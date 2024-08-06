@@ -12,8 +12,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "5.51.21",
+    "@tanstack/react-query-devtools": "5.51.21",
+    "gsap": "3.12.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "6.26.0",
     "styled-components": "6.1.12"
   },
   "devDependencies": {
@@ -26,6 +30,7 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
+    "react-helmet-async": "2.0.5",
     "typescript": "^5.2.2",
     "vite": "^5.3.4"
   }

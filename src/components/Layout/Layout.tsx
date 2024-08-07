@@ -6,12 +6,16 @@ import { useIsMobile } from '../../hooks/useIsMobile';
 
 function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
-    /* TO DO : 임시 설정 */
+  /* TO DO : 임시 설정 */
   const isMobile = useIsMobile();
 
   return (
     <LayoutWrapper>
-      <Header>
+      <Header
+        style={{
+          backgroundColor: location.pathname === '/' ? '#4E1006' : 'black',
+        }}
+      >
         <Nav isMobile={isMobile}>
           {NAVIGATION_ITEMS.map((item) => (
             <NavLink key={item.name} to={item.path} isActive={location.pathname === item.path}>
@@ -30,11 +34,9 @@ export default Layout;
 const LayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100%;
 `;
 
 const Header = styled.header`
-  background-color: ${(props) => props.theme.colors.primary};
   padding: ${(props) => props.theme.spacing.medium};
   display: flex;
   justify-content: center;
@@ -59,10 +61,8 @@ export interface NavLinkProps {
 }
 
 const NavLink = styled(Link)<NavLinkProps>`
-  color: ${(props) => props.theme.colors.text.primary};
-  opacity: ${(props) => (props.isActive ? 1 : 0.5)};
   transition: opacity 0.3s ease, color 0.3s ease;
-
+  color: ${({ isActive }) => (isActive ? '#FFFFFF' : '#966B6B')};
   &:hover {
     opacity: 1;
   }
@@ -70,5 +70,4 @@ const NavLink = styled(Link)<NavLinkProps>`
 
 const Main = styled.main`
   flex: 1;
-  padding: ${(props) => props.theme.spacing.medium};
 `;

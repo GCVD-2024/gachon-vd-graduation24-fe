@@ -18,19 +18,12 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
   }
 
   /* HTML5 display-role reset for older browsers */
   article, aside, details, figcaption, figure, 
   footer, header, hgroup, menu, nav, section {
     display: block;
-  }
-
-  body {
-    line-height: 1;
   }
 
   ol, ul {
@@ -57,13 +50,14 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  html, body, #root {
-    height: 100%;
-  }
-
   body {
     margin: 0;
     padding: 0;
+    /* 폰트 */
+    color: #FFFFFF;
+    font-family: 'Pretendard';
+
+    background-color: black;
   }
 
   a {

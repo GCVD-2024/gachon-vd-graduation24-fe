@@ -9,7 +9,7 @@ export const theme = {
     },
   },
   fonts: {
-    main: 'Arial, sans-serif',
+    primary: 'Pretendard',
   },
   fontSizes: {
     small: '14px',

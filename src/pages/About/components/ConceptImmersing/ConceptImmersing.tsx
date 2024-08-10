@@ -5,15 +5,8 @@ import BlackholeCircle from './components/BlackholeCircle';
 function ConceptImmersing(): React.ReactElement {
   return (
     <ImmersingWrapper>
-      <TitleContainer>
-        {/* TODO: 애니메이션 효과 추가 */}
-        <Title>
-          {/* Immersing.
-          <br />
-          몰입하다 */}
-          <BlackholeCircle />
-        </Title>
-      </TitleContainer>
+      <BlackholeCircle />
+
       <DescriptionContainer>
         <Description>
           Immersing은 어떤 활동이나 주제에 완전히 빠져들어 집중하는 것을 의미한다.
@@ -31,34 +24,13 @@ function ConceptImmersing(): React.ReactElement {
 export default ConceptImmersing;
 
 const ImmersingWrapper = styled.div`
-  /* TODO: 높이 임시 지정 */
   height: 3000px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-`;
-
-const TitleContainer = styled.div`
-  width: 1055px;
-  height: 1055px;
-  margin-bottom: 56px;
-  background-image: url('/about/ConceptImmersing/concept-immersing-bg.svg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Title = styled.h1`
-  font-size: 70px;
-  font-weight: 800;
-  line-height: 120%; /* 84px */
-  letter-spacing: -1.4px;
+  gap: 30px;
 `;
 
 const DescriptionContainer = styled.div`

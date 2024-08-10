@@ -117,14 +117,7 @@ export default function BlackholeCircle() {
 }
 
 const Circle = styled.div`
-  width: 980px;
-  height: 980px;
-  position: relative;
-  overflow: hidden;
 `;
 
 const Canvas = styled.canvas`
-  position: absolute;
-  top: 0;
-  left: 0;
 `;

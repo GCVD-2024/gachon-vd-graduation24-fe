@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import BlackholeCircle from './components/BlackholeCircle';
 
 function ConceptImmersing(): React.ReactElement {
   return (
@@ -7,9 +8,10 @@ function ConceptImmersing(): React.ReactElement {
       <TitleContainer>
         {/* TODO: 애니메이션 효과 추가 */}
         <Title>
-          Immersing.
+          {/* Immersing.
           <br />
-          몰입하다
+          몰입하다 */}
+          <BlackholeCircle />
         </Title>
       </TitleContainer>
       <DescriptionContainer>

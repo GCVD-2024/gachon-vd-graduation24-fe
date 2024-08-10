@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import Marquee from './components/Marquee';
 
 function ConceptReflecting(): React.ReactElement {
   return (
     <ReflectingWrapper>
-      <TitleBox>
-        <TitleText>Reflecting</TitleText>
-        <TitleText>반추하다</TitleText>
-      </TitleBox>
+      <Marquee marqueeText="Reflecting . 반추하" />
 
       <Description>
         Reflecting은 특정한 경험이나 지식에 대해 깊이 생각하고 그 의미를 되새기는 과정을 의미한다.
@@ -33,23 +31,8 @@ const ReflectingWrapper = styled.div`
   padding: 0 140px 0 140px;
 `;
 
-const TitleBox = styled.div`
-  height: 400px;
-  /* TODO: 임시 설정 */
-  background-color: #ffd700;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 50px;
-`;
-
-const TitleText = styled.span`
-  font-size: 48px;
-  font-weight: bold;
-`;
-
 const Description = styled.p`
+  margin-top: 46px;
   font-size: 32px;
   font-weight: 500;
   line-height: 140%; /* 44.8px */

@@ -54,9 +54,38 @@ jobs:
           vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} > vercel-output.txt
           echo "preview_url=$(cat vercel-output.txt)" >> $GITHUB_OUTPUT
 
-      # PR 프리뷰 배포
-      - name: Comment PR with Preview URL
+      # 성능 메트릭
+      - name: Run Lighthouse
+        id: lighthouse
+        uses: treosh/lighthouse-ci-action@v9
+        with:
+          urls: |
+            ${{ steps.deploy.outputs.preview_url }}
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        
+      - name: List all changed files
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          for file in ${ALL_CHANGED_FILES}; do
+            echo "$file was changed"
+          done
+
+      # PR 프리뷰 배포 링크 및 성능 점수 보여주기
+      - name: Comment PR with Preview URL and Lighthouse scores
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
             🎉 구현한 기능 Preview: ${{ steps.deploy.outputs.preview_url }}
+
+            변경된 파일 목록:
+            ${{ steps.changed-files.outputs.all_changed_files }}
+
+            Lighthouse 점수:
+            - Performance: ${{ steps.lighthouse.outputs.performance }}
+            - Accessibility: ${{ steps.lighthouse.outputs.accessibility }}
+            - Best Practices: ${{ steps.lighthouse.outputs.best-practices }}
+            - SEO: ${{ steps.lighthouse.outputs.seo }}

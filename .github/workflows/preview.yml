@@ -66,13 +66,11 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v44
 
-      - name: List all changed files
-        env:
-          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+      - name: Print Formatted Changed Files
         run: |
-          echo "${{ steps.changed-files.outputs.all_changed_files }}" | tr ' ' '\n' > changed_files.txt
+          echo "${{ steps.changed-files.outputs.all_changed_files }}" | tr ' ' '\n'
 
-      # PR 프리뷰 배포 링크 및 성능 점수 보여주기
+          # PR 프리뷰 배포 링크 및 성능 점수 보여주기
       - name: Comment PR with Preview URL and Lighthouse scores
         uses: thollander/actions-comment-pull-request@v2
         with:
@@ -80,7 +78,7 @@ jobs:
             🎉 구현한 기능 Preview: ${{ steps.deploy.outputs.preview_url }}
 
             🧩 변경된 파일
-            $(cat changed_files.txt | sed 's/^/- /')
+            ${{ steps.changed-files.outputs.all_changed_files }}
 
             Lighthouse 점수:
             - Performance: ${{ steps.lighthouse.outputs.performance }}

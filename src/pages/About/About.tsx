@@ -10,9 +10,11 @@ import ConceptExperiencing from './components/ConceptExperiencing/ConceptExperie
 import ConceptImmersing from './components/ConceptImmersing/ConceptImmersing';
 import ConceptReflecting from './components/ConceptReflecting/ConceptReflecting';
 import { useScroll } from '../../hooks/useScroll';
+import ScrollIndicator from './components/ScrollIndicator/ScrollIndicator';
 
 function About() {
   const { scrollProgress } = useScroll();
+  const scrollPercentage = Math.round(scrollProgress);
 
   return (
     <>
@@ -20,6 +22,7 @@ function About() {
         <title>Digging Club - About</title>
       </Helmet>
       <AboutPage>
+        <ScrollIndicator scrollPercentage={scrollPercentage} />
         <MainTitle scrollPercentage={scrollProgress} />
         <ExhibitionInfo />
         <ExhibitionIntroduction />
@@ -39,5 +42,6 @@ function About() {
 export default About;
 
 const AboutPage = styled.div`
+  position: relative;
   background-color: black;
 `;

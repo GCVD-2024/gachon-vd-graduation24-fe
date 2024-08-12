@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 function ConceptSavoring(): React.ReactElement {
   return (
-    // TODO: 반구 이미지 추가 필요
     <PageWrapper>
       <Title>Savoring.</Title>
       <Subtitle>향유하다</Subtitle>
@@ -28,11 +27,16 @@ function ConceptSavoring(): React.ReactElement {
 export default ConceptSavoring;
 
 const PageWrapper = styled.div`
-  height: 1080px;
+  height: 3000px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  background-image: url('/about/ConceptSavoring/concept-savoring-bg.svg');
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
 `;
 
 const TitleText = styled.h1`

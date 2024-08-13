@@ -21,7 +21,11 @@ function ScrollToTopButton({ onClick, text }: ScrollToTopButtonProps) {
 
   if (!isVisible) return null;
 
-  return <ButtonWrapper onClick={onClick}>{text}</ButtonWrapper>;
+  return (
+    <ButtonWrapper aria-label="Scroll to top" onClick={onClick}>
+      {text}
+    </ButtonWrapper>
+  );
 }
 
 export default ScrollToTopButton;

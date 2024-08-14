@@ -5,7 +5,7 @@ import Marquee from './components/Marquee';
 function ConceptReflecting(): React.ReactElement {
   return (
     <ReflectingWrapper>
-      <Marquee marqueeText="Reflecting . 반추하" />
+      <Marquee marqueeText="Reflecting . 반추하다" />
 
       <Description>
         Reflecting은 특정한 경험이나 지식에 대해 깊이 생각하고 그 의미를 되새기는 과정을 의미한다.

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-
 interface InfoItem {
   label: string;
   content: string;
@@ -42,14 +41,13 @@ const ExhibitionInfoWrapper = styled.div`
 `;
 
 const TitleContainer = styled.div`
+  width: 90%;
   height: 961px;
   /* TODO: 사이즈 수정 필요 */
   background-image: url('/about/ExhibitionInfo/exhibition-info-bg.svg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  font-size: 32px;
-  font-weight: bold;
 
   display: flex;
   flex-direction: column;
@@ -66,7 +64,7 @@ const Title = styled.h1`
 
 const Subtitle = styled.h2`
   margin-bottom: 200px;
-  font-size: 48px;
+  font-size: 36px;
   font-weight: 500;
   line-height: 120%; /* 57.6px */
   letter-spacing: -0.96px;
@@ -74,7 +72,7 @@ const Subtitle = styled.h2`
 
 const InfoSection = styled.div`
   margin-bottom: 40px;
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 700;
   line-height: normal;
 `;

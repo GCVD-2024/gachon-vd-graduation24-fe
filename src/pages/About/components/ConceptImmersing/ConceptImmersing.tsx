@@ -40,7 +40,7 @@ const DescriptionContainer = styled.div`
 `;
 
 const Description = styled.p`
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 500;
   line-height: 140%;
   letter-spacing: -0.64px;

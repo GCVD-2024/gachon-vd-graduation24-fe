@@ -34,11 +34,13 @@ const ExperiencingWrapper = styled.div`
   height: 1080px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 0px 140px 0px 140px;
 `;
 
 const MatterJsContainer = styled.div`
-  width: 100%;
+  width: 1360px;
   height: 800px;
   background-image: url('/about/ConceptExperiencing/concept-experiencing-bg.svg');
   background-size: cover;
@@ -60,7 +62,7 @@ const Title = styled.h1`
 `;
 
 const Description = styled.p`
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 500;
   line-height: 140%; /* 44.8px */
   letter-spacing: -0.64px;

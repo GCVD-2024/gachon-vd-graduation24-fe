@@ -22,7 +22,7 @@ export default function Marquee({ marqueeText }: MarqueeProps) {
 }
 
 const Content = styled.div`
-  width: 100%;
+  width: 1360px;
   height: 396px;
 `;
 

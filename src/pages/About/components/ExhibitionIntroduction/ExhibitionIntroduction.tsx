@@ -41,7 +41,7 @@ const Title = styled.h1`
 
 const Paragraph = styled.p`
   margin-bottom: 60px;
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 500;
   line-height: 140%;
   letter-spacing: -0.64px;

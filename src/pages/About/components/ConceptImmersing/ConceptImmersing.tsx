@@ -26,7 +26,7 @@ function ConceptImmersing() {
           ...toVars,
           scrollTrigger: {
             trigger: containerRef.current,
-            start: 'top 10%',
+            start: 'top 5%',
             end: 'bottom 20%',
           },
           delay: index * 0.2,

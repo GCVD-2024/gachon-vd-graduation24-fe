@@ -33,7 +33,6 @@ const marqueeAnimation = keyframes`
 
 const MarqueeContainer = styled.div`
   position: relative;
-  width: 100%;
   height: 396px;
   font-size: 5em;
   display: grid;
@@ -56,12 +55,12 @@ const MarqueeBlur = styled.div`
   display: grid;
   place-items: center;
   background-color: black;
-  background-image: linear-gradient(to right, white, 1rem, transparent 50%),
-    linear-gradient(to left, white, 1rem, transparent 50%);
+  background-image: linear-gradient(to right, rgba(228, 66, 39, 1), 1rem, transparent 50%),
+    linear-gradient(to left, rgba(228, 66, 39, 1), 1rem, transparent 50%);
   filter: contrast(15);
 
   p {
-    filter: blur(0.07em);
+    filter: blur(0.06em);
   }
 `;
 

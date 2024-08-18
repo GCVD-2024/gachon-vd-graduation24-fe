@@ -1,13 +1,48 @@
-import React from 'react';
-import styled from 'styled-components';
 import Marquee from './components/Marquee';
+import { useGSAP } from '@gsap/react';
+import { useRef } from 'react';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import styled from 'styled-components';
+import gsap from 'gsap';
 
-function ConceptReflecting(): React.ReactElement {
+gsap.registerPlugin(ScrollTrigger);
+
+function ConceptReflecting() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (!containerRef.current) return;
+
+    const titles = gsap.utils.toArray<HTMLElement>('.reflecting_title');
+    const contents = gsap.utils.toArray<HTMLElement>('.reflecting_content');
+
+    const animateElements = (
+      elements: HTMLElement[],
+      fromVars: gsap.TweenVars,
+      toVars: gsap.TweenVars
+    ) => {
+      elements.forEach((element, index) => {
+        gsap.fromTo(element, fromVars, {
+          ...toVars,
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 5%',
+            end: 'bottom 20%',
+          },
+          delay: index * 0.2,
+        });
+      });
+    };
+
+    animateElements(titles, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1 });
+    animateElements(contents, { opacity: 0 }, { opacity: 1, duration: 1 });
+  }, []);
+
   return (
-    <ReflectingWrapper>
+    <ReflectingWrapper ref={containerRef}>
       <Marquee marqueeText="Reflecting. 반추하다" />
 
-      <Description>
+      <Description className="reflecting_title">
         Reflecting은 특정한 경험이나 지식에 대해 깊이 생각하고 그 의미를 되새기는 과정을 의미한다.
         <br />
         Digging을 통해 얻게 된 정보나 경험을 Reflecting함으로써, 그것이 우리의 삶에 어떤 의미를

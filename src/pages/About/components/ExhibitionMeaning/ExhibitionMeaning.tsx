@@ -1,11 +1,47 @@
+import { useGSAP } from '@gsap/react';
+import { useRef } from 'react';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import styled from 'styled-components';
+import gsap from 'gsap';
+
+gsap.registerPlugin(ScrollTrigger);
 
 function ExhibitionMeaning() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (!containerRef.current) return;
+
+    const titles = gsap.utils.toArray<HTMLElement>('.about_title');
+    const contents = gsap.utils.toArray<HTMLElement>('.about_content');
+
+    const animateElements = (
+      elements: HTMLElement[],
+      fromVars: gsap.TweenVars,
+      toVars: gsap.TweenVars
+    ) => {
+      elements.forEach((element, index) => {
+        gsap.fromTo(element, fromVars, {
+          ...toVars,
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 90%',
+            end: 'bottom 20%',
+          },
+          delay: index * 0.2,
+        });
+      });
+    };
+
+    animateElements(titles, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1 });
+    animateElements(contents, { opacity: 0 }, { opacity: 1, duration: 1 });
+  }, []);
+
   return (
-    <IntroductionWrapper>
+    <IntroductionWrapper ref={containerRef}>
       <TitleContainer>
-        <Title>우리가 지나온 길, 그리고 앞으로 나아갈 길</Title>
-        <Paragraph>
+        <Title className="about_title">우리가 지나온 길, 그리고 앞으로 나아갈 길</Title>
+        <Paragraph className="about_content">
           이번 전시에서는 <Highlight>Digging</Highlight>의 사전적 의미 뿐만 아니라,
           <br />
           더 확장 된 범주에서 단어를 사용함으로써 디자인 아이덴티티를 드러내고 있다.

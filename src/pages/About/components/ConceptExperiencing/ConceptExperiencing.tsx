@@ -1,18 +1,55 @@
+import { useGSAP } from '@gsap/react';
+import { useRef } from 'react';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import styled from 'styled-components';
+import gsap from 'gsap';
 import WordCanvas from './components/WordCanvas';
-function ConceptExperiencing(): React.ReactElement {
+
+gsap.registerPlugin(ScrollTrigger);
+
+function ConceptExperiencing() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (!containerRef.current) return;
+
+    const titles = gsap.utils.toArray<HTMLElement>('.experiencing_title');
+    const contents = gsap.utils.toArray<HTMLElement>('.experiencing_content');
+
+    const animateElements = (
+      elements: HTMLElement[],
+      fromVars: gsap.TweenVars,
+      toVars: gsap.TweenVars
+    ) => {
+      elements.forEach((element, index) => {
+        gsap.fromTo(element, fromVars, {
+          ...toVars,
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 5%',
+            end: 'bottom 20%',
+          },
+          delay: index * 0.2,
+        });
+      });
+    };
+
+    animateElements(titles, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1 });
+    animateElements(contents, { opacity: 0 }, { opacity: 1, duration: 1 });
+  }, []);
+
   return (
-    <ExperiencingWrapper>
+    <ExperiencingWrapper ref={containerRef}>
       <MatterJsContainer>
         <WordCanvas />
       </MatterJsContainer>
       <ContentWrapper>
-        <Title>
+        <Title className="experiencing_title">
           Experiencing.
           <br />
           경험하다
         </Title>
-        <Description>
+        <Description className="experiencing_content">
           Experiencing은 특정한 상황이나 사건, 감정 등을 실제로 겪고 느끼는 과정을 의미한다.
           <br />
           Digging이 지식이나 정보를 얻는 과정이라면,

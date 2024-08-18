@@ -1,5 +1,5 @@
+import { useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
-import { useRef } from 'react';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import styled from 'styled-components';
 import gsap from 'gsap';
@@ -9,6 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 function ConceptExperiencing() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isWordCanvasVisible, setIsWordCanvasVisible] = useState(false);
 
   useGSAP(() => {
     if (!containerRef.current) return;
@@ -36,13 +37,22 @@ function ConceptExperiencing() {
 
     animateElements(titles, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1 });
     animateElements(contents, { opacity: 0 }, { opacity: 1, duration: 1 });
+
+    // WordCanvas visibility trigger
+    ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: 'top 50%',
+      end: 'bottom 50%',
+      onEnter: () => setIsWordCanvasVisible(true),
+      onLeave: () => setIsWordCanvasVisible(false),
+      onEnterBack: () => setIsWordCanvasVisible(true),
+      onLeaveBack: () => setIsWordCanvasVisible(false),
+    });
   }, []);
 
   return (
     <ExperiencingWrapper ref={containerRef}>
-      <MatterJsContainer>
-        <WordCanvas />
-      </MatterJsContainer>
+      <MatterJsContainer>{isWordCanvasVisible && <WordCanvas />}</MatterJsContainer>
       <ContentWrapper>
         <Title className="experiencing_title">
           Experiencing.
@@ -67,6 +77,7 @@ function ConceptExperiencing() {
 
 export default ConceptExperiencing;
 
+// Styled components remain unchanged
 const ExperiencingWrapper = styled.div`
   height: 1080px;
   display: flex;

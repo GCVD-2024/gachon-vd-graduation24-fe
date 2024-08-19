@@ -74,6 +74,8 @@ export default function WordCanvas() {
       },
     });
 
+    render.canvas.style.pointerEvents = 'none';
+
     const walls = createWalls();
     const wordBodies = WORDS.map(createWordBody);
 

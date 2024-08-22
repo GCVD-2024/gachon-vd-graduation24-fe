@@ -1,9 +1,11 @@
 import styled from 'styled-components';
+import WordCanvas from './components/WordCanvas';
 function ConceptExperiencing(): React.ReactElement {
   return (
     <ExperiencingWrapper>
-      {/* TODO: matterjs로 구현 필요 */}
-      <MatterJsContainer></MatterJsContainer>
+      <MatterJsContainer>
+        <WordCanvas />
+      </MatterJsContainer>
       <ContentWrapper>
         <Title>
           Experiencing.

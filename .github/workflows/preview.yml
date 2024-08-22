@@ -1,0 +1,85 @@
+name: pr-preview
+on:
+  # main, develop 브랜치를 향해 PR 올리면 임시 배포되도록 설정
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+    branches: ['main', 'develop']
+
+# 권한 설정
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
+  pages: write
+  deployments: write
+
+# 동시성 설정
+concurrency: preview-${{ github.ref }}
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+
+    # 버셀과 연결
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+    steps:
+      # workflow에 속한 레포지토리에 접근할 수 있도록 설정
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Get Vercel Environment Variables
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      # 종속성 설치 및 프로젝트 빌드
+      - name: Install and Build
+        run: yarn install && yarn build
+
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project Artifacts to Vercel
+        id: deploy
+        run: |
+          vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} > vercel-output.txt
+          echo "preview_url=$(cat vercel-output.txt)" >> $GITHUB_OUTPUT
+
+      # 성능 메트릭
+      - name: Run Lighthouse
+        id: lighthouse
+        uses: treosh/lighthouse-ci-action@v9
+        with:
+          urls: |
+            ${{ steps.deploy.outputs.preview_url }}
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          separator: '\n'
+
+          # PR 프리뷰 배포 링크 및 성능 점수 보여주기
+      - name: Comment PR with Preview URL and Lighthouse scores
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            🎉 구현한 기능 Preview: ${{ steps.deploy.outputs.preview_url }}
+
+            🧩 변경된 파일
+            ${{ steps.changed-files.outputs.files }}
+
+            Lighthouse 점수:
+            - Performance: ${{ steps.lighthouse.outputs.performance }}
+            - Accessibility: ${{ steps.lighthouse.outputs.accessibility }}
+            - Best Practices: ${{ steps.lighthouse.outputs.best-practices }}
+            - SEO: ${{ steps.lighthouse.outputs.seo }}

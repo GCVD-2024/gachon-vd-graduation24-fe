@@ -35,7 +35,7 @@ export default MainTitle;
 const MainTitleWrapper = styled.div`
   position: relative;
   /* TODO: 높이 수정 */
-  height: 983px;
+  height: 1080px;
   background-image: url('/about/MainTitle/main-title-bg.svg');
   background-size: cover;
   background-position: center;
@@ -45,6 +45,7 @@ const MainTitleWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 `;
 
 const float = keyframes`
@@ -58,8 +59,8 @@ const FloatingImage = styled.img`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 800px;
-  z-index: 10;
   animation: ${float} 3s ease-in-out infinite;
+  z-index: 1000;
 `;
 
 const TitlePart = styled.div`

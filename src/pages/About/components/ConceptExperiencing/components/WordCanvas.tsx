@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import Matter from 'matter-js';
 import { WORDS } from '../../../../../constants/constants';
 
-const CANVAS_WIDTH = 1400;
+const CANVAS_WIDTH = 1360;
 const CANVAS_HEIGHT = 800;
 const WALL_THICKNESS = 50;
 
@@ -73,6 +73,8 @@ export default function WordCanvas() {
         background: 'transparent',
       },
     });
+
+    render.canvas.style.pointerEvents = 'none';
 
     const walls = createWalls();
     const wordBodies = WORDS.map(createWordBody);

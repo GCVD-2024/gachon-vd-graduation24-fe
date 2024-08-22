@@ -1,18 +1,65 @@
+import { useRef, useState } from 'react';
+import { useGSAP } from '@gsap/react';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import styled from 'styled-components';
+import gsap from 'gsap';
 import WordCanvas from './components/WordCanvas';
-function ConceptExperiencing(): React.ReactElement {
+
+gsap.registerPlugin(ScrollTrigger);
+
+function ConceptExperiencing() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isWordCanvasVisible, setIsWordCanvasVisible] = useState(false);
+
+  useGSAP(() => {
+    if (!containerRef.current) return;
+
+    const titles = gsap.utils.toArray<HTMLElement>('.experiencing_title');
+    const contents = gsap.utils.toArray<HTMLElement>('.experiencing_content');
+
+    const animateElements = (
+      elements: HTMLElement[],
+      fromVars: gsap.TweenVars,
+      toVars: gsap.TweenVars
+    ) => {
+      elements.forEach((element, index) => {
+        gsap.fromTo(element, fromVars, {
+          ...toVars,
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 5%',
+            end: 'bottom 20%',
+          },
+          delay: index * 0.2,
+        });
+      });
+    };
+
+    animateElements(titles, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1 });
+    animateElements(contents, { opacity: 0 }, { opacity: 1, duration: 1 });
+
+    // WordCanvas visibility trigger
+    ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: 'top 50%',
+      end: 'bottom 50%',
+      onEnter: () => setIsWordCanvasVisible(true),
+      onLeave: () => setIsWordCanvasVisible(false),
+      onEnterBack: () => setIsWordCanvasVisible(true),
+      onLeaveBack: () => setIsWordCanvasVisible(false),
+    });
+  }, []);
+
   return (
-    <ExperiencingWrapper>
-      <MatterJsContainer>
-        <WordCanvas />
-      </MatterJsContainer>
+    <ExperiencingWrapper ref={containerRef}>
+      <MatterJsContainer>{isWordCanvasVisible && <WordCanvas />}</MatterJsContainer>
       <ContentWrapper>
-        <Title>
+        <Title className="experiencing_title">
           Experiencing.
           <br />
           경험하다
         </Title>
-        <Description>
+        <Description className="experiencing_content">
           Experiencing은 특정한 상황이나 사건, 감정 등을 실제로 겪고 느끼는 과정을 의미한다.
           <br />
           Digging이 지식이나 정보를 얻는 과정이라면,
@@ -30,15 +77,18 @@ function ConceptExperiencing(): React.ReactElement {
 
 export default ConceptExperiencing;
 
+// Styled components remain unchanged
 const ExperiencingWrapper = styled.div`
   height: 1080px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 0px 140px 0px 140px;
 `;
 
 const MatterJsContainer = styled.div`
-  width: 100%;
+  width: 1360px;
   height: 800px;
   background-image: url('/about/ConceptExperiencing/concept-experiencing-bg.svg');
   background-size: cover;
@@ -60,7 +110,7 @@ const Title = styled.h1`
 `;
 
 const Description = styled.p`
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 500;
   line-height: 140%; /* 44.8px */
   letter-spacing: -0.64px;

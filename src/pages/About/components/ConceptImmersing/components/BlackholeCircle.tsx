@@ -54,10 +54,10 @@ export default function BlackholeCircle() {
 
       ctx.beginPath();
       ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+      ctx.strokeStyle = 'rgba(228, 66, 39, 1)';
       ctx.stroke();
 
-      ctx.fillStyle = 'white';
+      ctx.fillStyle = 'rgba(228, 66, 39, 1)';
       ctx.font = 'bold 70px Arial';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -95,7 +95,7 @@ export default function BlackholeCircle() {
 
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.fillStyle = 'rgba(228, 66, 39, 1)';
         ctx.fill();
       });
 

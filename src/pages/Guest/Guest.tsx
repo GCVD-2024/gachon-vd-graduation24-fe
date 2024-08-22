@@ -1,173 +1,10 @@
 import React, { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
-import { Helmet } from 'react-helmet-async';
+import styled from 'styled-components';
+import background from '../../assets/img/background.png';
+import SvgDefs from './components/SvgDefs';
+import GuestBook from './components/GuestBook';
 
-// Drop 애니메이션 정의
-const dropAnimation = keyframes`
-  0% {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-`;
-
-// Water Drop 애니메이션 정의
-const waterDropAnimation = keyframes`
-  from, to {
-    transform: none;
-  }
-  50% {
-    transform: translateX(300px);
-  }
-`;
-
-// Circle Drop 애니메이션 정의
-const circleDropAnimation = keyframes`
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(20px);
-  }
-`;
-
-// Circle Props 타입 정의
-interface CircleProps {
-  length: number;
-}
-
-// 원 크기 및 텍스트 박스 설정
-const Circle = styled.div<CircleProps>`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  font-size: 18px;
-  text-align: center;
-  background-color: #fff;
-  margin: 10px;
-  box-sizing: border-box;
-  animation: ${dropAnimation} 0.6s ease-out forwards, ${circleDropAnimation} 2s infinite ease-in-out,
-    ${waterDropAnimation} 5000ms infinite;
-  filter: url(#water);
-
-  width: ${({ length }) =>
-    length <= 20 ? '150px' : length <= 70 ? '250px' : length <= 130 ? '330px' : '430px'};
-
-  height: ${({ length }) =>
-    length <= 20 ? '150px' : length <= 70 ? '250px' : length <= 130 ? '330px' : '430px'};
-`;
-
-const TextBox = styled.div`
-  max-width: 90%;
-  max-height: 90%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: pre-wrap;
-  word-break: break-word;
-`;
-
-// WaterDropContainer와 애니메이션 설정
-const WaterDropContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-`;
-
-const SvgContainer = styled.svg`
-  width: 100%;
-  height: auto;
-`;
-
-const Drop = styled.circle`
-  animation: ${waterDropAnimation} 9000ms infinite;
-  overflow: hidden;
-
-  &:nth-child(2) {
-    animation-delay: 2500ms;
-  }
-`;
-
-const InputField = styled.input`
-  width: 80%;
-  padding: 10px;
-  margin-right: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-`;
-
-const SvgDefs = () => (
-  <svg height="0" width="0">
-    <defs>
-      <filter id="water" x="0" y="0">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur" />
-        <feColorMatrix
-          in="blur"
-          mode="matrix"
-          values="1 0 0 0 0  
-                  0 1 0 0 0  
-                  0 0 1 0 0  
-                  0 0 0 19 -9"
-          result="goo"
-        />
-      </filter>
-    </defs>
-  </svg>
-);
-
-const SubmitButton = styled.button`
-  padding: 10px 20px;
-  border-radius: 5px;
-  background-color: #333;
-  color: white;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #555;
-  }
-`;
-
-// GuestBookEntry 컴포넌트 타입 정의
-interface GuestBookEntryProps {
-  text: string;
-}
-
-const GuestBookEntry: React.FC<GuestBookEntryProps> = ({ text }) => (
-  <Circle length={text.length}>
-    <TextBox>{text}</TextBox>
-  </Circle>
-);
-
-// GuestBook 컴포넌트 스타일 설정
-const GuestBookContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: center;
-  margin-top: 20px;
-`;
-
-// GuestBook 컴포넌트 타입 정의
-interface GuestBookProps {
-  entries: string[];
-}
-
-const GuestBook: React.FC<GuestBookProps> = ({ entries }) => (
-  <GuestBookContainer>
-    {entries.map((entry, index) => (
-      <GuestBookEntry key={index} text={entry} />
-    ))}
-  </GuestBookContainer>
-);
-
-const Guest: React.FC = () => {
+const Guest = () => {
   const [guestEntries, setGuestEntries] = useState<string[]>([
     '정말 좋은 출연진이었습니다. 특히 저는 김도연님 작품이 가장 기억에 남네요.',
   ]);
@@ -186,24 +23,113 @@ const Guest: React.FC = () => {
   };
 
   return (
-    <>
-      <Helmet>
-        <title>Digging Club - Guest</title>
-      </Helmet>
+    <GuestPage>
       <SvgDefs />
-      <div>
-        <InputField
-          type="text"
-          value={inputValue}
-          onChange={handleInputChange}
-          placeholder="댓글을 입력하세요"
-        />
-        <SubmitButton onClick={handleSubmit}>전송</SubmitButton>
-      </div>
-
+      <img src={background} />
       <GuestBook entries={guestEntries} />
-    </>
+
+      <ComentContainer>
+        <h1>WHAT DID YOU DIG ?</h1>
+        <TextContainer>
+          <TextInput
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            placeholder="댓글을 입력하세요"
+          />
+          <SubmitButton onClick={handleSubmit}>DIGGING!</SubmitButton>
+        </TextContainer>
+      </ComentContainer>
+    </GuestPage>
   );
 };
 
 export default Guest;
+
+const ComentContainer = styled.article`
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  gap: 0.5rem;
+  padding-bottom: 5%;
+
+  min-width: 1050px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+`;
+
+const GuestPage = styled.main`
+  width: 100dvw;
+  height: calc(100vh - 73px);
+  background: radial-gradient(41.45% 43.19% at 50% 50%, #6c2519 0%, #000 100%);
+
+  h1 {
+    text-align: center;
+    text-shadow: 0px -4px 10px rgba(92, 37, 37, 0.3);
+    font-size: 100px;
+    font-style: normal;
+    font-weight: 900;
+    color: ${({ theme }) => theme.colors.primary};
+    line-height: 100%;
+  }
+
+  img {
+    position: absolute;
+    width: 100vw;
+    height: calc(100vh - 73px);
+  }
+`;
+
+const TextContainer = styled.section`
+  display: flex;
+  margin: 0 auto;
+  gap: 2rem;
+  width: 100%;
+`;
+
+const SubmitButton = styled.button`
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+
+  text-align: center;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 120%;
+  &:hover {
+    background-color: #e63946;
+  }
+`;
+
+const TextInput = styled.input`
+  display: flex;
+
+  width: 80%;
+  font-size: 18px;
+  color: white;
+  background: transparent;
+  border: 1px solid white;
+  border-radius: 14px;
+  outline: none;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.primary};
+    box-shadow: 0 0 5px ${({ theme }) => theme.colors.primary};
+  }
+`;

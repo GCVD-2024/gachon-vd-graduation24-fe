@@ -1,5 +1,3 @@
-import { css } from "styled-components";
-
 // TO DO : 임시로 작성되었기에, 수정 필요
 export const theme = {
   colors: {
@@ -28,7 +26,5 @@ export const theme = {
     maxWidth: '1200px',
   },
 };
-
-
 
 export type Theme = typeof theme;

@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import '../../../styles/animations.css';
 
 interface CardInfoProps {
   name: string;
@@ -39,6 +40,17 @@ const WorkCardItemWrapper = styled.div<{ imgUrl?: string }>`
   background-position: center;
 
   cursor: pointer;
+
+  &:hover {
+    -webkit-animation-name: hvr-buzz-out;
+    animation-name: hvr-buzz-out;
+    -webkit-animation-duration: 0.75s;
+    animation-duration: 0.75s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+  }
 `;
 
 const ItemSpan = styled.span`

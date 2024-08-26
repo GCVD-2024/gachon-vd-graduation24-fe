@@ -6,7 +6,7 @@ const ExhibitionSection = () => {
   return (
     <ExhibitionWrapper>
       {MOCK_DATA.map((data) => (
-        <WorkCardItem name={data.학생이름} title={data.작품이름} img={data.이미지} />
+        <WorkCardItem name={data.학생이름} title={data.작품이름} imgUrl={data.이미지} />
       ))}
     </ExhibitionWrapper>
   );

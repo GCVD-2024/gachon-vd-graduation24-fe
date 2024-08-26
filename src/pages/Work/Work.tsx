@@ -5,15 +5,13 @@ import styled from 'styled-components';
 
 function Work() {
   return (
-    <>
-      <WorkPage>
-        <Helmet>
-          <title>Digging Club - Work</title>
-        </Helmet>
-        <CategoriesSection />
-        <ExhibitionSection />
-      </WorkPage>
-    </>
+    <WorkPage>
+      <Helmet>
+        <title>Digging Club - Work</title>
+      </Helmet>
+      <CategoriesSection />
+      <ExhibitionSection />
+    </WorkPage>
   );
 }
 

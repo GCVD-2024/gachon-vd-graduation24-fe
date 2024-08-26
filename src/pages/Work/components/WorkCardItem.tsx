@@ -4,17 +4,17 @@ import { styled } from 'styled-components';
 interface CardInfoProps {
   name: string;
   title: string;
-  img: string;
+  imgUrl: string;
 }
 
-const WorkCardItem = ({ name, title, img }: CardInfoProps) => {
+const WorkCardItem = ({ name, title, imgUrl }: CardInfoProps) => {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate('/detail');
   };
 
   return (
-    <WorkCardItemWrapper onClick={handleClick} imgUrl={img}>
+    <WorkCardItemWrapper onClick={handleClick} imgUrl={imgUrl}>
       <ItemSpan>{name}</ItemSpan>
       <ItemSpan>{title}</ItemSpan>
     </WorkCardItemWrapper>

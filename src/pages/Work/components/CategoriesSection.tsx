@@ -2,17 +2,19 @@ import { styled } from 'styled-components';
 import { CATEGORIES } from '../../../constants/constants';
 import { useState } from 'react';
 
-const CategoriesSection = () => {
-  const [category, setCategory] = useState('ALL');
+type Category = (typeof CATEGORIES)[number];
 
-  const handleClick = (name: string) => {
+const CategoriesSection = () => {
+  const [category, setCategory] = useState<Category>('ALL');
+
+  const handleClick = (name: Category) => {
     setCategory(name);
   };
 
   return (
     <CategoriesWrapper>
       {CATEGORIES.map((item) => (
-        <CategoriesItem onClick={() => handleClick(item)} chosen={category === item}>
+        <CategoriesItem key={item} onClick={() => handleClick(item)} selected={category === item}>
           {item}
         </CategoriesItem>
       ))}
@@ -28,10 +30,10 @@ const CategoriesWrapper = styled.section`
   row-gap: 60px;
 `;
 
-const CategoriesItem = styled.span<{ chosen: boolean }>`
+const CategoriesItem = styled.span<{ selected: boolean }>`
   font-size: 40px;
   line-height: 120%;
-  color: ${({ theme, chosen }) => (chosen ? theme.colors.primary : 'white')};
+  color: ${({ theme, selected }) => (selected ? theme.colors.primary : 'white')};
 
   cursor: pointer;
 `;

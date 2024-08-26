@@ -5,7 +5,7 @@ const WorkDetail = () => {
   return (
     <WorkDetailPage>
       <WorkInfoSection />
-      <WorkImg imgUrl="" />
+      <WorkImg src="" alt="작품-이미지" />
     </WorkDetailPage>
   );
 };
@@ -22,13 +22,10 @@ const WorkDetailPage = styled.div`
   column-gap: 40px;
 `;
 
-const WorkImg = styled.img<{ imgUrl: string }>`
+const WorkImg = styled.img`
   width: 1220px;
   min-height: 823px;
 
-  background-image: url(${({ imgUrl }) => imgUrl});
-  background-size: cover;
-  background-position: center;
-
+  object-fit: cover;
   background-color: gray;
 `;

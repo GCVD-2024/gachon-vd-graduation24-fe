@@ -23,7 +23,10 @@ function About() {
         <title>Digging Club - About</title>
       </Helmet>
       <AboutPage>
-        <ScrollToTopButton onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} text="Going Up!" />
+        <ScrollToTopButton
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          text="Going Up!"
+        />
         <ScrollIndicator scrollPercentage={scrollPercentage} />
         <MainTitle scrollPercentage={scrollProgress} />
         <ExhibitionInfo />

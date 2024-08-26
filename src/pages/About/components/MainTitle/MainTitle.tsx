@@ -64,7 +64,7 @@ const FloatingImage = styled.img`
 `;
 
 const TitlePart = styled.div`
-  font-size: 350px;
+  font-size: 380px;
   font-weight: 900;
   line-height: 1;
 `;

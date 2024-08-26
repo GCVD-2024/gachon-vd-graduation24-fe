@@ -7,27 +7,31 @@ interface ScrollIndicatorProps {
 export default function ScrollIndicator({ scrollPercentage }: ScrollIndicatorProps) {
   return (
     <RulerContainer>
-      <Mask position="top">{scrollPercentage}%</Mask>
+      <Mask position="top">
+        <PercentageText>{scrollPercentage}%</PercentageText>
+      </Mask>
       <Lines>
         {[...Array(25)].map((_, i) => (
           <Line key={i} style={{ top: `${4 * (i + 1)}%` }} />
         ))}
       </Lines>
-      <Mask position="bottom">-{100 - scrollPercentage}%</Mask>
+      <Mask position="bottom">
+        <PercentageText>-{100 - scrollPercentage}%</PercentageText>
+      </Mask>
     </RulerContainer>
   );
 }
 
 const RulerContainer = styled.div`
   z-index: 1000;
-  width: 58px;
+  width: 100px;
   height: 100%;
   position: absolute;
   left: 39px;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 const Lines = styled.div`
@@ -50,16 +54,16 @@ const Line = styled.span`
 const Mask = styled.div<{ position: 'top' | 'bottom' }>`
   position: fixed;
   height: 10%;
-  width: 16px;
 
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
-  font-size: 1rem;
+  font-size: 24px;
   color: white;
-  ${(props) =>
-    props.position === 'top'
-      ? 'top: 0; border-bottom: 1px solid white;'
-      : 'bottom: 0; border-top: 1px solid white;'}
+  ${(props) => (props.position === 'top' ? 'top: 0; ' : 'bottom: 0; ')}
+`;
+
+const PercentageText = styled.span`
+  margin-left: 20px;
 `;

@@ -1,40 +1,48 @@
-import styled, { keyframes } from 'styled-components';
+import { forwardRef, useState, useMemo } from 'react';
+import styled, { keyframes, css } from 'styled-components';
 
 interface CircleProps {
   length: number;
+  isNew: boolean;
+  randomYOffset: number;
 }
 
 interface GuestBookEntryProps {
   text: string;
+  isNew: boolean;
+  hasConnection: boolean;
+  previousYOffset?: number;
 }
 
-const dropAnimation = keyframes`
+const expandLine = keyframes`
   0% {
-    transform: translateY(-50px);
+    width: 0;
     opacity: 0;
   }
   100% {
-    transform: translateY(0);
+    width: 100px;
     opacity: 1;
   }
 `;
 
-const waterDropAnimation = keyframes`
-  from, to {
-    transform: none;
-  }
-  50% {
-    transform: translateX(300px);
-  }
-`;
+const ConnectionLine = styled.div<{ isNew: boolean; angle: number }>`
+  height: 10px;
+  background-color: #fff;
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-top: -5px;
 
-const circleDropAnimation = keyframes`
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(20px);
-  }
+  ${({ isNew }) =>
+    isNew &&
+    css`
+      animation: ${expandLine} 1s ease-out forwards;
+    `}
+
+  width: 100px;
+  opacity: ${({ isNew }) => (isNew ? 0 : 1)};
+
+  transform: rotate(${({ angle }) => angle}deg);
+  transform-origin: left center;
 `;
 
 const Circle = styled.div<CircleProps>`
@@ -48,15 +56,13 @@ const Circle = styled.div<CircleProps>`
   background-color: #fff;
   margin: 10px;
   box-sizing: border-box;
-  animation: ${dropAnimation} 0.6s ease-out forwards, ${circleDropAnimation} 2s infinite ease-in-out,
-    ${waterDropAnimation} 5000ms infinite;
-  filter: url(#water);
 
   width: ${({ length }) =>
     length <= 20 ? '150px' : length <= 70 ? '250px' : length <= 130 ? '330px' : '430px'};
-
   height: ${({ length }) =>
     length <= 20 ? '150px' : length <= 70 ? '250px' : length <= 130 ? '330px' : '430px'};
+
+  transform: translateY(${({ randomYOffset }) => randomYOffset}px);
 `;
 
 const TextBox = styled.div`
@@ -68,10 +74,26 @@ const TextBox = styled.div`
   word-break: break-word;
 `;
 
-const GuestBookEntry = ({ text }: GuestBookEntryProps) => (
-  <Circle length={text.length}>
-    <TextBox>{text}</TextBox>
-  </Circle>
+const GuestBookEntry = forwardRef<HTMLDivElement, GuestBookEntryProps>(
+  ({ text, isNew, hasConnection, previousYOffset }, ref) => {
+    // Use useMemo to calculate the random Y offset only once when the component is first rendered
+    const randomYOffset = useMemo(() => Math.random() * 200 - 100, []);
+
+    // Calculate the angle for the ConnectionLine based on the Y offset difference
+    const angle =
+      previousYOffset !== undefined
+        ? Math.atan2(randomYOffset - previousYOffset, 100) * (180 / Math.PI)
+        : 0;
+
+    return (
+      <div ref={ref} style={{ display: 'flex', alignItems: 'center' }}>
+        {hasConnection && <ConnectionLine isNew={isNew} angle={angle} />}
+        <Circle length={text.length} isNew={isNew} randomYOffset={randomYOffset}>
+          <TextBox>{text}</TextBox>
+        </Circle>
+      </div>
+    );
+  }
 );
 
 export default GuestBookEntry;

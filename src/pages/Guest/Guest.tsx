@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import background from '../../assets/img/background.png';
-import SvgDefs from './components/SvgDefs';
+
 import GuestBook from './components/GuestBook';
 
 const Guest = () => {
@@ -10,6 +10,7 @@ const Guest = () => {
   ]);
 
   const [inputValue, setInputValue] = useState<string>('');
+  const [isAnimating, setIsAnimating] = useState<boolean>(false); // State for animation
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -18,14 +19,21 @@ const Guest = () => {
   const handleSubmit = () => {
     if (inputValue.trim()) {
       setGuestEntries([...guestEntries, inputValue.trim()]);
-      setInputValue(''); // 입력 필드 초기화
+      setInputValue(''); // Clear the input field
+
+      // Trigger the animation
+      setIsAnimating(true);
+
+      // Reset animation after it completes
+      setTimeout(() => {
+        setIsAnimating(false);
+      }, 1000); // Duration should match animation duration
     }
   };
 
   return (
     <GuestPage>
-      <SvgDefs />
-      <img src={background} />
+      <img src={background} alt="background" />
       <GuestBook entries={guestEntries} />
 
       <ComentContainer>
@@ -37,7 +45,12 @@ const Guest = () => {
             onChange={handleInputChange}
             placeholder="댓글을 입력하세요"
           />
-          <SubmitButton onClick={handleSubmit}>DIGGING!</SubmitButton>
+          <SubmitButton
+            onClick={handleSubmit}
+            isAnimating={isAnimating} // Pass animation state
+          >
+            DIGGING!
+          </SubmitButton>
         </TextContainer>
       </ComentContainer>
     </GuestPage>
@@ -52,7 +65,6 @@ const ComentContainer = styled.article`
   position: fixed;
   gap: 0.5rem;
   padding-bottom: 5%;
-
   min-width: 1050px;
   left: 50%;
   transform: translateX(-50%);
@@ -60,9 +72,15 @@ const ComentContainer = styled.article`
 `;
 
 const GuestPage = styled.main`
-  width: 100dvw;
-  height: calc(100vh - 73px);
+  width: 100vw; /* Ensure full viewport width */
+  height: calc(100vh - 73px); /* Ensure full height minus any navbar/header */
   background: radial-gradient(41.45% 43.19% at 50% 50%, #6c2519 0%, #000 100%);
+  overflow-x: hidden; /* Prevent horizontal overflow of the page itself */
+  overflow-y: hidden; /* Prevent vertical overflow of the page */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   h1 {
     text-align: center;
@@ -78,8 +96,32 @@ const GuestPage = styled.main`
     position: absolute;
     width: 100vw;
     height: calc(100vh - 73px);
+    object-fit: cover;
+    z-index: 0; /* Ensure the image is behind content */
   }
 `;
+
+// const GuestPage = styled.main`
+//   width: 100dvw;
+//   height: calc(100vh - 73px);
+//   background: radial-gradient(41.45% 43.19% at 50% 50%, #6c2519 0%, #000 100%);
+
+//   h1 {
+//     text-align: center;
+//     text-shadow: 0px -4px 10px rgba(92, 37, 37, 0.3);
+//     font-size: 100px;
+//     font-style: normal;
+//     font-weight: 900;
+//     color: ${({ theme }) => theme.colors.primary};
+//     line-height: 100%;
+//   }
+
+//   img {
+//     position: absolute;
+//     width: 100vw;
+//     height: calc(100vh - 73px);
+//   }
+// `;
 
 const TextContainer = styled.section`
   display: flex;
@@ -88,7 +130,27 @@ const TextContainer = styled.section`
   width: 100%;
 `;
 
-const SubmitButton = styled.button`
+// Define keyframes for animation
+const expandCircle = keyframes`
+  0% {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+  }
+  50% {
+    width: 300px; /* Elongated shape */
+    height: 100px;
+    border-radius: 50px;
+  }
+  100% {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+  }
+`;
+
+// Styled component with conditional animation
+const SubmitButton = styled.button<{ isAnimating: boolean }>`
   width: 160px;
   height: 160px;
   border-radius: 50%;
@@ -102,12 +164,16 @@ const SubmitButton = styled.button`
   align-items: center;
   justify-content: center;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-
   text-align: center;
   font-size: 30px;
   font-style: normal;
   font-weight: 900;
   line-height: 120%;
+  transition: background-color 0.3s ease;
+
+  // Apply animation when isAnimating is true
+  animation: ${({ isAnimating }) => (isAnimating ? expandCircle : 'none')} 1s ease;
+
   &:hover {
     background-color: #e63946;
   }
@@ -115,7 +181,6 @@ const SubmitButton = styled.button`
 
 const TextInput = styled.input`
   display: flex;
-
   width: 80%;
   font-size: 18px;
   color: white;

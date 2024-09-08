@@ -1,33 +1,14 @@
-import React, { useRef, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useRef } from 'react';
 import GuestBookEntry from './GuestBookEntry';
+import { styled } from 'styled-components';
 
 interface GuestBookProps {
   entries: string[];
+  angles: number[]; // 각도를 받는 prop 추가
 }
 
-const GuestBookContainer = styled.div`
-  display: flex;
-  position: relative;
-  top: -27%;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  margin-top: 20px;
-  padding: 10px;
-
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  color: black;
-`;
-
-const GuestBook: React.FC<GuestBookProps> = ({ entries }) => {
+const GuestBook: React.FC<GuestBookProps> = ({ entries, angles }) => {
   const lastEntryRef = useRef<HTMLDivElement | null>(null);
-  let previousYOffset: number | undefined = undefined;
 
   useEffect(() => {
     if (lastEntryRef.current) {
@@ -37,24 +18,22 @@ const GuestBook: React.FC<GuestBookProps> = ({ entries }) => {
 
   return (
     <GuestBookContainer>
-      {entries.map((entry, index) => {
-        const currentEntry = (
-          <GuestBookEntry
-            key={index}
-            text={entry}
-            isNew={index === entries.length - 1}
-            hasConnection={index > 0}
-            ref={index === entries.length - 1 ? lastEntryRef : null}
-            previousYOffset={previousYOffset}
-          />
-        );
-
-        previousYOffset = Math.random() * 200 - 100;
-
-        return currentEntry;
-      })}
+      {entries.map((entry, index) => (
+        <GuestBookEntry
+          key={index}
+          text={entry}
+          isNew={index === entries.length - 1}
+          hasConnection={index > 0}
+          ref={index === entries.length - 1 ? lastEntryRef : null}
+          angle={angles[index]} // 각도 전달
+        />
+      ))}
     </GuestBookContainer>
   );
 };
 
 export default GuestBook;
+
+const GuestBookContainer = styled.div`
+  display: flex;
+`;

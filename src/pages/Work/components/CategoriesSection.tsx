@@ -1,8 +1,7 @@
 import { styled } from 'styled-components';
-import { CATEGORIES } from '../../../constants/constants';
 import { useState } from 'react';
-
-type Category = (typeof CATEGORIES)[number];
+import { Category } from '../../../types/types';
+import { CATEGORIES } from '../../../constants/constants';
 
 const CategoriesSection = () => {
   const [category, setCategory] = useState<Category>('ALL');

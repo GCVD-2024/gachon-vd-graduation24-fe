@@ -19,8 +19,7 @@ const router = createBrowserRouter([
         element: <Work />,
       },
       {
-        // 서버 연결 후 삭제 예정
-        path: 'detail',
+        path: 'work/:name/:title',
         element: <WorkDetail />,
       },
       {

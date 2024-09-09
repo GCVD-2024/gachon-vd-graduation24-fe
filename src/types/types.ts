@@ -9,6 +9,11 @@ export interface ResponseType<T = Record<string, object>> {
   result: T;
 }
 
+export type WorkListRequestType = {
+  category: Category;
+  currentPage: number;
+};
+
 export type WorkListResponseType = ResponseType<{
   currentPage: number;
   totalPage: number;
@@ -21,6 +26,11 @@ export type WorkListType = {
   studentName: string;
   title: string;
   thumbnailUrl: string;
+};
+
+export type WorkDetailRequestType = {
+  name: string;
+  title: string;
 };
 
 export type WorkDetailResponseType = ResponseType<WorkDetailType>;

@@ -48,7 +48,7 @@ export const WORDS = [
 ];
 
 // CategoriesSection.tsx
-export const CATEGORIES = ['ALL', 'UX/UI', 'BRAND', 'GRAPHIC', 'ILLUST', 'MEDIA'] as const;
+export const CATEGORIES = ['ALL', 'UX', 'Brand', 'Graphic', 'Illust', 'Media'] as const;
 
 // 임시로 추가. 서버 연결 후 삭제 예정.
 export const MOCK_DATA = [

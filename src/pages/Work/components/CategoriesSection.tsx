@@ -1,11 +1,12 @@
 import { styled } from 'styled-components';
-import { useState } from 'react';
 import { Category } from '../../../types/types';
 import { CATEGORIES } from '../../../constants/constants';
 
-const CategoriesSection = () => {
-  const [category, setCategory] = useState<Category>('ALL');
-
+interface CategoriesSectionProps {
+  category: Category;
+  setCategory: React.Dispatch<React.SetStateAction<Category>>;
+}
+const CategoriesSection = ({ category, setCategory }: CategoriesSectionProps) => {
   const handleClick = (name: Category) => {
     setCategory(name);
   };

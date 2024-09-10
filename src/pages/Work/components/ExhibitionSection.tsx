@@ -1,12 +1,20 @@
 import { styled } from 'styled-components';
 import WorkCardItem from './WorkCardItem';
-import { MOCK_DATA } from '../../../constants/constants';
+// import { MOCK_DATA } from '../../../constants/constants';
+import { WorkListResponseType } from '../../../types/types';
 
-const ExhibitionSection = () => {
+interface ExhibitionSectionProps {
+  data: WorkListResponseType | undefined;
+}
+
+const ExhibitionSection = ({ data }: ExhibitionSectionProps) => {
+  if (!data) {
+    throw new Error('[에러] 작품리스트 데이터가 없습니다.');
+  }
   return (
     <ExhibitionWrapper>
-      {MOCK_DATA.map((data) => (
-        <WorkCardItem name={data.학생이름} title={data.작품이름} imgUrl={data.이미지} />
+      {data.result.works.map((work) => (
+        <WorkCardItem name={work.studentName} title={work.title} imgUrl={work.thumbnailUrl} />
       ))}
     </ExhibitionWrapper>
   );

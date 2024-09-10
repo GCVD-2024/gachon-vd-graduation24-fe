@@ -11,7 +11,7 @@ interface CardInfoProps {
 const WorkCardItem = ({ name, title, imgUrl }: CardInfoProps) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate('/detail');
+    navigate(`/work/${name}/${title}`);
   };
 
   return (

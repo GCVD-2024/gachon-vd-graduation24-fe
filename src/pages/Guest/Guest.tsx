@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import background from '../../assets/img/background.png';
+
 import GuestBook from './components/GuestBook';
 
 const Guest = () => {
   const [guestEntries, setGuestEntries] = useState<string[]>([
     '정말 좋은 출연진이었습니다. 특히 저는 김도연님 작품이 가장 기억에 남네요.',
   ]);
+
   const [inputValue, setInputValue] = useState<string>('');
   const [nameValue, setNameValue] = useState<string>('');
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
-  const [randomAngles, setRandomAngles] = useState<number[]>([]); // 각도를 저장하는 상태
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.name === 'comment') {
@@ -22,15 +23,10 @@ const Guest = () => {
 
   const handleSubmit = () => {
     if (inputValue.trim() && nameValue.trim()) {
-      // 이름과 댓글을 함께 표시
       setGuestEntries([...guestEntries, `${nameValue}: ${inputValue.trim()}`]);
 
-      // 랜덤 각도 생성 (-45도에서 45도 사이)
-      const randomAngle = Math.random() * 90 - 45;
-      setRandomAngles([...randomAngles, randomAngle]);
-
-      setInputValue('');
-      setNameValue('');
+      setInputValue(''); // Clear the input field
+      setNameValue(''); // Clear the input field
 
       // Trigger the animation
       setIsAnimating(true);
@@ -45,7 +41,7 @@ const Guest = () => {
   return (
     <GuestPage>
       <img src={background} alt="background" />
-      <GuestBook entries={guestEntries} angles={randomAngles} />
+      <GuestBook entries={guestEntries} />
 
       <ComentContainer>
         <h1>WHAT DID YOU DIG ?</h1>
@@ -97,11 +93,11 @@ const TextInputContainer = styled.article`
 `;
 
 const GuestPage = styled.main`
-  width: 100vw;
-  height: calc(100vh - 73px);
+  width: 100vw; /* Ensure full viewport width */
+  height: calc(100vh - 73px); /* Ensure full height minus any navbar/header */
   background: radial-gradient(41.45% 43.19% at 50% 50%, #6c2519 0%, #000 100%);
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-x: hidden; /* Prevent horizontal overflow of the page itself */
+  overflow-y: hidden; /* Prevent vertical overflow of the page */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -111,6 +107,7 @@ const GuestPage = styled.main`
     text-align: center;
     text-shadow: 0px -4px 10px rgba(92, 37, 37, 0.3);
     font-size: 100px;
+    font-style: normal;
     font-weight: 900;
     color: ${({ theme }) => theme.colors.primary};
     line-height: 100%;
@@ -121,9 +118,31 @@ const GuestPage = styled.main`
     width: 100vw;
     height: calc(100vh - 73px);
     object-fit: cover;
-    z-index: 0;
+    z-index: 0; /* Ensure the image is behind content */
   }
 `;
+
+// const GuestPage = styled.main`
+//   width: 100dvw;
+//   height: calc(100vh - 73px);
+//   background: radial-gradient(41.45% 43.19% at 50% 50%, #6c2519 0%, #000 100%);
+
+//   h1 {
+//     text-align: center;
+//     text-shadow: 0px -4px 10px rgba(92, 37, 37, 0.3);
+//     font-size: 100px;
+//     font-style: normal;
+//     font-weight: 900;
+//     color: ${({ theme }) => theme.colors.primary};
+//     line-height: 100%;
+//   }
+
+//   img {
+//     position: absolute;
+//     width: 100vw;
+//     height: calc(100vh - 73px);
+//   }
+// `;
 
 const TextContainer = styled.section`
   display: flex;
@@ -132,6 +151,7 @@ const TextContainer = styled.section`
   width: 100%;
 `;
 
+// Define keyframes for animation
 const expandCircle = keyframes`
   0% {
     width: 160px;
@@ -139,7 +159,7 @@ const expandCircle = keyframes`
     border-radius: 50%;
   }
   50% {
-    width: 300px;
+    width: 300px; /* Elongated shape */
     height: 100px;
     border-radius: 50px;
   }
@@ -150,6 +170,7 @@ const expandCircle = keyframes`
   }
 `;
 
+// Styled component with conditional animation
 const SubmitButton = styled.button<{ isAnimating: boolean }>`
   width: 160px;
   height: 160px;
@@ -164,11 +185,14 @@ const SubmitButton = styled.button<{ isAnimating: boolean }>`
   align-items: center;
   justify-content: center;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
   font-size: 30px;
+  font-style: normal;
   font-weight: 900;
   line-height: 120%;
   transition: background-color 0.3s ease;
 
+  // Apply animation when isAnimating is true
   animation: ${({ isAnimating }) => (isAnimating ? expandCircle : 'none')} 1s ease;
 
   &:hover {
@@ -197,6 +221,7 @@ const NameInput = styled.input`
 `;
 const TextInput = styled.input`
   display: flex;
+
   font-size: 18px;
   height: 100%;
   color: white;

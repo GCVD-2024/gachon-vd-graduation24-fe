@@ -5,12 +5,16 @@ import { WorkListResponseType } from '../../../types/types';
 
 interface ExhibitionSectionProps {
   data: WorkListResponseType | undefined;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const ExhibitionSection = ({ data }: ExhibitionSectionProps) => {
+const ExhibitionSection = ({ data, currentPage, setCurrentPage }: ExhibitionSectionProps) => {
   if (!data) {
     throw new Error('[에러] 작품리스트 데이터가 없습니다.');
   }
+  setCurrentPage(data.result.currentPage);
+
   return (
     <ExhibitionWrapper>
       {data.result.works.map((work) => (

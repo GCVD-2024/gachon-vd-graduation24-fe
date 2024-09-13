@@ -17,7 +17,7 @@ function Work() {
         <title>Digging Club - Work</title>
       </Helmet>
       <CategoriesSection category={category} setCategory={setCategory} />
-      <ExhibitionSection data={data} />
+      <ExhibitionSection data={data} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
     </WorkPage>
   );
 }

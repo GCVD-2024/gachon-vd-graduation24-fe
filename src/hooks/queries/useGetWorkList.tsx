@@ -1,11 +1,27 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { get } from '../../api/api';
-import { WorkListRequestType, WorkListResponseType } from '../../types/types';
+import { WorkListRequestType, WorkListResponseType, WorkListType } from '../../types/types';
 
 export const useGetWorkList = ({ category, currentPage }: WorkListRequestType) => {
-  return useSuspenseQuery<WorkListResponseType>({
-    queryKey: ['works', category, currentPage],
-    queryFn: () =>
-      get<WorkListResponseType>(`work?category=${category}&currentPage=${currentPage}`),
+  const { data, hasNextPage, fetchNextPage } = useInfiniteQuery({
+    queryKey: ['works', category],
+    queryFn: ({ pageParam = currentPage }) => getWorkList(category, pageParam),
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.length === 10 ? allPages.length + 1 : null;
+    },
+    initialPageParam: 1,
+    select: (data) => ({
+      pages: data?.pages.flatMap((page) => page),
+      pageParams: data.pageParams,
+    }),
   });
+
+  return { data, hasNextPage, fetchNextPage };
+};
+
+const getWorkList = async (category: string, currentPage: number) => {
+  const res = await get<WorkListResponseType>(
+    `work?category=${category}&currentPage=${currentPage}`
+  );
+  return res.result.works as WorkListType[];
 };

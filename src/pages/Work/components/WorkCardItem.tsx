@@ -6,16 +6,22 @@ interface CardInfoProps {
   name: string;
   title: string;
   imgUrl: string;
+  isLastItem: boolean;
+  setTarget: React.Dispatch<React.SetStateAction<HTMLDivElement | null | undefined>>;
 }
 
-const WorkCardItem = ({ name, title, imgUrl }: CardInfoProps) => {
+const WorkCardItem = ({ name, title, imgUrl, isLastItem, setTarget }: CardInfoProps) => {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/work/${name}/${title}`);
   };
 
   return (
-    <WorkCardItemWrapper onClick={handleClick} imgUrl={imgUrl}>
+    <WorkCardItemWrapper
+      onClick={handleClick}
+      imgUrl={imgUrl}
+      ref={isLastItem ? setTarget : undefined}
+    >
       <ItemSpan>{name}</ItemSpan>
       <ItemSpan>{title}</ItemSpan>
     </WorkCardItemWrapper>
@@ -25,14 +31,17 @@ const WorkCardItem = ({ name, title, imgUrl }: CardInfoProps) => {
 export default WorkCardItem;
 
 const WorkCardItemWrapper = styled.div<{ imgUrl?: string }>`
-  width: 600px;
-  height: 337px;
+  width: 466px;
+  height: 262px;
+  flex-shrink: 0;
   padding: 27.85px 27.91px;
 
   display: flex;
   flex-direction: column;
   justify-content: end;
   row-gap: 11.14px;
+
+  border: 2px solid white;
 
   background-color: gray;
   background-image: ${({ imgUrl }) => imgUrl || ''};

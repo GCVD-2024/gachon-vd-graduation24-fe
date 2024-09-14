@@ -8,16 +8,17 @@ import { Category } from '../../types/types';
 
 function Work() {
   const [category, setCategory] = useState<Category>('ALL');
-  const [currentPage, setCurrentPage] = useState(1);
-  const { data } = useGetWorkList({ category, currentPage });
+  const { data, hasNextPage, fetchNextPage } = useGetWorkList({ category, currentPage: 1 });
 
   return (
     <WorkPage>
       <Helmet>
         <title>Digging Club - Work</title>
       </Helmet>
-      <CategoriesSection category={category} setCategory={setCategory} />
-      <ExhibitionSection data={data} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
+      <div>
+        <CategoriesSection category={category} setCategory={setCategory} />
+        <ExhibitionSection data={data} hasNextPage={hasNextPage} fetchNextPage={fetchNextPage} />
+      </div>
     </WorkPage>
   );
 }
@@ -28,7 +29,6 @@ const WorkPage = styled.div`
   width: 100%;
 
   display: flex;
-  column-gap: 248px;
   justify-content: center;
 
   padding: 80px 0 104px 0;

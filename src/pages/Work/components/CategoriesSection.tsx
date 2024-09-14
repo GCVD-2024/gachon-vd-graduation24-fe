@@ -1,13 +1,17 @@
 import { styled } from 'styled-components';
 import { Category } from '../../../types/types';
 import { CATEGORIES } from '../../../constants/constants';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface CategoriesSectionProps {
   category: Category;
   setCategory: React.Dispatch<React.SetStateAction<Category>>;
 }
 const CategoriesSection = ({ category, setCategory }: CategoriesSectionProps) => {
+  const queryClient = useQueryClient();
+
   const handleClick = (name: Category) => {
+    queryClient.removeQueries({ queryKey: ['works'] });
     setCategory(name);
   };
 
@@ -25,8 +29,11 @@ const CategoriesSection = ({ category, setCategory }: CategoriesSectionProps) =>
 export default CategoriesSection;
 
 const CategoriesWrapper = styled.section`
+  position: fixed;
+
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   row-gap: 60px;
 `;
 
@@ -37,3 +44,4 @@ const CategoriesItem = styled.span<{ selected: boolean }>`
 
   cursor: pointer;
 `;
+1920;

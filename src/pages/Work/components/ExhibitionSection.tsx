@@ -1,36 +1,59 @@
 import { styled } from 'styled-components';
 import WorkCardItem from './WorkCardItem';
 // import { MOCK_DATA } from '../../../constants/constants';
-import { WorkListResponseType } from '../../../types/types';
+import { WorkListType } from '../../../types/types';
+import { useIntersectionObserver } from '../../../hooks/useIntersectionObserver';
+import { InfiniteQueryObserverResult } from '@tanstack/react-query';
 
 interface ExhibitionSectionProps {
-  data: WorkListResponseType | undefined;
-  currentPage: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  data:
+    | {
+        pages: WorkListType[];
+        pageParams: number[];
+      }
+    | undefined;
+  hasNextPage: boolean;
+  fetchNextPage: () => Promise<InfiniteQueryObserverResult>;
 }
 
-const ExhibitionSection = ({ data, currentPage, setCurrentPage }: ExhibitionSectionProps) => {
-  if (!data) {
-    throw new Error('[에러] 작품리스트 데이터가 없습니다.');
+const ExhibitionSection = ({ data, hasNextPage, fetchNextPage }: ExhibitionSectionProps) => {
+  if (!data?.pages) {
+    return <ExhibitionWrapper />;
   }
-  setCurrentPage(data.result.currentPage);
 
+  // intersectionObserver 호출
+  const { setTarget } = useIntersectionObserver({
+    hasNextPage,
+    fetchNextPage,
+  });
+
+  console.log('data', data);
   return (
     <ExhibitionWrapper>
-      {data.result.works.map((work) => (
-        <WorkCardItem name={work.studentName} title={work.title} imgUrl={work.thumbnailUrl} />
-      ))}
+      {data.pages.map((work, index) => {
+        const isLastItem = index === data.pages.length - 1;
+        return (
+          <WorkCardItem
+            name={work.studentName}
+            title={work.title}
+            imgUrl={work.thumbnailUrl}
+            isLastItem={isLastItem}
+            setTarget={setTarget}
+          />
+        );
+      })}
     </ExhibitionWrapper>
   );
 };
 
 export default ExhibitionSection;
 
-const ExhibitionWrapper = styled.section`
-  width: 1220px;
+const ExhibitionWrapper = styled.div`
+  width: 950px;
+  margin-left: 33.85%;
 
   display: grid;
-  grid-template-rows: repeat(7, 1fr);
+  grid-template-rows: repeat(5, 1fr);
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 `;

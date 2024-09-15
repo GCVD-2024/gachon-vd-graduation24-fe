@@ -15,7 +15,7 @@ const WorkDetail = () => {
   const { data } = useGetWorkDetail({ name, title });
   const result = data?.result;
   if (!result) {
-    return <div>[에러 발생]작품 데이터가 존재하지 않습니다.</div>;
+    return <WorkDetailPage />;
   }
 
   return (

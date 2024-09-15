@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import '../../../styles/animations.css';
+import { usePrefetchWorkDetail } from '../../../hooks/queries/usePrefetchWorkDetail';
 
 interface CardInfoProps {
   name: string;
@@ -12,7 +13,10 @@ interface CardInfoProps {
 
 const WorkCardItem = ({ name, title, imgUrl, isLastItem, setTarget }: CardInfoProps) => {
   const navigate = useNavigate();
+  const { prefetchWorkDetail } = usePrefetchWorkDetail();
+
   const handleClick = () => {
+    prefetchWorkDetail(name, title);
     navigate(`/work/${name}/${title}`);
   };
 

@@ -8,7 +8,10 @@ import { Category } from '../../types/types';
 
 function Work() {
   const [category, setCategory] = useState<Category>('ALL');
-  const { data, hasNextPage, fetchNextPage } = useGetWorkList({ category, currentPage: 1 });
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage } = useGetWorkList({
+    category,
+    currentPage: 1,
+  });
 
   return (
     <WorkPage>
@@ -17,7 +20,12 @@ function Work() {
       </Helmet>
       <div>
         <CategoriesSection category={category} setCategory={setCategory} />
-        <ExhibitionSection data={data} hasNextPage={hasNextPage} fetchNextPage={fetchNextPage} />
+        <ExhibitionSection
+          data={data}
+          hasNextPage={hasNextPage}
+          fetchNextPage={fetchNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+        />
       </div>
     </WorkPage>
   );

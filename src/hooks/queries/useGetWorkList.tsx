@@ -3,8 +3,8 @@ import { get } from '../../api/api';
 import { WorkListRequestType, WorkListResponseType, WorkListType } from '../../types/types';
 
 export const useGetWorkList = ({ category, currentPage }: WorkListRequestType) => {
-  const { data, hasNextPage, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['works', category],
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
+    queryKey: ['works', category, currentPage],
     queryFn: ({ pageParam = currentPage }) => getWorkList(category, pageParam),
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.length === 10 ? allPages.length + 1 : null;
@@ -16,7 +16,7 @@ export const useGetWorkList = ({ category, currentPage }: WorkListRequestType) =
     }),
   });
 
-  return { data, hasNextPage, fetchNextPage };
+  return { data, hasNextPage, fetchNextPage, isFetchingNextPage };
 };
 
 const getWorkList = async (category: string, currentPage: number) => {

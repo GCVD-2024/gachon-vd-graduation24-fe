@@ -1,13 +1,21 @@
 import { styled } from 'styled-components';
+import { Category } from '../../../types/types';
 import { CATEGORIES } from '../../../constants/constants';
-import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { usePrefetchWorkList } from '../../../hooks/queries/usePrefetchWorkList';
+import { WORK_KEYS } from '../../../constants/QueryKey';
 
-type Category = (typeof CATEGORIES)[number];
-
-const CategoriesSection = () => {
-  const [category, setCategory] = useState<Category>('ALL');
+interface CategoriesSectionProps {
+  category: Category;
+  setCategory: React.Dispatch<React.SetStateAction<Category>>;
+}
+const CategoriesSection = ({ category, setCategory }: CategoriesSectionProps) => {
+  const queryClient = useQueryClient();
+  const { prefetchWorkList } = usePrefetchWorkList();
 
   const handleClick = (name: Category) => {
+    queryClient.removeQueries({ queryKey: WORK_KEYS.all });
+    prefetchWorkList(category, 1);
     setCategory(name);
   };
 
@@ -25,8 +33,11 @@ const CategoriesSection = () => {
 export default CategoriesSection;
 
 const CategoriesWrapper = styled.section`
+  position: fixed;
+
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   row-gap: 60px;
 `;
 
@@ -37,3 +48,4 @@ const CategoriesItem = styled.span<{ selected: boolean }>`
 
   cursor: pointer;
 `;
+1920;

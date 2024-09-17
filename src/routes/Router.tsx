@@ -4,6 +4,7 @@ import Work from '../pages/Work/Work';
 import Guest from '../pages/Guest/Guest';
 import App from '../App';
 import WorkDetail from '../pages/Work/WorkDetail';
+import DelayRouteWrapper from '../pages/DelayRouteWrapper';
 
 const router = createBrowserRouter([
   {
@@ -16,12 +17,19 @@ const router = createBrowserRouter([
       },
       {
         path: 'work',
-        element: <Work />,
+        element: (
+          <DelayRouteWrapper>
+            <Work />
+          </DelayRouteWrapper>
+        ),
       },
       {
-        // 서버 연결 후 삭제 예정
-        path: 'detail',
-        element: <WorkDetail />,
+        path: 'work/:name/:title',
+        element: (
+          <DelayRouteWrapper>
+            <WorkDetail />
+          </DelayRouteWrapper>
+        ),
       },
       {
         path: 'guest',

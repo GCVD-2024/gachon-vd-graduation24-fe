@@ -1,13 +1,14 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { get } from '../../api/api';
 import { WorkListResponseType, WorkListType } from '../../types/types';
+import { WORK_KEYS } from '../../constants/QueryKey';
 
 export const usePrefetchWorkList = () => {
   const queryClient = useQueryClient();
 
   const prefetchWorkList = async (category: string, page: number) => {
     await queryClient.prefetchQuery({
-      queryKey: ['works', category, page],
+      queryKey: WORK_KEYS.list(category, page),
       queryFn: () => getWorkList(category, page),
     });
   };

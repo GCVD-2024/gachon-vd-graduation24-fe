@@ -3,6 +3,7 @@ import { Category } from '../../../types/types';
 import { CATEGORIES } from '../../../constants/constants';
 import { useQueryClient } from '@tanstack/react-query';
 import { usePrefetchWorkList } from '../../../hooks/queries/usePrefetchWorkList';
+import { WORK_KEYS } from '../../../constants/QueryKey';
 
 interface CategoriesSectionProps {
   category: Category;
@@ -13,7 +14,7 @@ const CategoriesSection = ({ category, setCategory }: CategoriesSectionProps) =>
   const { prefetchWorkList } = usePrefetchWorkList();
 
   const handleClick = (name: Category) => {
-    queryClient.removeQueries({ queryKey: ['works'] });
+    queryClient.removeQueries({ queryKey: WORK_KEYS.all });
     prefetchWorkList(category, 1);
     setCategory(name);
   };

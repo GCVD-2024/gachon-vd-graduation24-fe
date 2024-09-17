@@ -1,10 +1,11 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { get } from '../../api/api';
 import { WorkListRequestType, WorkListResponseType, WorkListType } from '../../types/types';
+import { WORK_KEYS } from '../../constants/QueryKey';
 
 export const useGetWorkList = ({ category, currentPage }: WorkListRequestType) => {
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: ['works', category, currentPage],
+    queryKey: WORK_KEYS.list(category, currentPage),
     queryFn: ({ pageParam = currentPage }) => getWorkList(category, pageParam),
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.length === 10 ? allPages.length + 1 : null;

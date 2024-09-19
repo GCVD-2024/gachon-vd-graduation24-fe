@@ -21,20 +21,22 @@ const WorkDetail = () => {
 
   return (
     <WorkDetailPage>
-      <YouTube
-        // videoId={key}
-        opts={{
-          width: '1220',
-          height: '686',
-          playerVars: {
-            autoplay: 1,
-            rel: 0,
-            modestbranding: 1,
-          },
-        }}
-      />
       <WorkInfoSection data={result} />
-      <WorkImg src={result.detailArtUrl || ''} alt={title || '작품-이미지'} />
+      <WorkDetailContent>
+        <YouTube
+          videoId={'RZ1E1itFAkE'}
+          opts={{
+            width: '1220',
+            height: '686',
+            playerVars: {
+              autoplay: 1,
+              rel: 0,
+              modestbranding: 1,
+            },
+          }}
+        />
+        <WorkImg src={result.detailArtUrl || ''} alt={title || '작품-이미지'} />
+      </WorkDetailContent>
     </WorkDetailPage>
   );
 };
@@ -49,6 +51,11 @@ const WorkDetailPage = styled.div`
   justify-content: center;
 
   column-gap: 40px;
+`;
+
+const WorkDetailContent = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const WorkImg = styled.img`

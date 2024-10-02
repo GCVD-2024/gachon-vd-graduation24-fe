@@ -18,16 +18,17 @@ const WorkDetail = () => {
   if (!result) {
     return <WorkDetailPage />;
   }
-
+  console.log('DATA', result);
+  // console.log('유튜브 링크', result.videoUrl);
   return (
     <WorkDetailPage>
       <WorkInfoSection data={result} />
       <WorkDetailContent>
         <YouTube
-          videoId={'RZ1E1itFAkE'}
+          videoId={result.videoUrl}
           opts={{
-            width: '1220',
-            height: '686',
+            width: '950',
+            height: '534',
             playerVars: {
               autoplay: 1,
               rel: 0,
@@ -44,7 +45,7 @@ const WorkDetail = () => {
 export default WorkDetail;
 
 const WorkDetailPage = styled.div`
-  padding-top: 80px;
+  padding-top: 60px;
   padding-bottom: 104px;
 
   display: flex;
@@ -54,6 +55,7 @@ const WorkDetailPage = styled.div`
 `;
 
 const WorkDetailContent = styled.div`
+  margin-top: 33px;
   display: flex;
   flex-direction: column;
 `;

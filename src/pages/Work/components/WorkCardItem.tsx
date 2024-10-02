@@ -25,10 +25,7 @@ const WorkCardItem = ({ name, title, imgUrl, isLastItem, setTarget }: CardInfoPr
       onClick={handleClick}
       imgUrl={imgUrl}
       ref={isLastItem ? setTarget : undefined}
-    >
-      <ItemSpan>{name}</ItemSpan>
-      <ItemSpan>{title}</ItemSpan>
-    </WorkCardItemWrapper>
+    ></WorkCardItemWrapper>
   );
 };
 
@@ -48,7 +45,7 @@ const WorkCardItemWrapper = styled.div<{ imgUrl?: string }>`
   border: 2px solid white;
 
   background-color: gray;
-  background-image: ${({ imgUrl }) => imgUrl || ''};
+  background-image: ${({ imgUrl }) => (imgUrl ? `url(${imgUrl})` : '')};
   background-size: cover;
   background-position: center;
 

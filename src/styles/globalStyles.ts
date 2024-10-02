@@ -18,9 +18,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     border: 0;
-
     font-size: 62.5%;
-
   }
 
   /* HTML5 display-role reset for older browsers */
@@ -48,7 +46,6 @@ const GlobalStyle = createGlobalStyle`
     border-spacing: 0;
   }
 
-  /* Additional global styles */
   * {
     box-sizing: border-box;
   }
@@ -59,8 +56,8 @@ const GlobalStyle = createGlobalStyle`
     /* 폰트 */
     color: #FFFFFF;
     font-family: 'Pretendard';
-
-    background-color: black;
+    -webkit-text-size-adjust: 100%;
+    background-color: #121212;
   }
 
   a {

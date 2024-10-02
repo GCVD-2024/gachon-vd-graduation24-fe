@@ -34,11 +34,11 @@ const ButtonWrapper = styled.button`
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 160px;
-  height: 160px;
-  background-color: #e44227;
+  width: 70px;
+  height: 70px;
+  background-color: #00B4DB;
   color: #fff;
-  font-size: 36px;
+  font-size: 16px;
   font-weight: 900;
   border-radius: 50%;
   display: flex;
@@ -51,6 +51,8 @@ const ButtonWrapper = styled.button`
   transition: background-color 0.2s, opacity 0.5s, transform 0.5s;
 
   &:hover {
-    transform: scale(1.05) translateY(-5px);
+    background-color: transparent;
+    border: 3px solid #00B4DB;
+    color: #00B4DB;
   }
 `;

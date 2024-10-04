@@ -1,28 +1,20 @@
 import styled from 'styled-components';
+import { WorkDetailType } from '../../../types/types';
+interface WorkInfoSectionProps {
+  data: WorkDetailType;
+}
 
-const WorkInfoSection = () => {
+const WorkInfoSection = ({ data }: WorkInfoSectionProps) => {
   return (
     <WorkInfoWrapper>
-      <WorkCategory>UX/UI</WorkCategory>
+      <WorkCategory>{data.category}</WorkCategory>
       <WorkAuthorInfo>
-        <AuthorSpan>김가천</AuthorSpan>
-        <AuthorSpan>202412345</AuthorSpan>
+        <AuthorSpan>{data.studentName}</AuthorSpan>
+        <AuthorSpan>{data.studentId}</AuthorSpan>
       </WorkAuthorInfo>
-      <WorkTitle>제목 : 내가 뭘 한 거지</WorkTitle>
-      <WorkBody>
-        나도 내가 멀 한건지 모르겠다. 졸업을 하고 싶다.나도 내가 멀 한건지 모르겠다. 졸업을 하고
-        싶다.나도 내가 멀 한건지 모르겠다. 졸업을 하고 싶다.나도 내가 멀 한건지 모르겠다. 졸업을
-        하고 싶다.나도 내가 멀 한건지 모르겠다. 졸업을 하고 싶다.나도 내가 멀 한건지 모르겠다.
-        졸업을 하고 싶다.나도 내가 멀 한건지 모르겠다. 졸업을 하고 싶다.나도 내가 멀 한건지
-        모르겠다. 졸업을 하고 싶다.나도 내가 멀 한건지 모르겠다. 졸업을 하고 싶다.나도 내가 멀
-        한건지 모르겠다. 졸업을 하고 싶다.나도 내가 멀 한건지 모르겠다. 졸업을 하고 싶다.나도 내가
-        멀 한건지 모르겠다. 졸업을 하고 싶다.나도 내가 멀 한건지 모르겠다. 졸업을 하고 싶다.나도
-        내가 멀 한건지 모르겠다. 졸업을 하고 싶다.나도 내가 멀 한건지 모르겠다. 졸업을 하고
-        싶다.나도 내가 멀 한건지 모르겠다. 졸업을 하고 싶다.나도 내가 멀 한건지 모르겠다. 졸업을
-        하고 싶다.나도 내가 멀 한건지 모르겠다. 졸업을 하고 싶다.나도 내가 멀 한건지 모르겠다.
-        졸업을 하고 싶다.나도 내가 멀 한건지 모르겠다. 졸업을 하고 싶다.나도 내가 멀 한건지
-        모르겠다. 졸업을 하고 싶다.나도 내가 멀 한건지
-      </WorkBody>
+      <WorkTitle>제목 : {data.title}</WorkTitle>
+      <WorkSubtitle>{data.subtitle}</WorkSubtitle>
+      <WorkBody>{data.description}</WorkBody>
     </WorkInfoWrapper>
   );
 };
@@ -62,8 +54,14 @@ const WorkTitle = styled.span`
   font-size: 32px;
   line-height: 120%;
 `;
+const WorkSubtitle = styled.span`
+  margin-bottom: 30px;
+
+  font-size: 16px;
+  line-height: 120%;
+`;
 
 const WorkBody = styled.span`
-  font-size: 20px;
+  font-size: 16px;
   line-height: 140%;
 `;

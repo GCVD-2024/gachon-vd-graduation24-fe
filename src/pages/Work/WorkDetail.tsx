@@ -1,11 +1,42 @@
 import styled from 'styled-components';
 import WorkInfoSection from './components/WorkInfoSection';
+import YouTube from 'react-youtube';
+import { useGetWorkDetail } from '../../hooks/queries/useGetWorkDetail';
+import { useParams } from 'react-router-dom';
 
 const WorkDetail = () => {
+  const params = useParams();
+  const name = params.name;
+  const title = params.title;
+
+  if (!name || !title) {
+    throw new Error('[에러 발생]작품명이나 작가 이름값이 존재하는지 확인하세요.');
+  }
+
+  const { data } = useGetWorkDetail({ name, title });
+  const result = data?.result;
+  if (!result) {
+    return <WorkDetailPage />;
+  }
+
   return (
     <WorkDetailPage>
-      <WorkInfoSection />
-      <WorkImg src="" alt="작품-이미지" />
+      <WorkInfoSection data={result} />
+      <WorkDetailContent>
+        <YouTube
+          videoId={'RZ1E1itFAkE'}
+          opts={{
+            width: '1220',
+            height: '686',
+            playerVars: {
+              autoplay: 1,
+              rel: 0,
+              modestbranding: 1,
+            },
+          }}
+        />
+        <WorkImg src={result.detailArtUrl || ''} alt={title || '작품-이미지'} />
+      </WorkDetailContent>
     </WorkDetailPage>
   );
 };
@@ -22,9 +53,14 @@ const WorkDetailPage = styled.div`
   column-gap: 40px;
 `;
 
+const WorkDetailContent = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const WorkImg = styled.img`
-  width: 1220px;
-  min-height: 823px;
+  width: 950px;
+  min-height: 838px;
 
   object-fit: cover;
   background-color: gray;

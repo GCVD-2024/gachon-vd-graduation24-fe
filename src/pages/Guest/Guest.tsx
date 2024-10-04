@@ -1,50 +1,70 @@
 import React, { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
-import background from '../../assets/img/background.png';
-
-import GuestBook from './components/GuestBook';
+import styled, { keyframes, css } from 'styled-components';
+import background from '../../assets/img/bg_guest.png';
+import { useGetGuestBookList } from '../../hooks/queries/guestBook/useGetGuestBook';
+import { IGuestBookData, usePostGuestBook } from '../../hooks/mutations/guestBook/usePostGuestBook';
+import { GUEST_KEYS } from '../../constants/QueryKey';
+import queryClient from '../../api/queyrCLient';
 
 const Guest = () => {
-  const [guestEntries, setGuestEntries] = useState<string[]>([
-    '정말 좋은 출연진이었습니다. 특히 저는 김도연님 작품이 가장 기억에 남네요.',
-  ]);
+  const guestBook = useGetGuestBookList();
+  const { GuestBookMutation } = usePostGuestBook();
+  console.log('✅', guestBook);
 
-  const [inputValue, setInputValue] = useState<string>('');
   const [nameValue, setNameValue] = useState<string>('');
-  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const [commentValue, setCommentValue] = useState<string>('');
+  const [circles, setCircles] = useState<
+    { id: number; text: string; position: { top: string; left: string }; animate: boolean }[]
+  >([]);
+  const [circleId, setCircleId] = useState<number>(0);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.name === 'comment') {
-      setInputValue(event.target.value);
-    } else if (event.target.name === 'name') {
-      setNameValue(event.target.value);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === 'name') setNameValue(value);
+    if (name === 'comment') setCommentValue(value);
+  };
+
+  const handleSubmit = async () => {
+    // 방명록 데이터 객체 생성
+    const newGuestBookData: IGuestBookData = {
+      nickname: nameValue,
+      content: commentValue,
+    };
+
+    // GuestBookMutation을 사용하여 데이터 전송
+    try {
+      await GuestBookMutation.mutateAsync(newGuestBookData);
+      const newCircle = {
+        id: circleId,
+        text: `${nameValue}: ${commentValue}`,
+        position: randomPosition(),
+        animate: true, // 애니메이션 활성화
+      };
+
+      setCircles([...circles, newCircle]);
+      setCircleId(circleId + 1);
+      setNameValue(''); // 입력 초기화
+      setCommentValue(''); // 입력 초기화
+
+      queryClient.invalidateQueries({
+        queryKey: GUEST_KEYS.all,
+      });
+    } catch (error) {
+      console.error('Error posting guest book:', error);
     }
   };
 
-  const handleSubmit = () => {
-    if (inputValue.trim() && nameValue.trim()) {
-      setGuestEntries([...guestEntries, `${nameValue}: ${inputValue.trim()}`]);
-
-      setInputValue(''); // Clear the input field
-      setNameValue(''); // Clear the input field
-
-      // Trigger the animation
-      setIsAnimating(true);
-
-      // Reset animation after it completes
-      setTimeout(() => {
-        setIsAnimating(false);
-      }, 1000); // Duration should match animation duration
-    }
+  const randomPosition = () => {
+    const top = `${Math.random() * 80 + 10}%`; // 10% ~ 90% 사이의 값
+    const left = `${Math.random() * 80 + 10}%`; // 10% ~ 90% 사이의 값
+    return { top, left };
   };
 
   return (
     <GuestPage>
       <img src={background} alt="background" />
-      <GuestBook entries={guestEntries} />
 
       <ComentContainer>
-        <h1>WHAT DID YOU DIG ?</h1>
         <TextContainer>
           <TextInputContainer>
             <NameInput
@@ -57,30 +77,76 @@ const Guest = () => {
             <TextInput
               name="comment"
               type="text"
-              value={inputValue}
+              value={commentValue}
               onChange={handleInputChange}
               placeholder="댓글을 입력하세요"
             />
           </TextInputContainer>
 
-          <SubmitButton onClick={handleSubmit} isAnimating={isAnimating}>
-            DIGGING!
-          </SubmitButton>
+          <SubmitButton onClick={handleSubmit}>DIGGING!</SubmitButton>
         </TextContainer>
       </ComentContainer>
+
+      {circles.map((circle) => (
+        <Circle
+          key={circle.id}
+          style={{ top: circle.position.top, left: circle.position.left }}
+          animate={circle.animate}
+        >
+          {circle.text}
+        </Circle>
+      ))}
     </GuestPage>
   );
 };
 
 export default Guest;
 
+// 애니메이션 정의
+const shootUp = keyframes`
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 1;
+  }
+`;
+
+const Circle = styled.div<{ animate: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 1px solid ${({ theme }) => theme.colors.primaryBlue};
+  background: radial-gradient(50% 50% at 50% 50%, #8eebff 23%, #fff 118%);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  z-index: 10;
+
+  ${({ animate }) =>
+    animate &&
+    css`
+      animation: ${shootUp} 1s ease-out forwards;
+    `}; // css 헬퍼로 감싸서 애니메이션 적용
+`;
+
 const ComentContainer = styled.article`
   display: flex;
   flex-direction: column;
   position: fixed;
   gap: 0.5rem;
-  padding-bottom: 5%;
-  min-width: 1050px;
+  padding-bottom: 3%;
+  min-width: 700px;
   left: 50%;
   transform: translateX(-50%);
   bottom: 0;
@@ -93,11 +159,11 @@ const TextInputContainer = styled.article`
 `;
 
 const GuestPage = styled.main`
-  width: 100vw; /* Ensure full viewport width */
-  height: calc(100vh - 73px); /* Ensure full height minus any navbar/header */
-  background: radial-gradient(41.45% 43.19% at 50% 50%, #6c2519 0%, #000 100%);
-  overflow-x: hidden; /* Prevent horizontal overflow of the page itself */
-  overflow-y: hidden; /* Prevent vertical overflow of the page */
+  width: 100vw;
+  height: calc(100vh - 73px);
+  background: radial-gradient(41.45% 43.19% at 50% 50%, #00b4db 0%, #000 100%);
+  overflow-x: hidden;
+  overflow-y: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -109,7 +175,7 @@ const GuestPage = styled.main`
     font-size: 100px;
     font-style: normal;
     font-weight: 900;
-    color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.primaryBlue};
     line-height: 100%;
   }
 
@@ -118,31 +184,9 @@ const GuestPage = styled.main`
     width: 100vw;
     height: calc(100vh - 73px);
     object-fit: cover;
-    z-index: 0; /* Ensure the image is behind content */
+    z-index: 0;
   }
 `;
-
-// const GuestPage = styled.main`
-//   width: 100dvw;
-//   height: calc(100vh - 73px);
-//   background: radial-gradient(41.45% 43.19% at 50% 50%, #6c2519 0%, #000 100%);
-
-//   h1 {
-//     text-align: center;
-//     text-shadow: 0px -4px 10px rgba(92, 37, 37, 0.3);
-//     font-size: 100px;
-//     font-style: normal;
-//     font-weight: 900;
-//     color: ${({ theme }) => theme.colors.primary};
-//     line-height: 100%;
-//   }
-
-//   img {
-//     position: absolute;
-//     width: 100vw;
-//     height: calc(100vh - 73px);
-//   }
-// `;
 
 const TextContainer = styled.section`
   display: flex;
@@ -151,31 +195,11 @@ const TextContainer = styled.section`
   width: 100%;
 `;
 
-// Define keyframes for animation
-const expandCircle = keyframes`
-  0% {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-  }
-  50% {
-    width: 300px; /* Elongated shape */
-    height: 100px;
-    border-radius: 50px;
-  }
-  100% {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-  }
-`;
-
-// Styled component with conditional animation
-const SubmitButton = styled.button<{ isAnimating: boolean }>`
-  width: 160px;
+const SubmitButton = styled.button`
+  width: 170px;
   height: 160px;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.primary};
+  background-color: ${({ theme }) => theme.colors.primaryBlue};
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -192,11 +216,8 @@ const SubmitButton = styled.button<{ isAnimating: boolean }>`
   line-height: 120%;
   transition: background-color 0.3s ease;
 
-  // Apply animation when isAnimating is true
-  animation: ${({ isAnimating }) => (isAnimating ? expandCircle : 'none')} 1s ease;
-
   &:hover {
-    background-color: #e63946;
+    background-color: ${({ theme }) => theme.colors.primaryBlue};
   }
 `;
 
@@ -215,10 +236,11 @@ const NameInput = styled.input`
   }
 
   &:focus {
-    border-color: ${({ theme }) => theme.colors.primary};
-    box-shadow: 0 0 5px ${({ theme }) => theme.colors.primary};
+    border-color: ${({ theme }) => theme.colors.primaryBlue};
+    box-shadow: 0 0 5px ${({ theme }) => theme.colors.primaryBlue};
   }
 `;
+
 const TextInput = styled.input`
   display: flex;
 

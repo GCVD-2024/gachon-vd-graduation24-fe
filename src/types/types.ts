@@ -9,6 +9,16 @@ export interface ResponseType<T = Record<string, object>> {
   result: T;
 }
 
+export interface guestbooks {
+  nickname: string;
+  content: string;
+  createdAt: string;
+}
+
+export type GuestBookListResponseType = ResponseType<{
+  guest: guestbooks[];
+}>;
+
 export type WorkListRequestType = {
   category: Category;
   currentPage: number;

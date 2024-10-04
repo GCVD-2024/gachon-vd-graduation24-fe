@@ -4,7 +4,6 @@ import background from '../../assets/img/bg_guest.png';
 import { useGetGuestBookList } from '../../hooks/queries/guestBook/useGetGuestBook';
 import { IGuestBookData, usePostGuestBook } from '../../hooks/mutations/guestBook/usePostGuestBook';
 import { GUEST_KEYS } from '../../constants/QueryKey';
-import queryClient from '../../api/queyrCLient';
 
 const Guest = () => {
   const guestBook = useGetGuestBookList();

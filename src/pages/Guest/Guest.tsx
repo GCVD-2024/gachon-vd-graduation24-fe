@@ -8,7 +8,6 @@ import { GUEST_KEYS } from '../../constants/QueryKey';
 const Guest = () => {
   const guestBook = useGetGuestBookList();
   const { GuestBookMutation } = usePostGuestBook();
-  console.log('✅', guestBook);
 
   const [nameValue, setNameValue] = useState<string>('');
   const [commentValue, setCommentValue] = useState<string>('');
@@ -37,7 +36,7 @@ const Guest = () => {
         id: circleId,
         text: `${nameValue}: ${commentValue}`,
         position: randomPosition(),
-        animate: true, // 애니메이션 활성화
+        animate: true,
       };
 
       setCircles([...circles, newCircle]);
@@ -45,11 +44,11 @@ const Guest = () => {
       setNameValue(''); // 입력 초기화
       setCommentValue(''); // 입력 초기화
 
-      queryClient.invalidateQueries({
-        queryKey: GUEST_KEYS.all,
-      });
+      // queryClient.invalidateQueries({
+      //   queryKey: GUEST_KEYS.all,
+      // });
     } catch (error) {
-      console.error('Error posting guest book:', error);
+      console.error('방명록 전송 실패 -- ✈️ :', error);
     }
   };
 
@@ -136,7 +135,7 @@ const Circle = styled.div<{ animate: boolean }>`
     animate &&
     css`
       animation: ${shootUp} 1s ease-out forwards;
-    `}; // css 헬퍼로 감싸서 애니메이션 적용
+    `};
 `;
 
 const ComentContainer = styled.article`

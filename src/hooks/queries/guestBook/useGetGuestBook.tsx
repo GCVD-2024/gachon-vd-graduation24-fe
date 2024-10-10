@@ -8,8 +8,8 @@ import { GuestBookListResponseType } from '../../../types/types';
  */
 
 export const getGuestBook = async () => {
-  const data = await get<GuestBookListResponseType>(`api/guestbook`);
-  console.log('=====방명록 조회 성공=====', data);
+  const data = await get<GuestBookListResponseType>(`/api/guestbook`);
+  console.log('=====방명록 조회 성공=====', data.result);
   return data.result;
 };
 

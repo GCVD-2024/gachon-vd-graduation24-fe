@@ -11,8 +11,7 @@ export interface IGuestBookData {
  */
 
 export const postGuestBook = async (data: IGuestBookData) => {
-  const res = await post(`api/guestbook`, data);
-  console.log('===방명록 전송 성공====', res);
+  const res = await post(`/api/guestbook`, data);
   return res;
 };
 

@@ -11,7 +11,7 @@ export interface IGuestBookData {
  */
 
 export const postGuestBook = async (data: IGuestBookData) => {
-  const res = await post(`/api/guestbook`, data);
+  const res = await post(`guestbook`, data);
   return res;
 };
 

@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import WorkInfoSection from './components/WorkInfoSection';
+import WorkInfoSection from '../WorkInfoSection';
 import YouTube from 'react-youtube';
-import { useGetWorkDetail } from '../../hooks/queries/useGetWorkDetail';
+import { useGetWorkDetail } from '../../../../hooks/queries/useGetWorkDetail';
 import { useParams } from 'react-router-dom';
-import { useIsMobile } from '../../hooks/useIsMobile';
-import MobileWorkDetail from './components/mobile/MobileWorkDetail';
+import { useIsMobile } from '../../../../hooks/useIsMobile';
+import MobileWorkInfoSection from './MobileWorkInfoSection';
+import MobileWorkDetailContact from './MobileWorkDetailContact';
 
-const WorkDetail = () => {
+const MobileWorkDetail = () => {
   const params = useParams();
   const name = params.name;
   const title = params.title;
@@ -20,15 +21,13 @@ const WorkDetail = () => {
   const { data } = useGetWorkDetail({ name, title });
   const result = data?.result;
   if (!result) {
-    return <WorkDetailPage />;
+    return <MobileWorkDetailPage />;
   }
   console.log('DATA', result);
   // console.log('유튜브 링크', result.videoUrl);
-  return isMobile ? (
-    <MobileWorkDetail />
-  ) : (
-    <WorkDetailPage>
-      <WorkInfoSection data={result} />
+  return (
+    <MobileWorkDetailPage>
+      <MobileWorkInfoSection data={result} />
       <WorkDetailContent>
         <YouTube
           videoId={result.videoUrl}
@@ -44,18 +43,23 @@ const WorkDetail = () => {
         />
         <WorkImg src={result.detailArtUrl || ''} alt={title || '작품-이미지'} />
       </WorkDetailContent>
-    </WorkDetailPage>
+      <MobileWorkDetailContact
+        name={result.studentName}
+        studentId={result.studentId}
+        contact={result.contact}
+      />
+    </MobileWorkDetailPage>
   );
 };
 
-export default WorkDetail;
+export default MobileWorkDetail;
 
-const WorkDetailPage = styled.div`
+const MobileWorkDetailPage = styled.div`
   padding-top: 60px;
-  padding-bottom: 104px;
 
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 
   column-gap: 40px;
 `;

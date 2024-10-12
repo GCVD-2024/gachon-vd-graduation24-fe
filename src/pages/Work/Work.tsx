@@ -6,7 +6,7 @@ import { useGetWorkList } from '../../hooks/queries/useGetWorkList';
 import { useState } from 'react';
 import { Category } from '../../types/types';
 import { useIsMobile } from '../../hooks/useIsMobile';
-import MobileCategoriesSection from './components/MobileCategoriesSection';
+import MobileCategoriesSection from './components/mobile/MobileCategoriesSection';
 
 function Work() {
   const [category, setCategory] = useState<Category>('ALL');
@@ -55,13 +55,15 @@ const WorkPage = styled.div`
 
   display: flex;
   justify-content: center;
-
-  padding: 80px 0 104px 0;
 `;
 
-const NotMobileDiv = styled.div``;
+const NotMobileDiv = styled.div`
+  padding: 6rem 0 10.4rem 0;
+`;
 
 const MobileDiv = styled.div`
+  padding: 2rem 0;
+
   display: flex;
   flex-direction: column;
   align-items: center;

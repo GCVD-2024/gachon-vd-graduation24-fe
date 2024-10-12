@@ -1,9 +1,9 @@
 import { styled } from 'styled-components';
-import { Category } from '../../../types/types';
-import { CATEGORIES } from '../../../constants/constants';
+import { Category } from '../../../../types/types';
+import { CATEGORIES } from '../../../../constants/constants';
 import { useQueryClient } from '@tanstack/react-query';
-import { usePrefetchWorkList } from '../../../hooks/queries/usePrefetchWorkList';
-import { WORK_KEYS } from '../../../constants/QueryKey';
+import { usePrefetchWorkList } from '../../../../hooks/queries/usePrefetchWorkList';
+import { WORK_KEYS } from '../../../../constants/QueryKey';
 
 interface MobileCategoriesSectionProps {
   category: Category;
@@ -38,6 +38,7 @@ const MobileCategoriesWrapper = styled.section`
 
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 0;
 `;
 
 const CategoriesItem = styled.span<{ selected: boolean }>`
@@ -56,5 +57,7 @@ const CategoriesItem = styled.span<{ selected: boolean }>`
   color: ${({ theme, selected }) => (selected ? theme.colors.primary : 'white')};
 
   border: 1px solid #fff;
+  /* box-sizing: border-box; */
+  /* margin: 0 -1px; */
   cursor: pointer;
 `;

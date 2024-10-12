@@ -56,9 +56,12 @@ const ExhibitionSection = ({
 export default ExhibitionSection;
 
 const ExhibitionWrapper = styled.div<{ isMobile: boolean }>`
+  display: ${({ isMobile }) => (isMobile ? 'flex' : null)};
+  justify-content: ${({ isMobile }) => (isMobile ? 'center' : null)};
   width: ${({ isMobile }) => (isMobile ? '34.3rem' : '95rem')};
   margin-left: ${({ isMobile }) => (isMobile ? null : '33.85%')};
-  margin-top: ${({ isMobile }) => (isMobile ? '4.1rem' : null)};
+  margin-top: ${({ isMobile }) => (isMobile ? '14.8rem' : null)};
+
   display: grid;
   grid-template-rows: ${({ isMobile }) => (isMobile ? 'repeat(10, 1fr)' : 'repeat(5, 1fr)')};
   grid-template-columns: ${({ isMobile }) => (isMobile ? 'repeat(1, 1fr)' : 'repeat(2, 1fr)')};

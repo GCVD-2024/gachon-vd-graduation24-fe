@@ -5,6 +5,7 @@ import Guest from '../pages/Guest/Guest';
 import App from '../App';
 import WorkDetail from '../pages/Work/WorkDetail';
 import DelayRouteWrapper from '../pages/DelayRouteWrapper';
+import WorkDetailHeaderLayout from '../components/Layout/WorkDetailHeaderLayout';
 
 const router = createBrowserRouter([
   {
@@ -24,12 +25,17 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'work/:name/:title',
-        element: (
-          <DelayRouteWrapper>
-            <WorkDetail />
-          </DelayRouteWrapper>
-        ),
+        element: <WorkDetailHeaderLayout />,
+        children: [
+          {
+            path: 'work/:name/:title',
+            element: (
+              <DelayRouteWrapper>
+                <WorkDetail />
+              </DelayRouteWrapper>
+            ),
+          },
+        ],
       },
       {
         path: 'guest',

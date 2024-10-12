@@ -16,7 +16,7 @@ export interface guestbooks {
 }
 
 export type GuestBookListResponseType = ResponseType<{
-  guest: guestbooks[];
+  guestbooks: guestbooks[];
 }>;
 
 export type WorkListRequestType = {

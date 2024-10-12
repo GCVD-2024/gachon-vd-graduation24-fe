@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import background from '../../assets/img/bg_guest.png';
 import { useGetGuestBookList } from '../../hooks/queries/guestBook/useGetGuestBook';
 import { IGuestBookData, usePostGuestBook } from '../../hooks/mutations/guestBook/usePostGuestBook';
-import { GUEST_KEYS } from '../../constants/QueryKey';
 
 const Guest = () => {
-  const guestBook = useGetGuestBookList();
+  const { data: guestBookData, isPending, isError } = useGetGuestBookList();
   const { GuestBookMutation } = usePostGuestBook();
 
   const [nameValue, setNameValue] = useState<string>('');
@@ -16,6 +15,42 @@ const Guest = () => {
   >([]);
   const [circleId, setCircleId] = useState<number>(0);
 
+  const safeZone = {
+    topStart: 73,
+    topEnd: 100,
+    leftStart: 10,
+    leftEnd: 90,
+  };
+
+  const randomPosition = () => {
+    let top, left;
+
+    do {
+      top = Math.random() * 90;
+      left = Math.random() * 90;
+    } while (
+      top >= safeZone.topStart &&
+      top <= safeZone.topEnd &&
+      left >= safeZone.leftStart &&
+      left <= safeZone.leftEnd
+    );
+
+    return { top: `${top}%`, left: `${left}%` };
+  };
+
+  const initialCircles = useMemo(
+    () =>
+      guestBookData?.guestbooks?.map((guest, index) => ({
+        id: index,
+        text: `${guest.nickname}: ${guest.content}`,
+        position: randomPosition(),
+        animate: false,
+      })) || [],
+    [guestBookData]
+  );
+
+  const allCircles = [...initialCircles, ...circles];
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === 'name') setNameValue(value);
@@ -23,17 +58,16 @@ const Guest = () => {
   };
 
   const handleSubmit = async () => {
-    // 방명록 데이터 객체 생성
     const newGuestBookData: IGuestBookData = {
       nickname: nameValue,
       content: commentValue,
     };
 
-    // GuestBookMutation을 사용하여 데이터 전송
     try {
       await GuestBookMutation.mutateAsync(newGuestBookData);
+
       const newCircle = {
-        id: circleId,
+        id: circleId + initialCircles.length,
         text: `${nameValue}: ${commentValue}`,
         position: randomPosition(),
         animate: true,
@@ -41,21 +75,11 @@ const Guest = () => {
 
       setCircles([...circles, newCircle]);
       setCircleId(circleId + 1);
-      setNameValue(''); // 입력 초기화
-      setCommentValue(''); // 입력 초기화
-
-      // queryClient.invalidateQueries({
-      //   queryKey: GUEST_KEYS.all,
-      // });
+      setNameValue('');
+      setCommentValue('');
     } catch (error) {
       console.error('방명록 전송 실패 -- ✈️ :', error);
     }
-  };
-
-  const randomPosition = () => {
-    const top = `${Math.random() * 80 + 10}%`; // 10% ~ 90% 사이의 값
-    const left = `${Math.random() * 80 + 10}%`; // 10% ~ 90% 사이의 값
-    return { top, left };
   };
 
   return (
@@ -85,7 +109,7 @@ const Guest = () => {
         </TextContainer>
       </ComentContainer>
 
-      {circles.map((circle) => (
+      {allCircles.map((circle) => (
         <Circle
           key={circle.id}
           style={{ top: circle.position.top, left: circle.position.left }}
@@ -99,8 +123,6 @@ const Guest = () => {
 };
 
 export default Guest;
-
-// 애니메이션 정의
 const shootUp = keyframes`
   0% {
     transform: translateY(100%);
@@ -241,7 +263,6 @@ const NameInput = styled.input`
 
 const TextInput = styled.input`
   display: flex;
-
   font-size: 18px;
   height: 100%;
   color: white;

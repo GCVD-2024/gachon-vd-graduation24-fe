@@ -1,77 +1,55 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
+import { formatDate } from '../../../utils/dateUtils';
 
-interface CircleProps {
-  length: number;
+interface GuestBoxProps {
+  nickname: string;
+  content: string;
+  timestamp: string;
 }
 
-interface GuestBookEntryProps {
-  text: string;
-}
+const GuestBookEntry = ({ nickname, content, timestamp }: GuestBoxProps) => {
+  const formattedTimestamp = formatDate(timestamp);
 
-const dropAnimation = keyframes`
-  0% {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-`;
-
-const waterDropAnimation = keyframes`
-  from, to {
-    transform: none;
-  }
-  50% {
-    transform: translateX(300px);
-  }
-`;
-
-const circleDropAnimation = keyframes`
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(20px);
-  }
-`;
-
-const Circle = styled.div<CircleProps>`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  font-size: 18px;
-  text-align: center;
-  background-color: #fff;
-  margin: 10px;
-  box-sizing: border-box;
-  animation: ${dropAnimation} 0.6s ease-out forwards, ${circleDropAnimation} 2s infinite ease-in-out,
-    ${waterDropAnimation} 5000ms infinite;
-  filter: url(#water);
-
-  width: ${({ length }) =>
-    length <= 20 ? '150px' : length <= 70 ? '250px' : length <= 130 ? '330px' : '430px'};
-
-  height: ${({ length }) =>
-    length <= 20 ? '150px' : length <= 70 ? '250px' : length <= 130 ? '330px' : '430px'};
-`;
-
-const TextBox = styled.div`
-  max-width: 90%;
-  max-height: 90%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: pre-wrap;
-  word-break: break-word;
-`;
-
-const GuestBookEntry = ({ text }: GuestBookEntryProps) => (
-  <Circle length={text.length}>
-    <TextBox>{text}</TextBox>
-  </Circle>
-);
+  return (
+    <GuestBoxContainer>
+      <GuestBoxHeader>from. {nickname || '익명'}</GuestBoxHeader>
+      <GuestBoxContent>{content}</GuestBoxContent>
+      <GuestBoxFooter>{formattedTimestamp}</GuestBoxFooter>
+    </GuestBoxContainer>
+  );
+};
 
 export default GuestBookEntry;
+
+const GuestBoxContainer = styled.div`
+  width: 465px;
+  height: 250px;
+  background-color: #0000006e;
+  border: 1px solid ${({ theme }) => theme.colors.primaryBlue};
+  padding: 16px;
+  margin: 10px;
+  border-radius: 8px;
+  color: white;
+`;
+
+const GuestBoxHeader = styled.div`
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px;
+`;
+
+const GuestBoxContent = styled.div`
+  font-size: 18px;
+  font-weight: 900;
+  top: 41%;
+  position: relative;
+  transform: translateY(-50%);
+  margin-bottom: 16px;
+`;
+
+const GuestBoxFooter = styled.div`
+  font-size: 12px;
+  top: 60%;
+  position: relative;
+  text-align: right;
+`;

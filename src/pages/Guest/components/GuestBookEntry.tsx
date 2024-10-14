@@ -24,11 +24,12 @@ export default GuestBookEntry;
 const GuestBoxContainer = styled.div`
   width: 465px;
   height: 250px;
-  background: radial-gradient(50% 50% at 50% 50%, #8eebff 23%, #fff 118%);
+  background-color: #0000006e;
+  border: 1px solid ${({ theme }) => theme.colors.primaryBlue};
   padding: 16px;
   margin: 10px;
   border-radius: 8px;
-  color: black;
+  color: white;
 `;
 
 const GuestBoxHeader = styled.div`
@@ -39,6 +40,7 @@ const GuestBoxHeader = styled.div`
 
 const GuestBoxContent = styled.div`
   font-size: 18px;
+  font-weight: 900;
   top: 41%;
   position: relative;
   transform: translateY(-50%);
@@ -50,5 +52,4 @@ const GuestBoxFooter = styled.div`
   top: 60%;
   position: relative;
   text-align: right;
-  color: #666;
 `;

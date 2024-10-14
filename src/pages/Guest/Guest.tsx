@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useRef, useEffect, useCallback } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import background from '../../assets/img/bg_guest.png';
 import { useGetGuestBookList } from '../../hooks/queries/guestBook/useGetGuestBook';
@@ -13,8 +13,10 @@ const Guest = () => {
   const { GuestBookMutation } = usePostGuestBook();
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
-  const [nameValue, setNameValue] = useState<string>('');
-  const [commentValue, setCommentValue] = useState<string>('');
+  const [formValues, setFormValues] = useState({
+    name: '',
+    comment: '',
+  });
   const [guestEntries, setGuestEntries] = useState<
     {
       id: number;
@@ -25,6 +27,8 @@ const Guest = () => {
     }[]
   >([]);
   const [entryId, setEntryId] = useState<number>(0);
+
+  const entriesEndRef = useRef<HTMLDivElement>(null);
 
   const initialEntries = useMemo(
     () =>
@@ -40,16 +44,22 @@ const Guest = () => {
 
   const allEntries = [...initialEntries, ...guestEntries];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === 'name') setNameValue(value);
-    if (name === 'comment') setCommentValue(value);
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  }, []);
+
+  const scrollToBottom = () => {
+    entriesEndRef.current?.scrollIntoView({ behavior: 'smooth' }); 
   };
 
   const handleSubmit = async () => {
     const newGuestBookData: IGuestBookData = {
-      nickname: nameValue,
-      content: commentValue,
+      nickname: formValues.name,
+      content: formValues.comment,
     };
 
     try {
@@ -57,16 +67,18 @@ const Guest = () => {
 
       const newEntry = {
         id: entryId + initialEntries.length,
-        nickname: nameValue,
-        content: commentValue,
+        nickname: formValues.name,
+        content: formValues.comment,
         timestamp: new Date().toISOString(),
         twinkle: true,
       };
 
       setGuestEntries([...guestEntries, newEntry]);
       setEntryId(entryId + 1);
-      setNameValue('');
-      setCommentValue('');
+      setFormValues({
+        name: '',
+        comment: '',
+      });
       setIsAnimating(true);
       useGetGuestBookList();
       queryClient.invalidateQueries({
@@ -81,11 +93,16 @@ const Guest = () => {
         );
 
         setIsAnimating(false);
+        scrollToBottom(); 
       }, 1000);
     } catch (error) {
       console.error('방명록 전송 실패 -- ✈️ :', error);
     }
   };
+
+  useEffect(() => {
+    scrollToBottom(); 
+  }, [allEntries]);
 
   return (
     <GuestPage>
@@ -99,16 +116,18 @@ const Guest = () => {
             <NameInput
               name="name"
               type="text"
-              value={nameValue}
+              value={formValues.name}
               onChange={handleInputChange}
               placeholder="이름을 입력하세요"
+              autoComplete="off"
             />
             <TextInput
               name="comment"
               type="text"
-              value={commentValue}
+              value={formValues.comment}
               onChange={handleInputChange}
               placeholder="댓글을 입력하세요"
+              autoComplete="off"
             />
           </TextInputContainer>
 
@@ -128,6 +147,7 @@ const Guest = () => {
             />
           </EntryWrapper>
         ))}
+        <div ref={entriesEndRef} /> {/* 스크롤이 도착할 마지막 요소 */}
       </EntriesContainer>
     </GuestPage>
   );
@@ -135,6 +155,9 @@ const Guest = () => {
 
 export default Guest;
 
+/**
+ *  1. 디깅 버튼 눌렀을 때 애니메이션
+ */
 const expandCircle = keyframes`
   0% {
     width: 160px;
@@ -150,6 +173,23 @@ const expandCircle = keyframes`
     width: 160px;
     height: 160px;
     border-radius: 50%;
+  }
+`;
+
+/**
+ *  2. 방명록 전송 후 올라오는 애니메이션
+ */
+const shootUp = keyframes`
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
   }
 `;
 
@@ -185,14 +225,12 @@ const EntriesContainer = styled.div`
   position: relative;
   flex-wrap: wrap;
   overflow-x: scroll;
-  justify-content: center;
 
   padding: 20px;
-  margin-bottom: 4rem;
+  margin-bottom: 7rem;
 `;
 
 const EntryWrapper = styled.div<{ twinkle: boolean }>`
-  margin-top: 2rem;
   ${({ twinkle }) =>
     twinkle &&
     css`
@@ -200,33 +238,18 @@ const EntryWrapper = styled.div<{ twinkle: boolean }>`
     `};
 `;
 
-const shootUp = keyframes`
-  0% {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(0%);
-    opacity: 1;
-  }
-`;
-
 const ComentContainer = styled.article`
   display: flex;
   flex-direction: column;
   position: fixed;
-  width: 60%;
+  width: 55%;
   gap: 0.5rem;
-  padding-bottom: 3%;
+  padding-bottom: 2%;
 
   left: 50%;
   transform: translateX(-50%);
   bottom: 0;
   z-index: 10;
-  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const TextInputContainer = styled.article`
@@ -269,13 +292,14 @@ const SubmitButton = styled.button<{ isAnimating: boolean }>`
 
 const NameInput = styled.input`
   display: flex;
-
+  padding-left: 1rem;
   font-size: 18px;
   height: 60%;
   color: white;
   background: transparent;
   border-radius: 14px 14px 0px 0px;
   border: 2px solid #fff;
+  /* border-bottom: none; */
   outline: none;
 
   &::placeholder {
@@ -284,26 +308,14 @@ const NameInput = styled.input`
 
   &:focus {
     border-color: ${({ theme }) => theme.colors.primaryBlue};
-    box-shadow: 0 0 5px ${({ theme }) => theme.colors.primaryBlue};
   }
 `;
 
-const TextInput = styled.input`
+const TextInput = styled(NameInput)`
   display: flex;
-  font-size: 18px;
-  height: 100%;
-  color: white;
-  background: transparent;
+  padding-left: 1rem;
+  font-size: 16px;
+  height: 160px;
   border-radius: 0px 0px 14px 14px;
-  border: 2px solid #fff;
-  outline: none;
-
-  &::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-  }
-
-  &:focus {
-    border-color: ${({ theme }) => theme.colors.primaryBlue};
-    box-shadow: 0 0 5px ${({ theme }) => theme.colors.primaryBlue};
-  }
+  border-top: none;
 `;

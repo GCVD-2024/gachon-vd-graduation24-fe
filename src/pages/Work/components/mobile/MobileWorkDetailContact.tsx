@@ -21,8 +21,9 @@ const MobileWorkDetailContact = ({ name, studentId, contact }: MobileContactProp
 export default MobileWorkDetailContact;
 
 const MobileFooterWrapper = styled.section`
-  width: 37.5rem;
-  padding-top: 2rem;
+  width: 100%;
+  min-width: 37.5rem;
+  padding: 2rem 1.6rem 0 1.6rem;
   margin-bottom: 10rem;
 
   display: flex;

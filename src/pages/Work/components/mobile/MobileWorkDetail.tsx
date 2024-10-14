@@ -1,18 +1,15 @@
 import styled from 'styled-components';
-import WorkInfoSection from '../WorkInfoSection';
 import YouTube from 'react-youtube';
 import { useGetWorkDetail } from '../../../../hooks/queries/useGetWorkDetail';
 import { useParams } from 'react-router-dom';
-import { useIsMobile } from '../../../../hooks/useIsMobile';
 import MobileWorkInfoSection from './MobileWorkInfoSection';
 import MobileWorkDetailContact from './MobileWorkDetailContact';
+import WorkDetailHeaderLayout from '../../../../components/Layout/WorkDetailHeaderLayout';
 
 const MobileWorkDetail = () => {
   const params = useParams();
   const name = params.name;
   const title = params.title;
-
-  const isMobile = useIsMobile();
 
   if (!name || !title) {
     throw new Error('[에러 발생]작품명이나 작가 이름값이 존재하는지 확인하세요.');
@@ -24,39 +21,45 @@ const MobileWorkDetail = () => {
     return <MobileWorkDetailPage />;
   }
   console.log('DATA', result);
-  // console.log('유튜브 링크', result.videoUrl);
+  console.log('유튜브 링크', result.videoUrl);
   return (
-    <MobileWorkDetailPage>
-      <MobileWorkInfoSection data={result} />
-      <WorkDetailContent>
-        <YouTube
-          videoId={result.videoUrl}
-          opts={{
-            width: '343',
-            height: '193',
-            playerVars: {
-              autoplay: 1,
-              rel: 0,
-              modestbranding: 1,
-            },
-          }}
-        />
-        <WorkImg src={result.detailArtUrl || ''} alt={title || '작품-이미지'} />
-      </WorkDetailContent>
-      <MobileWorkDetailContact
-        name={result.studentName}
-        studentId={result.studentId}
-        contact={result.contact}
-      />
-    </MobileWorkDetailPage>
+    <>
+      <WorkDetailHeaderLayout>
+        <MobileWorkDetailPage>
+          <MobileWorkInfoSection data={result} />
+          <WorkDetailContent>
+            {result.videoUrl ? (
+              <YouTube
+                videoId={result.videoUrl.split('/').pop()}
+                opts={{
+                  width: '343',
+                  height: '193',
+                  playerVars: {
+                    autoplay: 1,
+                    rel: 0,
+                    modestbranding: 1,
+                  },
+                }}
+              />
+            ) : (
+              <></>
+            )}
+            <WorkImg src={result.detailArtUrl || ''} alt={title || '작품-이미지'} />
+          </WorkDetailContent>
+          <MobileWorkDetailContact
+            name={result.studentName}
+            studentId={result.studentId}
+            contact={result.contact}
+          />
+        </MobileWorkDetailPage>
+      </WorkDetailHeaderLayout>
+    </>
   );
 };
 
 export default MobileWorkDetail;
 
 const MobileWorkDetailPage = styled.div`
-  padding-top: 60px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,8 +68,6 @@ const MobileWorkDetailPage = styled.div`
 `;
 
 const WorkDetailContent = styled.div`
-  margin-bottom: 4rem;
-
   display: flex;
   flex-direction: column;
   align-items: center;

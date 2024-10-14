@@ -4,7 +4,7 @@ import Work from '../pages/Work/Work';
 import Guest from '../pages/Guest/Guest';
 import App from '../App';
 import WorkDetail from '../pages/Work/WorkDetail';
-import DelayRouteWrapper from '../pages/DelayRouteWrapper';
+import DelayRouteWrapper from '../pages/Work/components/error/DelayRouteWrapper';
 import WorkDetailHeaderLayout from '../components/Layout/WorkDetailHeaderLayout';
 
 const router = createBrowserRouter([
@@ -25,17 +25,12 @@ const router = createBrowserRouter([
         ),
       },
       {
-        element: <WorkDetailHeaderLayout />,
-        children: [
-          {
-            path: 'work/:name/:title',
-            element: (
-              <DelayRouteWrapper>
-                <WorkDetail />
-              </DelayRouteWrapper>
-            ),
-          },
-        ],
+        path: 'work/:name/:title',
+        element: (
+          <DelayRouteWrapper>
+            <WorkDetail />
+          </DelayRouteWrapper>
+        ),
       },
       {
         path: 'guest',

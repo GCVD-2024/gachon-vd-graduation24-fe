@@ -14,9 +14,11 @@ const MobileWorkInfoSection = ({ data }: WorkInfoSectionProps) => {
           <AuthorSpan className="studentId">{data.studentId}</AuthorSpan>
         </WorkAuthorInfo>
       </MobileCategoryWrapper>
-      <WorkTitle>제목 : {data.title}</WorkTitle>
-      <WorkSubtitle>{data.subtitle}</WorkSubtitle>
-      <WorkBody>{data.description}</WorkBody>
+      <InfoBodyWrapper>
+        <WorkTitle>제목 : {data.title}</WorkTitle>
+        <WorkSubtitle>{data.subtitle}</WorkSubtitle>
+        <WorkBody>{data.description}</WorkBody>
+      </InfoBodyWrapper>
     </WorkInfoWrapper>
   );
 };
@@ -24,13 +26,15 @@ const MobileWorkInfoSection = ({ data }: WorkInfoSectionProps) => {
 export default MobileWorkInfoSection;
 
 const WorkInfoWrapper = styled.section`
-  width: 380px;
+  width: 100%;
+  min-width: 38rem;
 
   display: flex;
   flex-direction: column;
 `;
 
 const MobileCategoryWrapper = styled.div`
+  width: 100%;
   height: 6.2rem;
   margin-bottom: 4rem;
 
@@ -42,12 +46,16 @@ const MobileCategoryWrapper = styled.div`
 `;
 
 const WorkCategory = styled.span`
+  margin-left: 1.6rem;
+
   font-size: 1.8rem;
   line-height: 120%;
   color: ${({ theme }) => theme.colors.primary};
 `;
 
 const WorkAuthorInfo = styled.div`
+  margin-right: 1.6rem;
+
   display: flex;
   column-gap: 1.45rem;
 `;
@@ -61,8 +69,15 @@ const AuthorSpan = styled.span`
   }
 `;
 
+const InfoBodyWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  padding: 0 1.6rem;
+`;
+
 const WorkTitle = styled.span`
-  margin-bottom: 20px;
+  margin-bottom: 1.2rem;
   font: ${({ theme }) => theme.fonts.Primary};
   font-size: 2.4rem;
   font-style: normal;

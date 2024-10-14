@@ -34,7 +34,7 @@ export default MobileCategoriesSection;
 
 const MobileCategoriesWrapper = styled.section`
   position: fixed;
-  width: 34.3rem;
+  min-width: 34.3rem;
 
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

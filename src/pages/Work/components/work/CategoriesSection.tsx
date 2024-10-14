@@ -43,7 +43,7 @@ const CategoriesWrapper = styled.section`
 
 const CategoriesItem = styled.span<{ selected: boolean }>`
   ${({ theme }) => theme.fonts.primary};
-  font-size: 40px;
+  font-size: 4rem;
   line-height: 120%;
   color: ${({ theme, selected }) => (selected ? theme.colors.primary : 'white')};
 

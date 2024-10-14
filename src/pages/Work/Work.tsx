@@ -9,7 +9,7 @@ import { useIsMobile } from '../../hooks/useIsMobile';
 import MobileHeader from './components/mobile/MobileHeader';
 
 function Work() {
-  const [category, setCategory] = useState<Category>("ALL");
+  const [category, setCategory] = useState<Category>('ALL');
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } = useGetWorkList({
     category,
     currentPage: 1,
@@ -33,7 +33,7 @@ function Work() {
           />
         </MobileDiv>
       ) : (
-        <NotMobileDiv>
+        <PcDiv>
           <CategoriesSection category={category} setCategory={setCategory} />
           <ExhibitionSection
             data={data}
@@ -42,7 +42,7 @@ function Work() {
             isFetchingNextPage={isFetchingNextPage}
             isMobile={isMobile}
           />
-        </NotMobileDiv>
+        </PcDiv>
       )}
     </WorkPage>
   );
@@ -57,7 +57,7 @@ const WorkPage = styled.div`
   justify-content: center;
 `;
 
-const NotMobileDiv = styled.div`
+const PcDiv = styled.div`
   padding: 6rem 0 10.4rem 0;
 `;
 

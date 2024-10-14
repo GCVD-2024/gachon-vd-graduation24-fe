@@ -64,5 +64,5 @@ const ExhibitionWrapper = styled.div<{ isMobile: boolean }>`
   display: grid;
   grid-template-rows: ${({ isMobile }) => (isMobile ? 'repeat(10, 1fr)' : 'repeat(5, 1fr)')};
   grid-template-columns: ${({ isMobile }) => (isMobile ? 'repeat(1, 1fr)' : 'repeat(2, 1fr)')};
-  gap: 20px;
+  gap: ${({ isMobile }) => (isMobile ? '1.6rem' : '1.4rem')};
 `;

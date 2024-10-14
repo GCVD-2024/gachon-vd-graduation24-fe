@@ -62,7 +62,7 @@ const MobileWorkDetailPage = styled.div`
   flex-direction: column;
   align-items: center;
 
-  column-gap: 40px;
+  column-gap: 4rem;
 `;
 
 const WorkDetailContent = styled.div`
@@ -74,6 +74,7 @@ const WorkDetailContent = styled.div`
 const WorkImg = styled.img`
   width: 34.3rem;
   min-height: 60rem;
+  margin-bottom: 4rem;
 
   object-fit: cover;
   background-color: gray;

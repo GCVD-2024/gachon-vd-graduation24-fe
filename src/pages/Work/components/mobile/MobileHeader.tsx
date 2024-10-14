@@ -44,9 +44,9 @@ export default MobileHeader;
 const StyledHeader = styled.header<{ show: boolean }>`
   width: 34.3rem;
   position: fixed;
-  top: ${({ show }) => (show ? '6.4rem' : '-9rem')};
+  top: ${({ show }) => (show ? '8.4rem' : '-9rem')};
   width: 100%;
-  height: 80px;
+  height: 8rem;
 
   display: flex;
   justify-content: center;

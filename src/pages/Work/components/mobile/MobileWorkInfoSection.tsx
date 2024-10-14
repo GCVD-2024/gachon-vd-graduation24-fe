@@ -31,6 +31,7 @@ const WorkInfoWrapper = styled.section`
 
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const MobileCategoryWrapper = styled.div`
@@ -72,12 +73,11 @@ const AuthorSpan = styled.span`
 `;
 
 const InfoBodyWrapper = styled.div`
-  width: 100%;
-  min-width: 37.5rem;
+  width: 37.5rem;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 
   padding: 0 1.6rem;
 `;
@@ -103,7 +103,6 @@ const WorkSubtitle = styled.span`
 
 const WorkBody = styled.span`
   width: 34.3rem;
-  height: 15.3rem;
   margin-bottom: 4rem;
 
   font-size: 1.2rem;

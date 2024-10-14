@@ -44,15 +44,13 @@ const MobileCategoriesWrapper = styled.section`
 `;
 
 const CategoriesItem = styled.span<{ selected: boolean }>`
-  /* width: 11.4rem; */
   height: 4.4rem;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  ${({ theme }) => theme.fonts.primary};
-  font-size: 20px;
+  font-size: 2rem;
   line-height: 120%;
   font-style: normal;
   font-weight: 900;

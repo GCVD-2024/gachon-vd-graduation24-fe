@@ -38,14 +38,12 @@ const WorkCardItemWrapper = styled.div<{ imgUrl?: string; isMobile: boolean }>`
   width: ${({ isMobile }) => (isMobile ? '34.3rem' : '46.6rem')};
   height: ${({ isMobile }) => (isMobile ? '19rem' : '26.2rem')};
   flex-shrink: 0;
-  padding: 27.85px 27.91px;
 
   display: flex;
   flex-direction: column;
   justify-content: end;
-  row-gap: 11.14px;
 
-  border: 2px solid white;
+  border: ${({ isMobile }) => (isMobile ? '1px' : '2px')} solid white;
 
   background-color: gray;
   background-image: ${({ imgUrl }) => (imgUrl ? `url(${imgUrl})` : '')};

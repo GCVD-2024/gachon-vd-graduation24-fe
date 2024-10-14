@@ -53,24 +53,24 @@ const WorkDetail = () => {
 export default WorkDetail;
 
 const WorkDetailPage = styled.div`
-  padding-top: 60px;
-  padding-bottom: 104px;
+  padding-top: 6rem;
+  padding-bottom: 10.4rem;
 
   display: flex;
   justify-content: center;
 
-  column-gap: 40px;
+  column-gap: 4rem;
 `;
 
 const WorkDetailContent = styled.div`
-  margin-top: 33px;
+  margin-top: 3.3rem;
   display: flex;
   flex-direction: column;
 `;
 
 const WorkImg = styled.img`
-  width: 950px;
-  min-height: 838px;
+  width: 95rem;
+  min-height: 83.8rem;
 
   object-fit: cover;
   background-color: gray;

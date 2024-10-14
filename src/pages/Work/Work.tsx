@@ -8,7 +8,7 @@ import { Category } from '../../types/types';
 import { useIsMobile } from '../../hooks/useIsMobile';
 import MobileHeader from './components/mobile/MobileHeader';
 
-function Work() {
+const Work = () => {
   const [category, setCategory] = useState<Category>('ALL');
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } = useGetWorkList({
     category,
@@ -46,7 +46,7 @@ function Work() {
       )}
     </WorkPage>
   );
-}
+};
 
 export default Work;
 

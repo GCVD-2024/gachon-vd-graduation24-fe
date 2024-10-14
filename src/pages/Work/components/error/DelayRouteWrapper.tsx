@@ -1,8 +1,9 @@
 import { Suspense } from 'react';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ErrorBoundary } from 'react-error-boundary';
-import DelayedComponent from '../pages/DelayedComponent';
-import ErrorFallback from '../pages/ErrorFallback';
+import ErrorFallback from './ErrorFallback';
+import DelayedComponent from './DelayedComponent';
+
 
 const DelayRouteWrapper = ({ children }: { children: React.ReactNode }) => {
   return (

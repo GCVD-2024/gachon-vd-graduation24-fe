@@ -8,7 +8,7 @@ export const usePrefetchWorkList = () => {
 
   const prefetchWorkList = async (category: string, page: number) => {
     await queryClient.prefetchQuery({
-      queryKey: WORK_KEYS.list(category, page),
+      queryKey: WORK_KEYS.prefetchList(category, page),
       queryFn: () => getWorkList(category, page),
     });
   };

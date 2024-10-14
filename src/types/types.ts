@@ -55,4 +55,5 @@ export type WorkDetailType = {
   description: string;
   detailArtUrl: string;
   thumbnailUrl: string;
+  videoUrl: string;
 };

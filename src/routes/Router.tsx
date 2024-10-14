@@ -4,7 +4,7 @@ import Work from '../pages/Work/Work';
 import Guest from '../pages/Guest/Guest';
 import App from '../App';
 import WorkDetail from '../pages/Work/WorkDetail';
-import DelayRouteWrapper from '../pages/DelayRouteWrapper';
+import DelayRouteWrapper from '../pages/Work/components/error/DelayRouteWrapper';
 
 const router = createBrowserRouter([
   {

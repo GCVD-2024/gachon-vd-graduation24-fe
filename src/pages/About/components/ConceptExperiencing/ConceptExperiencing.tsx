@@ -4,41 +4,18 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 import styled from 'styled-components';
 import gsap from 'gsap';
 import WordCanvas from './components/WordCanvas';
+import { useIsMobile } from '../../../../hooks/useIsMobile';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function ConceptExperiencing() {
+export default function ConceptExperiencing() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isWordCanvasVisible, setIsWordCanvasVisible] = useState(false);
+  const isMobile = useIsMobile();
 
   useGSAP(() => {
     if (!containerRef.current) return;
 
-    const titles = gsap.utils.toArray<HTMLElement>('.experiencing_title');
-    const contents = gsap.utils.toArray<HTMLElement>('.experiencing_content');
-
-    const animateElements = (
-      elements: HTMLElement[],
-      fromVars: gsap.TweenVars,
-      toVars: gsap.TweenVars
-    ) => {
-      elements.forEach((element, index) => {
-        gsap.fromTo(element, fromVars, {
-          ...toVars,
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 5%',
-            end: 'bottom 20%',
-          },
-          delay: index * 0.2,
-        });
-      });
-    };
-
-    animateElements(titles, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1 });
-    animateElements(contents, { opacity: 0 }, { opacity: 1, duration: 1 });
-
-    // WordCanvas visibility trigger
     ScrollTrigger.create({
       trigger: containerRef.current,
       start: 'top 50%',
@@ -51,15 +28,17 @@ function ConceptExperiencing() {
   }, []);
 
   return (
-    <ExperiencingWrapper ref={containerRef}>
-      <MatterJsContainer>{isWordCanvasVisible && <WordCanvas />}</MatterJsContainer>
-      <ContentWrapper>
-        <Title className="experiencing_title">
+    <ExperiencingWrapper ref={containerRef} isMobile={isMobile}>
+      <MatterJsContainer isMobile={isMobile}>
+        {isWordCanvasVisible && <WordCanvas />}
+      </MatterJsContainer>
+      <ContentWrapper isMobile={isMobile}>
+        <Title className="experiencing_title" isMobile={isMobile}>
           Experiencing.
           <br />
           경험하다
         </Title>
-        <Description className="experiencing_content">
+        <Description className="experiencing_content" isMobile={isMobile}>
           Experiencing은 특정한 상황이나 사건, 감정 등을 실제로 겪고 느끼는 과정을 의미한다.
           <br />
           Digging이 지식이나 정보를 얻는 과정이라면,
@@ -75,43 +54,42 @@ function ConceptExperiencing() {
   );
 }
 
-export default ConceptExperiencing;
-
-// Styled components remain unchanged
-const ExperiencingWrapper = styled.div`
-  height: 1080px;
+const ExperiencingWrapper = styled.div<{ isMobile: boolean }>`
+  height: ${(props) => (props.isMobile ? 'auto' : '1080px')};
+  min-height: ${(props) => (props.isMobile ? '100vh' : 'auto')};
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0px 140px 0px 140px;
+  padding: ${(props) => (props.isMobile ? '40px 20px' : '0px 140px')};
 `;
 
-const MatterJsContainer = styled.div`
-  width: 1360px;
-  height: 800px;
+const MatterJsContainer = styled.div<{ isMobile: boolean }>`
+  width: ${(props) => (props.isMobile ? '343px' : '1060px')};
+  height: ${(props) => (props.isMobile ? '326px' : '725px')};
   background-image: url('/about/ConceptExperiencing/concept-experiencing-bg.svg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  margin-bottom: 100px;
+  margin-bottom: ${(props) => (props.isMobile ? '40px' : '100px')};
 `;
 
-const ContentWrapper = styled.div`
+const ContentWrapper = styled.div<{ isMobile: boolean }>`
   display: flex;
-  gap: 115px;
+  flex-direction: ${(props) => (props.isMobile ? 'column' : 'row')};
+  gap: ${(props) => (props.isMobile ? '30px' : '300px')};
+  align-items: ${(props) => (props.isMobile ? 'center' : 'flex-start')};
 `;
 
-const Title = styled.h1`
-  font-size: 70px;
+const Title = styled.h1<{ isMobile: boolean }>`
+  font-size: ${(props) => (props.isMobile ? '32px' : '40px')};
   font-weight: 800;
-  line-height: 120%; /* 84px */
-  letter-spacing: -1.4px;
+  text-align: ${(props) => (props.isMobile ? 'center' : 'left')};
 `;
 
-const Description = styled.p`
-  font-size: 24px;
+const Description = styled.p<{ isMobile: boolean }>`
+  font-size: ${(props) => (props.isMobile ? '14px' : '16px')};
   font-weight: 500;
-  line-height: 140%; /* 44.8px */
-  letter-spacing: -0.64px;
+  line-height: 150%;
+  text-align: ${(props) => (props.isMobile ? 'center' : 'left')};
 `;

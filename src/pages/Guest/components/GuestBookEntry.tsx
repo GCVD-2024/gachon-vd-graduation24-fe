@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { formatDate } from '../../../utils/dateUtils';
 
 interface GuestBoxProps {
   nickname: string;
@@ -7,11 +8,13 @@ interface GuestBoxProps {
 }
 
 const GuestBookEntry = ({ nickname, content, timestamp }: GuestBoxProps) => {
+  const formattedTimestamp = formatDate(timestamp);
+
   return (
     <GuestBoxContainer>
       <GuestBoxHeader>from. {nickname || '익명'}</GuestBoxHeader>
       <GuestBoxContent>{content}</GuestBoxContent>
-      <GuestBoxFooter>{timestamp}</GuestBoxFooter>
+      <GuestBoxFooter>{formattedTimestamp}</GuestBoxFooter>
     </GuestBoxContainer>
   );
 };
@@ -19,13 +22,13 @@ const GuestBookEntry = ({ nickname, content, timestamp }: GuestBoxProps) => {
 export default GuestBookEntry;
 
 const GuestBoxContainer = styled.div`
-  background-color: #8eebff;
-  border: 1px solid #000;
+  width: 465px;
+  height: 250px;
+  background: radial-gradient(50% 50% at 50% 50%, #8eebff 23%, #fff 118%);
   padding: 16px;
   margin: 10px;
   border-radius: 8px;
-  width: 465px;
-  height: 250px;
+  color: black;
 `;
 
 const GuestBoxHeader = styled.div`
@@ -36,11 +39,16 @@ const GuestBoxHeader = styled.div`
 
 const GuestBoxContent = styled.div`
   font-size: 18px;
+  top: 41%;
+  position: relative;
+  transform: translateY(-50%);
   margin-bottom: 16px;
 `;
 
 const GuestBoxFooter = styled.div`
   font-size: 12px;
+  top: 60%;
+  position: relative;
   text-align: right;
   color: #666;
 `;

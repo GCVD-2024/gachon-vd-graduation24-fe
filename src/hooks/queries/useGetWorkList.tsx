@@ -8,7 +8,7 @@ export const useGetWorkList = ({ category, currentPage }: WorkListRequestType) =
     queryKey: WORK_KEYS.list(category, currentPage),
     queryFn: ({ pageParam = currentPage }) => getWorkList(category, pageParam),
     getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === 10 ? allPages.length + 1 : null;
+      return lastPage?.length === 10 ? allPages.length + 1 : null;
     },
     initialPageParam: 1,
     select: (data) => ({

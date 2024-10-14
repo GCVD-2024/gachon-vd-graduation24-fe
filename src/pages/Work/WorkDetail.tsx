@@ -23,25 +23,29 @@ const WorkDetail = () => {
     return <WorkDetailPage />;
   }
   console.log('DATA', result);
-  // console.log('유튜브 링크', result.videoUrl);
+  console.log('유튜브 링크', result.videoUrl?.split('/').pop());
   return isMobile ? (
     <MobileWorkDetail />
   ) : (
     <WorkDetailPage>
       <WorkInfoSection data={result} />
       <WorkDetailContent>
-        <YouTube
-          videoId={result.videoUrl}
-          opts={{
-            width: '950',
-            height: '534',
-            playerVars: {
-              autoplay: 1,
-              rel: 0,
-              modestbranding: 1,
-            },
-          }}
-        />
+        {result.videoUrl ? (
+          <YouTube
+            videoId={result.videoUrl}
+            opts={{
+              width: '950',
+              height: '534',
+              playerVars: {
+                autoplay: 1,
+                rel: 0,
+                modestbranding: 1,
+              },
+            }}
+          />
+        ) : (
+          <></>
+        )}
         <WorkImg src={result.detailArtUrl || ''} alt={title || '작품-이미지'} />
       </WorkDetailContent>
     </WorkDetailPage>

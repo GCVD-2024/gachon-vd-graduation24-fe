@@ -1,11 +1,14 @@
-import { Outlet } from 'react-router-dom';
 import WorkDetailHeader from '../../pages/Work/components/WorkDetailHeader';
 
-const WorkDetailHeaderLayout = () => {
+interface WorkDetailHeaderLayoutProps {
+  children: React.ReactNode;
+}
+
+const WorkDetailHeaderLayout = ({ children }: WorkDetailHeaderLayoutProps) => {
   return (
     <>
-      {/* <WorkDetailHeader /> */}
-      <Outlet />
+      <WorkDetailHeader />
+      {children}
     </>
   );
 };

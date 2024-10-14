@@ -5,7 +5,6 @@ import Guest from '../pages/Guest/Guest';
 import App from '../App';
 import WorkDetail from '../pages/Work/WorkDetail';
 import DelayRouteWrapper from '../pages/Work/components/error/DelayRouteWrapper';
-import WorkDetailHeaderLayout from '../components/Layout/WorkDetailHeaderLayout';
 
 const router = createBrowserRouter([
   {

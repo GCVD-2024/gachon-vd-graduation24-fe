@@ -12,8 +12,11 @@ import ConceptReflecting from './components/ConceptReflecting/ConceptReflecting'
 import { useScroll } from '../../hooks/useScroll';
 import ScrollIndicator from './components/ScrollIndicator/ScrollIndicator';
 import ScrollToTopButton from './components/ScrollToTopButton/ScrollToTopButton';
+import { useIsMobile } from '../../hooks/useIsMobile';
+import Designers from './components/Designers/Designers';
 
 function About() {
+  const isMobile = useIsMobile();
   const { scrollProgress } = useScroll();
   const scrollPercentage = Math.round(scrollProgress);
 
@@ -27,18 +30,18 @@ function About() {
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           text="Going Up!"
         />
-        <ScrollIndicator scrollPercentage={scrollPercentage} />
-        <MainTitle scrollPercentage={scrollProgress} />
+        {isMobile ? <></> : <ScrollIndicator scrollPercentage={scrollPercentage} />}
+        <MainTitle />
         <ExhibitionInfo />
         <ExhibitionIntroduction />
         <ExhibitionMeaning />
         <GraduationCommittee />
-        <section>
-          <ConceptSavoring />
-          <ConceptExperiencing />
-          <ConceptImmersing />
-          <ConceptReflecting />
-        </section>
+
+        <ConceptSavoring />
+        <ConceptExperiencing />
+        <ConceptImmersing />
+        <ConceptReflecting />
+        <Designers />
       </AboutPage>
     </>
   );

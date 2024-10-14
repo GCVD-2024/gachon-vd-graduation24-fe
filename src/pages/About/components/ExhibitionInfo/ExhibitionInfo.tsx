@@ -1,10 +1,7 @@
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
 import styled from 'styled-components';
-import ScrollTrigger from 'gsap/ScrollTrigger';
 import { useRef } from 'react';
+import { useIsMobile } from '../../../../hooks/useIsMobile';
 
-gsap.registerPlugin(ScrollTrigger);
 interface InfoItem {
   label: string;
   content: string;
@@ -17,46 +14,19 @@ const infoItems: InfoItem[] = [
   { label: '장소', content: '가천대학교 비전타워 B1' },
 ];
 
-function ExhibitionInfo() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    if (!containerRef.current) return;
-
-    const titles = gsap.utils.toArray<HTMLElement>('.info_title');
-    const contents = gsap.utils.toArray<HTMLElement>('.info_content');
-
-    const animateElements = (
-      elements: HTMLElement[],
-      fromVars: gsap.TweenVars,
-      toVars: gsap.TweenVars
-    ) => {
-      elements.forEach((element, index) => {
-        gsap.fromTo(element, fromVars, {
-          ...toVars,
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 80%',
-            end: 'bottom 20%',
-          },
-          delay: index * 0.2,
-        });
-      });
-    };
-
-    animateElements(titles, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1 });
-    animateElements(contents, { opacity: 0 }, { opacity: 1, duration: 1 });
-  }, []);
+export default function ExhibitionInfo() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const isMobile = useIsMobile();
 
   return (
     <ExhibitionInfoWrapper ref={containerRef}>
-      <TitleContainer>
-        <Title className="info_title">Digging Club</Title>
-        <Subtitle className="info_title">발견의 여정 : 숨겨진 가능성을 찾아서</Subtitle>
+      <TitleContainer isMobile={isMobile}>
+        <Title className="info_title" isMobile={isMobile}>Digging Club</Title>
+        <Subtitle className="info_title" isMobile={isMobile}>발견의 여정 : 숨겨진 가능성을 찾아서</Subtitle>
 
         {infoItems.map((item, index) => (
-          <InfoSection className="info_content" key={index}>
-            <Label>{item.label}</Label>
+          <InfoSection className="info_content" key={index} isMobile={isMobile}>
+            <Label isMobile={isMobile}>{item.label}</Label>
             {item.content}
           </InfoSection>
         ))}
@@ -64,8 +34,6 @@ function ExhibitionInfo() {
     </ExhibitionInfoWrapper>
   );
 }
-
-export default ExhibitionInfo;
 
 const ExhibitionInfoWrapper = styled.div`
   height: 1080px;
@@ -75,10 +43,9 @@ const ExhibitionInfoWrapper = styled.div`
   text-align: center;
 `;
 
-const TitleContainer = styled.div`
-  width: 90%;
-  height: 961px;
-  /* TODO: 사이즈 수정 필요 */
+const TitleContainer = styled.div<{ isMobile: boolean }>`
+  width: ${props => props.isMobile ? '400px' : '830px'};
+  height: ${props => props.isMobile ? '400px' : '830px'};
   background-image: url('/about/ExhibitionInfo/exhibition-info-bg.svg');
   background-size: cover;
   background-position: center;
@@ -90,29 +57,26 @@ const TitleContainer = styled.div`
   align-items: center;
 `;
 
-const Title = styled.h1`
-  font-size: 80px;
+const Title = styled.h1<{ isMobile: boolean }>`
+  font-size: ${props => props.isMobile ? '24px' : '40px'};
   font-weight: 900;
-  line-height: 120%; /* 96px */
-  letter-spacing: -1.6px;
 `;
 
-const Subtitle = styled.h2`
-  margin-bottom: 200px;
-  font-size: 36px;
+const Subtitle = styled.h2<{ isMobile: boolean }>`
+  margin-bottom: ${props => props.isMobile ? '50px' : '139px'};
+  font-size: ${props => props.isMobile ? '10px' : '20px'};
   font-weight: 500;
-  line-height: 120%; /* 57.6px */
-  letter-spacing: -0.96px;
 `;
 
-const InfoSection = styled.div`
-  margin-bottom: 40px;
-  font-size: 24px;
+const InfoSection = styled.div<{ isMobile: boolean }>`
+  margin-bottom: 20px;
+  font-size: ${props => props.isMobile ? '10px' : '16px'};
   font-weight: 700;
-  line-height: normal;
 `;
 
-const Label = styled.span`
+const Label = styled.span<{ isMobile: boolean }>`
   margin-right: 8px;
-  color: #e44227;
+  font-size: ${props => props.isMobile ? '10px' : '16px'};
+  font-weight: 700;
+  color: #00b4db;
 `;

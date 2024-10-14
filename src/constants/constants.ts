@@ -9,7 +9,7 @@ export const MOBILE_BREAKPOINT = 768;
 // ABOUT PAGE
 
 // MainTitle.tsx
-export const EXHIBITION_TITLE = '2025 Gachon University College of Design';
+export const EXHIBITION_TITLE = '2024 Gachon University College of Design';
 export const EXHIBITION_DEPARTMENT = 'Department of Visual communication Design,';
 export const EXHIBITION_SUBTITLE = 'Graduation Exhibition';
 

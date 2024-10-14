@@ -11,15 +11,14 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-
-              <ReactQueryDevtools initialIsOpen={false} />
-              <HelmetProvider context={helmetContext}>
-                <ThemeProvider>
-                  <Layout>
-                    <Outlet />
-                  </Layout>
-                </ThemeProvider>
-              </HelmetProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <HelmetProvider context={helmetContext}>
+        <ThemeProvider>
+          <Layout>
+            <Outlet />
+          </Layout>
+        </ThemeProvider>
+      </HelmetProvider>
     </QueryClientProvider>
   );
 }

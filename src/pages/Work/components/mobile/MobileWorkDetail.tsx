@@ -32,8 +32,8 @@ const MobileWorkDetail = () => {
         <YouTube
           videoId={result.videoUrl}
           opts={{
-            width: '950',
-            height: '534',
+            width: '343',
+            height: '193',
             playerVars: {
               autoplay: 1,
               rel: 0,
@@ -65,14 +65,16 @@ const MobileWorkDetailPage = styled.div`
 `;
 
 const WorkDetailContent = styled.div`
-  margin-top: 33px;
+  margin-bottom: 4rem;
+
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const WorkImg = styled.img`
-  width: 950px;
-  min-height: 838px;
+  width: 34.3rem;
+  min-height: 60rem;
 
   object-fit: cover;
   background-color: gray;

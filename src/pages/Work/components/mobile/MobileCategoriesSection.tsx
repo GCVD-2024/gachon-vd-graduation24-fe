@@ -38,6 +38,7 @@ const MobileCategoriesWrapper = styled.section`
 
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   grid-gap: 0;
 `;
 
@@ -56,8 +57,19 @@ const CategoriesItem = styled.span<{ selected: boolean }>`
   font-weight: 900;
   color: ${({ theme, selected }) => (selected ? theme.colors.primary : 'white')};
 
-  border: 1px solid #fff;
-  /* box-sizing: border-box; */
-  /* margin: 0 -1px; */
   cursor: pointer;
+
+  border: 1px solid #fff;
+
+  &:nth-child(2),
+  &:nth-child(5) {
+    border-left: none;
+    border-right: none;
+  }
+
+  &:nth-child(1),
+  &:nth-child(2),
+  &:nth-child(3) {
+    border-bottom: none;
+  }
 `;

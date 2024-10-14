@@ -1,55 +1,28 @@
-import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
-import ScrollTrigger from 'gsap/ScrollTrigger';
 import styled from 'styled-components';
-import gsap from 'gsap';
+import { useIsMobile } from '../../../../hooks/useIsMobile';
 
-gsap.registerPlugin(ScrollTrigger);
-
-function ConceptSavoring() {
+export default function ConceptSavoring() {
   const containerRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    if (!containerRef.current) return;
-
-    const titles = gsap.utils.toArray<HTMLElement>('.savoring_title');
-    const contents = gsap.utils.toArray<HTMLElement>('.savoring_content');
-
-    const animateElements = (
-      elements: HTMLElement[],
-      fromVars: gsap.TweenVars,
-      toVars: gsap.TweenVars
-    ) => {
-      elements.forEach((element, index) => {
-        gsap.fromTo(element, fromVars, {
-          ...toVars,
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 5%',
-            end: 'bottom 20%',
-          },
-          delay: index * 0.2,
-        });
-      });
-    };
-
-    animateElements(titles, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1 });
-    animateElements(contents, { opacity: 0 }, { opacity: 1, duration: 1 });
-  }, []);
+  const isMobile = useIsMobile();
 
   return (
-    <PageWrapper ref={containerRef}>
-      <Title className="savoring_title">Savoring.</Title>
-      <Subtitle className="savoring_title">향유하다</Subtitle>
-      <DescriptionContainer>
-        <Description className="savoring_content">
+    <PageWrapper ref={containerRef} isMobile={isMobile}>
+      <Title className="savoring_title" isMobile={isMobile}>
+        Savoring.
+      </Title>
+      <Subtitle className="savoring_title" isMobile={isMobile}>
+        향유하다
+      </Subtitle>
+      <DescriptionContainer isMobile={isMobile}>
+        <Description className="savoring_content" isMobile={isMobile}>
           Savoring은 어떤 경험이나 감정을 깊이 있게 즐기고 음미하는 것을 의미한다.
           <br />
           Digging이 무언가를 탐구하고 발견하는 과정이라면,
           <br />
           Savoring은 그 과정에서 얻은 결과를 천천히 그리고 깊이 있게 즐기는 것이다.
         </Description>
-        <Description className="savoring_content">
+        <Description className="savoring_content" isMobile={isMobile}>
           우리는 Digging을 통해 발견한 것들을 Savoring함으로써
           <br />
           그것이 우리에게 주는 진정한 의미와 가치를 마음껏 누릴 수 있다.
@@ -59,49 +32,49 @@ function ConceptSavoring() {
   );
 }
 
-export default ConceptSavoring;
-
-const PageWrapper = styled.div`
-  height: 3000px;
+const PageWrapper = styled.div<{ isMobile: boolean }>`
+  height: ${(props) => (props.isMobile ? 'auto' : '3000px')};
+  min-height: ${(props) => (props.isMobile ? '100vh' : 'auto')};
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: ${(props) => (props.isMobile ? '40px 20px' : '0')};
 
   background-image: url('/about/ConceptSavoring/concept-savoring-bg.svg');
-  background-size: 100%;
+  background-size: ${(props) => (props.isMobile ? 'cover' : '100%')};
   background-position: center;
   background-repeat: no-repeat;
 `;
 
-const TitleText = styled.h1`
-  font-size: 76px;
+const TitleText = styled.h1<{ isMobile: boolean }>`
+  font-size: ${(props) => (props.isMobile ? '24px' : '40px')};
   font-weight: 800;
   line-height: 120%;
-  letter-spacing: -1.52px;
+  letter-spacing: ${(props) => (props.isMobile ? '-1.28px' : '-1.52px')};
   text-align: center;
 `;
 
 const Title = styled(TitleText)`
-  margin-bottom: 20px;
+  margin-bottom: ${(props) => (props.isMobile ? '10px' : '20px')};
 `;
 
 const Subtitle = styled(TitleText)`
-  margin-bottom: 150px;
+  margin-bottom: ${(props) => (props.isMobile ? '40px' : '85px')};
 `;
 
-const DescriptionContainer = styled.div`
+const DescriptionContainer = styled.div<{ isMobile: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 60px;
+  gap: ${(props) => (props.isMobile ? '30px' : '60px')};
 `;
 
-const Description = styled.p`
+const Description = styled.p<{ isMobile: boolean }>`
   text-align: center;
-  font-size: 24px;
+  font-size: ${(props) => (props.isMobile ? '12px' : '16px')};
   font-weight: 500;
   line-height: 140%;
-  letter-spacing: -0.64px;
+  letter-spacing: ${(props) => (props.isMobile ? '-0.56px' : '-0.64px')};
 `;

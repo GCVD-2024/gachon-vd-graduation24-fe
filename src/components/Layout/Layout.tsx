@@ -1,30 +1,69 @@
-// src/components/Layout/Layout.tsx
 import styled from 'styled-components';
 import { NAVIGATION_ITEMS } from '../../constants/constants';
 import { Link, useLocation } from 'react-router-dom';
 import { useIsMobile } from '../../hooks/useIsMobile';
+import { useEffect, useState } from 'react';
 
 function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
-  /* TO DO : 임시 설정 */
   const isMobile = useIsMobile();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
+
+  useEffect(() => {
+    if (isDrawerOpen === true) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    };
+  }, [isDrawerOpen]);
 
   return (
     <LayoutWrapper>
-      <Header
-        style={{
-          backgroundColor: location.pathname === '/' ? '#4E1006' : 'black',
-        }}
-      >
-        <Nav isMobile={isMobile}>
-          {NAVIGATION_ITEMS.map((item) => (
-            <NavLink key={item.name} to={item.path} isActive={location.pathname === item.path}>
-              {item.name}
-            </NavLink>
-          ))}
-        </Nav>
-      </Header>
-      <Main>{children}</Main>
+      <Nav isMobile={isMobile}>
+        {isMobile ? (
+          <>
+            <HamburgerButton onClick={toggleDrawer} src="/svg/hamburger.svg" />
+            <Drawer isOpen={isDrawerOpen}>
+              <DrawerContent>
+                <DrawerButton onClick={toggleDrawer} src="/svg/left-arrow.svg" />
+                <NavLinkContainer isMobile={isMobile}>
+                  {NAVIGATION_ITEMS.map((item) => (
+                    <NavLink
+                      key={item.name}
+                      to={item.path}
+                      isActive={location.pathname === item.path}
+                      onClick={toggleDrawer}
+                    >
+                      {item.name}
+                    </NavLink>
+                  ))}
+                </NavLinkContainer>
+              </DrawerContent>
+            </Drawer>
+          </>
+        ) : (
+          <NavLinkContainer isMobile={isMobile}>
+            {NAVIGATION_ITEMS.map((item) => (
+              <NavLink key={item.name} to={item.path} isActive={location.pathname === item.path}>
+                {item.name}
+              </NavLink>
+            ))}
+          </NavLinkContainer>
+        )}
+      </Nav>
+      {children}
     </LayoutWrapper>
   );
 }
@@ -36,38 +75,66 @@ const LayoutWrapper = styled.div`
   flex-direction: column;
 `;
 
-const Header = styled.header`
-  padding: ${(props) => props.theme.spacing.medium};
-  display: flex;
-  justify-content: center;
-`;
-
 interface NavProps {
   isMobile: boolean;
 }
 
 const Nav = styled.nav<NavProps>`
   display: flex;
-  /* TO DO : 임시 설정 */
-  gap: ${({ isMobile }) => (isMobile ? '20px' : '200px')};
-  font-size: ${({ isMobile }) => (isMobile ? '20px' : '32px')};
-  font-weight: 900;
-  line-height: 120%;
-  letter-spacing: -0.736px;
+  height: ${({ isMobile }) => (isMobile ? '44px' : '64px')};
+  justify-content: ${({ isMobile }) => (isMobile ? 'flex-start' : 'center')};
+  align-items: center;
+  padding-left: 16px;
 `;
 
-export interface NavLinkProps {
-  isActive: boolean;
+interface NavLinkContainerProps {
+  isMobile: boolean;
 }
 
-const NavLink = styled(Link)<NavLinkProps>`
-  transition: opacity 0.3s ease, color 0.3s ease;
-  color: ${({ isActive }) => (isActive ? '#FFFFFF' : '#966B6B')};
-  &:hover {
-    opacity: 1;
-  }
+const NavLinkContainer = styled.div<NavLinkContainerProps>`
+  display: flex;
+  flex-direction: ${({ isMobile }) => (isMobile ? 'column' : 'row')};
+  gap: ${({ isMobile }) => (isMobile ? '60px' : '200px')};
 `;
 
-const Main = styled.main`
-  flex: 1;
+interface NavLinkProps {
+  isActive: boolean;
+}
+const NavLink = styled(Link)<NavLinkProps>`
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 120%;
+  transition: opacity 0.3s ease, color 0.3s ease;
+  color: ${({ isActive }) => (isActive ? '#FFFFFF' : '#7CA2B0')};
+`;
+
+const HamburgerButton = styled.img`
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+`;
+
+const Drawer = styled.div<{ isOpen: boolean }>`
+  position: fixed;
+  top: 0;
+  left: ${({ isOpen }) => (isOpen ? '0' : '-250px')};
+  width: 150px;
+  height: 100%;
+  background-color: #000000;
+  transition: left 0.3s ease-in-out;
+  z-index: 10000000;
+`;
+
+const DrawerContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+`;
+
+const DrawerButton = styled.img`
+  cursor: pointer;
+  margin: 50px 0px;
+  width: 24px;
+  height: 24px;
 `;

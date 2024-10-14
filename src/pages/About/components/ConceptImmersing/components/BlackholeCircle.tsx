@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useIsMobile } from '../../../../../hooks/useIsMobile';
 
 interface Particle {
   x: number;
@@ -15,6 +16,7 @@ interface Particle {
 export default function BlackholeCircle() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -24,19 +26,19 @@ export default function BlackholeCircle() {
     if (!ctx) return;
 
     const particles: Particle[] = [];
-    const particleCount = 1500;
+    const particleCount = isMobile ? 750 : 1500;
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
-    const circleRadius = 250;
-    const trailLength = 10;
+    const circleRadius = isMobile ? 125 : 250;
+    const trailLength = isMobile ? 5 : 10;
 
     for (let i = 0; i < particleCount; i++) {
       const angle = Math.random() * Math.PI * 2;
-      const distance = Math.random() * (canvas.width / 2 - circleRadius - 150) + circleRadius;
+      const distance = Math.random() * (canvas.width / 2 - circleRadius - (isMobile ? 75 : 150)) + circleRadius;
       particles.push({
         x: centerX + Math.cos(angle) * distance,
         y: centerY + Math.sin(angle) * distance,
-        radius: Math.random() * 2,
+        radius: Math.random() * (isMobile ? 1 : 2),
         angle: angle,
         speed: Math.random() * 0.002 + 0.001,
         distance: distance,
@@ -54,15 +56,15 @@ export default function BlackholeCircle() {
 
       ctx.beginPath();
       ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(228, 66, 39, 1)';
+      ctx.strokeStyle = 'rgba(0, 180, 219, 1)';
       ctx.stroke();
 
-      ctx.fillStyle = 'rgba(228, 66, 39, 1)';
-      ctx.font = 'bold 70px Arial';
+      ctx.fillStyle = 'rgba(0, 180, 219, 1)';
+      ctx.font = `bold ${isMobile ? '35px' : '70px'} Arial`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText('Immersing', centerX, centerY - 50);
-      ctx.fillText('몰입하다', centerX, centerY + 50);
+      ctx.fillText('Immersing', centerX, centerY - (isMobile ? 25 : 50));
+      ctx.fillText('몰입하다', centerX, centerY + (isMobile ? 25 : 50));
 
       particles.forEach((particle) => {
         if (isHovered) {
@@ -95,7 +97,7 @@ export default function BlackholeCircle() {
 
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(228, 66, 39, 1)';
+        ctx.fillStyle = 'rgba(0, 180, 219, 1)';
         ctx.fill();
       });
 
@@ -107,17 +109,25 @@ export default function BlackholeCircle() {
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [isHovered]);
+  }, [isHovered, isMobile]);
 
   return (
-    <Circle onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-      <Canvas ref={canvasRef} width={1055} height={1055} />
+    <Circle 
+      onMouseEnter={() => setIsHovered(true)} 
+      onMouseLeave={() => setIsHovered(false)}
+      isMobile={isMobile}
+    >
+      <Canvas ref={canvasRef} width={isMobile ? 343 : 884} height={isMobile ? 343 : 884} />
     </Circle>
   );
 }
 
-const Circle = styled.div`
+const Circle = styled.div<{ isMobile: boolean }>`
+  width: ${props => props.isMobile ? '343px' : '884px'};
+  height: ${props => props.isMobile ? '343px' : '884px'};
 `;
 
 const Canvas = styled.canvas`
+  width: 100%;
+  height: 100%;
 `;

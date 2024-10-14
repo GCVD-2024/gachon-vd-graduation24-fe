@@ -1,19 +1,21 @@
 import styled, { keyframes } from 'styled-components';
+import { useIsMobile } from '../../../../../hooks/useIsMobile';
 
 interface MarqueeProps {
   marqueeText: string;
 }
 
 export default function Marquee({ marqueeText }: MarqueeProps) {
+  const isMobile = useIsMobile();
   return (
     <>
-      <Content>
-        <MarqueeContainer>
+      <Content isMobile={isMobile}>
+        <MarqueeContainer isMobile={isMobile}>
           <MarqueeBlur>
-            <MarqueeText>{marqueeText}</MarqueeText>
+            <MarqueeText isMobile={isMobile}>{marqueeText}</MarqueeText>
           </MarqueeBlur>
           <MarqueeClear>
-            <MarqueeText>{marqueeText}</MarqueeText>
+            <MarqueeText isMobile={isMobile}>{marqueeText}</MarqueeText>
           </MarqueeClear>
         </MarqueeContainer>
       </Content>
@@ -21,9 +23,9 @@ export default function Marquee({ marqueeText }: MarqueeProps) {
   );
 }
 
-const Content = styled.div`
-  width: 1360px;
-  height: 396px;
+const Content = styled.div<{ isMobile: boolean }>`
+  width: ${(props) => (props.isMobile ? '343px' : '1060px')};
+  height: ${(props) => (props.isMobile ? '100px' : '320px')};
 `;
 
 const marqueeAnimation = keyframes`
@@ -31,17 +33,16 @@ const marqueeAnimation = keyframes`
   to { translate: -70%; }
 `;
 
-const MarqueeContainer = styled.div`
+const MarqueeContainer = styled.div<{ isMobile: boolean }>`
   position: relative;
-  height: 396px;
-  font-size: 5em;
+  height: ${(props) => (props.isMobile ? '100px' : '320px')};
   display: grid;
   place-items: center;
   overflow: hidden;
 `;
 
-const MarqueeText = styled.p`
-  font-size: 200px;
+const MarqueeText = styled.p<{ isMobile: boolean }>`
+  font-size: ${(props) => (props.isMobile ? '50px' : '200px')};
   font-weight: 800;
   position: absolute;
   min-width: 100%;
@@ -55,8 +56,8 @@ const MarqueeBlur = styled.div`
   display: grid;
   place-items: center;
   background-color: black;
-  background-image: linear-gradient(to right, rgba(228, 66, 39, 1), 1rem, transparent 50%),
-    linear-gradient(to left, rgba(228, 66, 39, 1), 1rem, transparent 50%);
+  background-image: linear-gradient(to right, rgba(0, 180, 219, 1), 1rem, transparent 50%),
+    linear-gradient(to left, rgba(0, 180, 219, 1), 1rem, transparent 50%);
   filter: contrast(15);
 
   p {

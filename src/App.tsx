@@ -7,19 +7,24 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 function App() {
   const helmetContext = {};
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        throwOnError: true,
+      },
+    },
+  });
 
   return (
     <QueryClientProvider client={queryClient}>
-
-              <ReactQueryDevtools initialIsOpen={false} />
-              <HelmetProvider context={helmetContext}>
-                <ThemeProvider>
-                  <Layout>
-                    <Outlet />
-                  </Layout>
-                </ThemeProvider>
-              </HelmetProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <HelmetProvider context={helmetContext}>
+        <ThemeProvider>
+          <Layout>
+            <Outlet />
+          </Layout>
+        </ThemeProvider>
+      </HelmetProvider>
     </QueryClientProvider>
   );
 }

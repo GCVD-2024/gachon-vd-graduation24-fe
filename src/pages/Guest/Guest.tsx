@@ -3,53 +3,41 @@ import styled, { keyframes, css } from 'styled-components';
 import background from '../../assets/img/bg_guest.png';
 import { useGetGuestBookList } from '../../hooks/queries/guestBook/useGetGuestBook';
 import { IGuestBookData, usePostGuestBook } from '../../hooks/mutations/guestBook/usePostGuestBook';
+import GuestBookEntry from './components/GuestBookEntry';
+import queryClient from '../../api/queyrClient';
+import { GUEST_KEYS } from '../../constants/QueryKey';
 
 const Guest = () => {
-  const { data: guestBookData, isPending, isError } = useGetGuestBookList();
+  const { data: guestBookData } = useGetGuestBookList();
+  console.log('실행', guestBookData);
   const { GuestBookMutation } = usePostGuestBook();
 
   const [nameValue, setNameValue] = useState<string>('');
   const [commentValue, setCommentValue] = useState<string>('');
-  const [circles, setCircles] = useState<
-    { id: number; text: string; position: { top: string; left: string }; animate: boolean }[]
+  const [guestEntries, setGuestEntries] = useState<
+    {
+      id: number;
+      nickname: string;
+      content: string;
+      timestamp: string;
+      twinkle: boolean;
+    }[]
   >([]);
-  const [circleId, setCircleId] = useState<number>(0);
+  const [entryId, setEntryId] = useState<number>(0);
 
-  const safeZone = {
-    topStart: 73,
-    topEnd: 100,
-    leftStart: 10,
-    leftEnd: 90,
-  };
-
-  const randomPosition = () => {
-    let top, left;
-
-    do {
-      top = Math.random() * 90;
-      left = Math.random() * 90;
-    } while (
-      top >= safeZone.topStart &&
-      top <= safeZone.topEnd &&
-      left >= safeZone.leftStart &&
-      left <= safeZone.leftEnd
-    );
-
-    return { top: `${top}%`, left: `${left}%` };
-  };
-
-  const initialCircles = useMemo(
+  const initialEntries = useMemo(
     () =>
       guestBookData?.guestbooks?.map((guest, index) => ({
         id: index,
-        text: `${guest.nickname}: ${guest.content}`,
-        position: randomPosition(),
-        animate: false,
+        nickname: guest.nickname,
+        content: guest.content,
+        timestamp: guest.createdAt,
+        twinkle: false,
       })) || [],
     [guestBookData]
   );
 
-  const allCircles = [...initialCircles, ...circles];
+  const allEntries = [...initialEntries, ...guestEntries];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -66,17 +54,31 @@ const Guest = () => {
     try {
       await GuestBookMutation.mutateAsync(newGuestBookData);
 
-      const newCircle = {
-        id: circleId + initialCircles.length,
-        text: `${nameValue}: ${commentValue}`,
-        position: randomPosition(),
-        animate: true,
+      const newEntry = {
+        id: entryId + initialEntries.length,
+        nickname: nameValue,
+        content: commentValue,
+        timestamp: new Date().toLocaleString(),
+        twinkle: true,
       };
 
-      setCircles([...circles, newCircle]);
-      setCircleId(circleId + 1);
+      setGuestEntries([...guestEntries, newEntry]);
+      setEntryId(entryId + 1);
       setNameValue('');
       setCommentValue('');
+
+      queryClient.invalidateQueries({
+        queryKey: GUEST_KEYS.all,
+      });
+
+      // twinkle 애니메이션이 끝난 후 twinkle 상태를 false로 변경
+      setTimeout(() => {
+        setGuestEntries((prevEntries) =>
+          prevEntries.map((entry) =>
+            entry.id === newEntry.id ? { ...entry, twinkle: false } : entry
+          )
+        );
+      }, 1000);
     } catch (error) {
       console.error('방명록 전송 실패 -- ✈️ :', error);
     }
@@ -85,6 +87,8 @@ const Guest = () => {
   return (
     <GuestPage>
       <img src={background} alt="background" />
+
+      <Title>WHAT DID YOU DIG ?</Title>
 
       <ComentContainer>
         <TextContainer>
@@ -109,95 +113,35 @@ const Guest = () => {
         </TextContainer>
       </ComentContainer>
 
-      {allCircles.map((circle) => (
-        <Circle
-          key={circle.id}
-          style={{ top: circle.position.top, left: circle.position.left }}
-          animate={circle.animate}
-        >
-          {circle.text}
-        </Circle>
-      ))}
+      <EntriesContainer>
+        {allEntries.map((entry) => (
+          <EntryWrapper key={entry.id} twinkle={entry.twinkle}>
+            <GuestBookEntry
+              nickname={entry.nickname}
+              content={entry.content}
+              timestamp={entry.timestamp}
+            />
+          </EntryWrapper>
+        ))}
+      </EntriesContainer>
     </GuestPage>
   );
 };
 
 export default Guest;
-const shootUp = keyframes`
-  0% {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-100%);
-    opacity: 1;
-  }
-`;
 
-const Circle = styled.div<{ animate: boolean }>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 1px solid ${({ theme }) => theme.colors.primaryBlue};
-  background: radial-gradient(50% 50% at 50% 50%, #8eebff 23%, #fff 118%);
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  z-index: 10;
-
-  ${({ animate }) =>
-    animate &&
-    css`
-      animation: ${shootUp} 1s ease-out forwards;
-    `};
-`;
-
-const ComentContainer = styled.article`
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  gap: 0.5rem;
-  padding-bottom: 3%;
-  min-width: 700px;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 0;
-`;
-
-const TextInputContainer = styled.article`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
+const Title = styled.h1``;
 
 const GuestPage = styled.main`
   width: 100vw;
   height: calc(100vh - 73px);
   background: radial-gradient(41.45% 43.19% at 50% 50%, #00b4db 0%, #000 100%);
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-x: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-
-  h1 {
-    text-align: center;
-    text-shadow: 0px -4px 10px rgba(92, 37, 37, 0.3);
-    font-size: 100px;
-    font-style: normal;
-    font-weight: 900;
-    color: ${({ theme }) => theme.colors.primaryBlue};
-    line-height: 100%;
-  }
+  padding-bottom: 160px;
 
   img {
     position: absolute;
@@ -208,15 +152,67 @@ const GuestPage = styled.main`
   }
 `;
 
+const EntriesContainer = styled.div`
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  overflow-x: scroll;
+  justify-content: center;
+
+  padding: 20px;
+  margin-bottom: 3rem;
+`;
+
+const EntryWrapper = styled.div<{ twinkle: boolean }>`
+  margin-top: 2rem;
+  ${({ twinkle }) =>
+    twinkle &&
+    css`
+      animation: ${shootUp} 1s ease-out forwards;
+    `};
+`;
+
+const shootUp = keyframes`
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+`;
+
+const ComentContainer = styled.article`
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  width: 60%;
+  gap: 0.5rem;
+  padding-bottom: 3%;
+
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
+const TextInputContainer = styled.article`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+`;
+
 const TextContainer = styled.section`
   display: flex;
-  margin: 0 auto;
   gap: 2rem;
-  width: 100%;
 `;
 
 const SubmitButton = styled.button`
-  width: 170px;
   height: 160px;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.primaryBlue};
@@ -243,6 +239,7 @@ const SubmitButton = styled.button`
 
 const NameInput = styled.input`
   display: flex;
+
   font-size: 18px;
   height: 60%;
   color: white;
@@ -276,7 +273,7 @@ const TextInput = styled.input`
   }
 
   &:focus {
-    border-color: ${({ theme }) => theme.colors.primary};
-    box-shadow: 0 0 5px ${({ theme }) => theme.colors.primary};
+    border-color: ${({ theme }) => theme.colors.primaryBlue};
+    box-shadow: 0 0 5px ${({ theme }) => theme.colors.primaryBlue};
   }
 `;

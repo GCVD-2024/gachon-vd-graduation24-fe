@@ -1,32 +1,40 @@
-// import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
+import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { ResponseType } from '../types/types';
 
-// function handleFetchError(response: Response) {
-//   if (!response.ok) {
-//     return response.json().then((data) => {
-//       const errorCode = data.errorCode || 'UNKNOWN_ERROR'; // Adjust based on your API response
-//       const errorMessage = data.message || 'An error occurred';
-//       throw new Error(`[${errorCode}] ${errorMessage}`);
-//     });
-//   }
-// }
+// [TODO] 체크 필요
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error, query) => {
+      console.log('🔯 Query onError');
+      console.log(error, query.meta);
 
-// const queryClient = new QueryClient({
-//   queryCache: new QueryCache({
-//     onError: (error, query) => {
-//       console.log('🔯 Query onError');
-//       console.log(error, query.meta);
+      handleAxiosError(error);
+    },
+  }),
+  mutationCache: new MutationCache({
+    onError: (error, _variables, _context, mutation) => {
+      console.log('🔯 Mutation onError');
+      console.log(error);
 
-//       handleFetchError;
-//     },
-//   }),
-//   mutationCache: new MutationCache({
-//     onError: (error, _variables, _context) => {
-//       console.log('🔯 Mutation onError');
-//       console.log(error);
+      handleAxiosError(error);
+    },
+  }),
+});
 
-//       handleFetchError;
-//     },
-//   }),
-// });
+function isAxiosError(error: any): error is AxiosError {
+  return (error as AxiosError).isAxiosError !== undefined;
+}
 
-// export default queryClient;
+function handleAxiosError(error: any) {
+  if (isAxiosError(error) && error.response) {
+    const errorCode = (error.response.data as ResponseType<string>);
+    const errorMessage = (error.response.data as ResponseType<string>).message;
+
+    if (errorCode) {
+      error.message = `[${errorCode}] ${errorMessage}`;
+    }
+  }
+}
+
+export default queryClient;

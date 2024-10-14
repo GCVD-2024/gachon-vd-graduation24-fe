@@ -11,6 +11,7 @@ const Guest = () => {
   const { data: guestBookData } = useGetGuestBookList();
   console.log('실행', guestBookData);
   const { GuestBookMutation } = usePostGuestBook();
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
   const [nameValue, setNameValue] = useState<string>('');
   const [commentValue, setCommentValue] = useState<string>('');
@@ -58,7 +59,7 @@ const Guest = () => {
         id: entryId + initialEntries.length,
         nickname: nameValue,
         content: commentValue,
-        timestamp: new Date().toLocaleString(),
+        timestamp: new Date().toISOString(),
         twinkle: true,
       };
 
@@ -66,18 +67,20 @@ const Guest = () => {
       setEntryId(entryId + 1);
       setNameValue('');
       setCommentValue('');
-
+      setIsAnimating(true);
+      useGetGuestBookList();
       queryClient.invalidateQueries({
         queryKey: GUEST_KEYS.all,
       });
 
-      // twinkle 애니메이션이 끝난 후 twinkle 상태를 false로 변경
       setTimeout(() => {
         setGuestEntries((prevEntries) =>
           prevEntries.map((entry) =>
             entry.id === newEntry.id ? { ...entry, twinkle: false } : entry
           )
         );
+
+        setIsAnimating(false);
       }, 1000);
     } catch (error) {
       console.error('방명록 전송 실패 -- ✈️ :', error);
@@ -109,7 +112,9 @@ const Guest = () => {
             />
           </TextInputContainer>
 
-          <SubmitButton onClick={handleSubmit}>DIGGING!</SubmitButton>
+          <SubmitButton onClick={handleSubmit} isAnimating={isAnimating}>
+            DIGGING!
+          </SubmitButton>
         </TextContainer>
       </ComentContainer>
 
@@ -130,7 +135,30 @@ const Guest = () => {
 
 export default Guest;
 
-const Title = styled.h1``;
+const expandCircle = keyframes`
+  0% {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+  }
+  50% {
+    width: 300px;
+    height: 100px;
+    border-radius: 50px;
+  }
+  100% {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+  }
+`;
+
+const Title = styled.h1`
+  font-size: 40px;
+  font-weight: 900;
+  color: ${({ theme }) => theme.colors.primaryBlue};
+  line-height: normal;
+`;
 
 const GuestPage = styled.main`
   width: 100vw;
@@ -160,7 +188,7 @@ const EntriesContainer = styled.div`
   justify-content: center;
 
   padding: 20px;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
 `;
 
 const EntryWrapper = styled.div<{ twinkle: boolean }>`
@@ -212,7 +240,7 @@ const TextContainer = styled.section`
   gap: 2rem;
 `;
 
-const SubmitButton = styled.button`
+const SubmitButton = styled.button<{ isAnimating: boolean }>`
   height: 160px;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.primaryBlue};
@@ -231,6 +259,8 @@ const SubmitButton = styled.button`
   font-weight: 900;
   line-height: 120%;
   transition: background-color 0.3s ease;
+
+  animation: ${({ isAnimating }) => (isAnimating ? expandCircle : 'none')} 1s ease;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.primaryBlue};

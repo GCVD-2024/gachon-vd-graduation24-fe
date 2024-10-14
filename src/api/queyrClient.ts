@@ -13,7 +13,7 @@ const queryClient = new QueryClient({
     },
   }),
   mutationCache: new MutationCache({
-    onError: (error, _variables, _context, mutation) => {
+    onError: (error, _variables, _context) => {
       console.log('🔯 Mutation onError');
       console.log(error);
 
@@ -28,7 +28,7 @@ function isAxiosError(error: any): error is AxiosError {
 
 function handleAxiosError(error: any) {
   if (isAxiosError(error) && error.response) {
-    const errorCode = (error.response.data as ResponseType<string>);
+    const errorCode = error.response.data as ResponseType<string>;
     const errorMessage = (error.response.data as ResponseType<string>).message;
 
     if (errorCode) {

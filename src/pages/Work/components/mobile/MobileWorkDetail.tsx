@@ -20,8 +20,6 @@ const MobileWorkDetail = () => {
   if (!result) {
     return <MobileWorkDetailPage />;
   }
-  console.log('DATA', result);
-  console.log('유튜브 링크', result.videoUrl);
   return (
     <>
       <WorkDetailHeaderLayout>

@@ -27,7 +27,7 @@ export default MobileWorkInfoSection;
 
 const WorkInfoWrapper = styled.section`
   width: 100%;
-  min-width: 38rem;
+  min-width: 37.5rem;
 
   display: flex;
   flex-direction: column;
@@ -35,6 +35,8 @@ const WorkInfoWrapper = styled.section`
 
 const MobileCategoryWrapper = styled.div`
   width: 100%;
+  min-width: 37.5rem;
+
   height: 6.2rem;
   margin-bottom: 4rem;
 
@@ -70,14 +72,19 @@ const AuthorSpan = styled.span`
 `;
 
 const InfoBodyWrapper = styled.div`
+  width: 100%;
+  min-width: 37.5rem;
+
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   padding: 0 1.6rem;
 `;
 
 const WorkTitle = styled.span`
   margin-bottom: 1.2rem;
+
   font: ${({ theme }) => theme.fonts.Primary};
   font-size: 2.4rem;
   font-style: normal;

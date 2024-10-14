@@ -22,8 +22,6 @@ const WorkDetail = () => {
   if (!result) {
     return <WorkDetailPage />;
   }
-  console.log('DATA', result);
-  console.log('유튜브 링크', result.videoUrl?.split('/').pop());
   return isMobile ? (
     <MobileWorkDetail />
   ) : (
@@ -32,7 +30,7 @@ const WorkDetail = () => {
       <WorkDetailContent>
         {result.videoUrl ? (
           <YouTube
-            videoId={result.videoUrl}
+            videoId={result.videoUrl.split('/').pop()}
             opts={{
               width: '950',
               height: '534',

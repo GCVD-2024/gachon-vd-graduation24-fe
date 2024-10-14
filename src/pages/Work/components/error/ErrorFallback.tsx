@@ -7,8 +7,6 @@ import { FallbackProps } from 'react-error-boundary';
 const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   const navigate = useNavigate();
 
-  console.log('ERROR', error);
-
   return (
     <DelayedComponent>
       <ErrorWrapper>

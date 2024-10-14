@@ -8,11 +8,15 @@ export const useGetWorkList = ({ category, currentPage }: WorkListRequestType) =
     queryKey: WORK_KEYS.list(category, currentPage),
     queryFn: ({ pageParam = currentPage }) => getWorkList(category, pageParam),
     getNextPageParam: (lastPage, allPages) => {
-      return lastPage?.length === 10 ? allPages.length + 1 : null;
+      console.log('LASTPAGE', lastPage);
+      if (lastPage && Array.isArray(lastPage) && lastPage.length === 10) {
+        return allPages.length + 1;
+      }
+      return null;
     },
     initialPageParam: 1,
     select: (data) => ({
-      pages: data?.pages.flatMap((page) => page),
+      pages: data?.pages.flatMap((page) => page) || [],
       pageParams: data.pageParams,
     }),
   });
@@ -37,5 +41,6 @@ const getWorkList = async (category: string, currentPage: number) => {
   const res = await get<WorkListResponseType>(
     `work?category=${mappedCategory}&currentPage=${currentPage}`
   );
+  console.log('API Response:', res);
   return res.result.works as WorkListType[];
 };

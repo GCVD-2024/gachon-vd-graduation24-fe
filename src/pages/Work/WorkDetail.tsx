@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import WorkInfoSection from './components/WorkInfoSection';
+import WorkInfoSection from './components/workDetail/WorkInfoSection';
 import YouTube from 'react-youtube';
 import { useGetWorkDetail } from '../../hooks/queries/useGetWorkDetail';
 import { useParams } from 'react-router-dom';

@@ -21,8 +21,21 @@ export const useGetWorkList = ({ category, currentPage }: WorkListRequestType) =
 };
 
 const getWorkList = async (category: string, currentPage: number) => {
+  const mappedCategory = (() => {
+    switch (category) {
+      case 'ILLUST':
+        return 'ILLUSTRATION';
+      case 'UX':
+        return 'UXUI';
+      case 'BRAND':
+        return 'BX';
+      default:
+        return category;
+    }
+  })();
+
   const res = await get<WorkListResponseType>(
-    `work?category=${category}&currentPage=${currentPage}`
+    `work?category=${mappedCategory}&currentPage=${currentPage}`
   );
   return res.result.works as WorkListType[];
 };

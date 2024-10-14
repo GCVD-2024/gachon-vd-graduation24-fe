@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { WorkDetailType } from '../../../types/types';
+import { WorkDetailType } from '../../../../types/types';
 interface WorkInfoSectionProps {
   data: WorkDetailType;
 }

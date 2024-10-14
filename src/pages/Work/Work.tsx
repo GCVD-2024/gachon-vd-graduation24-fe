@@ -1,12 +1,12 @@
 import { Helmet } from 'react-helmet-async';
-import CategoriesSection from './components/CategoriesSection';
-import ExhibitionSection from './components/ExhibitionSection';
+import CategoriesSection from './components/work/CategoriesSection';
+import ExhibitionSection from './components/work/ExhibitionSection';
 import styled from 'styled-components';
 import { useGetWorkList } from '../../hooks/queries/useGetWorkList';
 import { useState } from 'react';
 import { Category } from '../../types/types';
 import { useIsMobile } from '../../hooks/useIsMobile';
-import MobileCategoriesSection from './components/mobile/MobileCategoriesSection';
+import MobileHeader from './components/mobile/MobileHeader';
 
 function Work() {
   const [category, setCategory] = useState<Category>('ALL');
@@ -23,7 +23,7 @@ function Work() {
       </Helmet>
       {isMobile ? (
         <MobileDiv>
-          <MobileCategoriesSection category={category} setCategory={setCategory} />
+          <MobileHeader category={category} setCategory={setCategory} />
           <ExhibitionSection
             data={data}
             hasNextPage={hasNextPage}
@@ -62,8 +62,6 @@ const NotMobileDiv = styled.div`
 `;
 
 const MobileDiv = styled.div`
-  padding: 2rem 0;
-
   display: flex;
   flex-direction: column;
   align-items: center;

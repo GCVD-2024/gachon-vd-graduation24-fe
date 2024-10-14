@@ -1,8 +1,8 @@
 import { styled } from 'styled-components';
-import WorkCardItem from './WorkCardItem';
-import { WorkListType } from '../../../types/types';
-import { useIntersectionObserver } from '../../../hooks/useIntersectionObserver';
+import { WorkListType } from '../../../../types/types';
+import { useIntersectionObserver } from '../../../../hooks/useIntersectionObserver';
 import { InfiniteQueryObserverResult } from '@tanstack/react-query';
+import WorkCardItem from './WorkCardItem';
 
 interface ExhibitionSectionProps {
   data:
@@ -34,7 +34,6 @@ const ExhibitionSection = ({
     fetchNextPage,
   });
 
-  console.log('data', data);
   return (
     <ExhibitionWrapper isMobile={isMobile}>
       {data?.pages.map((work, index) => {

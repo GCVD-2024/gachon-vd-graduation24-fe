@@ -1,4 +1,4 @@
-import WorkDetailHeader from '../../pages/Work/components/WorkDetailHeader';
+import WorkDetailHeader from '../../pages/Work/components/workDetail/WorkDetailHeader';
 
 interface WorkDetailHeaderLayoutProps {
   children: React.ReactNode;

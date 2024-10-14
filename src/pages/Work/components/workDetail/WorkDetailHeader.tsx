@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import IcLeft from '../../../assets/icons/left.svg';
+import IcLeft from '../../../../assets/icons/left.svg';
 import { styled } from 'styled-components';
 
 const WorkDetailHeader = () => {

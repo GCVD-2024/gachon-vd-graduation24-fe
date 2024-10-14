@@ -1,9 +1,9 @@
 import { styled } from 'styled-components';
-import { Category } from '../../../types/types';
-import { CATEGORIES } from '../../../constants/constants';
+import { Category } from '../../../../types/types';
+import { CATEGORIES } from '../../../../constants/constants';
 import { useQueryClient } from '@tanstack/react-query';
-import { usePrefetchWorkList } from '../../../hooks/queries/usePrefetchWorkList';
-import { WORK_KEYS } from '../../../constants/QueryKey';
+import { usePrefetchWorkList } from '../../../../hooks/queries/usePrefetchWorkList';
+import { WORK_KEYS } from '../../../../constants/QueryKey';
 
 interface CategoriesSectionProps {
   category: Category;

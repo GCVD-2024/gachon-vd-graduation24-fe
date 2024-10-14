@@ -33,17 +33,18 @@ const MobileCategoriesSection = ({ category, setCategory }: MobileCategoriesSect
 export default MobileCategoriesSection;
 
 const MobileCategoriesWrapper = styled.section`
-  position: fixed;
   min-width: 34.3rem;
 
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-gap: 0;
+
+  background-color: #121212;
 `;
 
 const CategoriesItem = styled.span<{ selected: boolean }>`
-  width: 11.4rem;
+  /* width: 11.4rem; */
   height: 4.4rem;
 
   display: flex;

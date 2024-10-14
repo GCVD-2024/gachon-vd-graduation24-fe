@@ -53,8 +53,8 @@ const WorkDetail = () => {
 export default WorkDetail;
 
 const WorkDetailPage = styled.div`
-  padding-top: 6rem;
-  padding-bottom: 10.4rem;
+  margin-top: 6rem;
+  margin-bottom: 10.4rem;
 
   display: flex;
   justify-content: center;

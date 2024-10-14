@@ -23,7 +23,7 @@ const WorkInfoSection = ({ data }: WorkInfoSectionProps) => {
 export default WorkInfoSection;
 
 const WorkInfoWrapper = styled.section`
-  width: 3.8rem;
+  width: 29rem;
 
   display: flex;
   flex-direction: column;

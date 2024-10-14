@@ -1,9 +1,9 @@
 import { styled } from 'styled-components';
-import { Category } from '../../../types/types';
-import { CATEGORIES } from '../../../constants/constants';
+import { Category } from '../../../../types/types';
+import { CATEGORIES } from '../../../../constants/constants';
 import { useQueryClient } from '@tanstack/react-query';
-import { usePrefetchWorkList } from '../../../hooks/queries/usePrefetchWorkList';
-import { WORK_KEYS } from '../../../constants/QueryKey';
+import { usePrefetchWorkList } from '../../../../hooks/queries/usePrefetchWorkList';
+import { WORK_KEYS } from '../../../../constants/QueryKey';
 
 interface CategoriesSectionProps {
   category: Category;
@@ -42,7 +42,8 @@ const CategoriesWrapper = styled.section`
 `;
 
 const CategoriesItem = styled.span<{ selected: boolean }>`
-  font-size: 40px;
+  ${({ theme }) => theme.fonts.primary};
+  font-size: 4rem;
   line-height: 120%;
   color: ${({ theme, selected }) => (selected ? theme.colors.primary : 'white')};
 

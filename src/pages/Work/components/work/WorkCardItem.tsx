@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import '../../../styles/animations.css';
-import { usePrefetchWorkDetail } from '../../../hooks/queries/usePrefetchWorkDetail';
+import '../../../../styles/animations.css';
+import { usePrefetchWorkDetail } from '../../../../hooks/queries/usePrefetchWorkDetail';
+import { useIsMobile } from '../../../../hooks/useIsMobile';
 
 interface CardInfoProps {
   name: string;
@@ -14,6 +15,7 @@ interface CardInfoProps {
 const WorkCardItem = ({ name, title, imgUrl, isLastItem, setTarget }: CardInfoProps) => {
   const navigate = useNavigate();
   const { prefetchWorkDetail } = usePrefetchWorkDetail();
+  const isMobile = useIsMobile();
 
   const handleClick = () => {
     prefetchWorkDetail(name, title);
@@ -24,31 +26,27 @@ const WorkCardItem = ({ name, title, imgUrl, isLastItem, setTarget }: CardInfoPr
     <WorkCardItemWrapper
       onClick={handleClick}
       imgUrl={imgUrl}
-      ref={isLastItem ? setTarget : undefined}
-    >
-      <ItemSpan>{name}</ItemSpan>
-      <ItemSpan>{title}</ItemSpan>
-    </WorkCardItemWrapper>
+      ref={isLastItem ? setTarget : null}
+      isMobile={isMobile}
+    />
   );
 };
 
 export default WorkCardItem;
 
-const WorkCardItemWrapper = styled.div<{ imgUrl?: string }>`
-  width: 466px;
-  height: 262px;
+const WorkCardItemWrapper = styled.div<{ imgUrl?: string; isMobile: boolean }>`
+  width: ${({ isMobile }) => (isMobile ? '34.3rem' : '46.6rem')};
+  height: ${({ isMobile }) => (isMobile ? '19rem' : '26.2rem')};
   flex-shrink: 0;
-  padding: 27.85px 27.91px;
 
   display: flex;
   flex-direction: column;
   justify-content: end;
-  row-gap: 11.14px;
 
-  border: 2px solid white;
+  border: ${({ isMobile }) => (isMobile ? '1px' : '2px')} solid white;
 
   background-color: gray;
-  background-image: ${({ imgUrl }) => imgUrl || ''};
+  background-image: ${({ imgUrl }) => (imgUrl ? `url(${imgUrl})` : '')};
   background-size: cover;
   background-position: center;
 
@@ -64,9 +62,4 @@ const WorkCardItemWrapper = styled.div<{ imgUrl?: string }>`
     -webkit-animation-iteration-count: 1;
     animation-iteration-count: 1;
   }
-`;
-
-const ItemSpan = styled.span`
-  font-size: 16px;
-  line-height: 100%;
 `;

@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Category } from '../../types/types';
 import { useIsMobile } from '../../hooks/useIsMobile';
 import MobileHeader from './components/mobile/MobileHeader';
+import background from '../../assets/img/workBackground.png';
 
 const Work = () => {
   const [category, setCategory] = useState<Category>('ALL');
@@ -18,6 +19,7 @@ const Work = () => {
 
   return (
     <WorkPage>
+      <img src={background} />
       <Helmet>
         <title>Digging Club - Work</title>
       </Helmet>
@@ -55,14 +57,27 @@ const WorkPage = styled.div`
 
   display: flex;
   justify-content: center;
+
+  img {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+
+    z-index: 1;
+  }
 `;
 
 const PcDiv = styled.div`
-  padding: 6rem 0 10.4rem 0;
+  display: flex;
+  padding: 6rem 0;
+
+  z-index: 2;
 `;
 
 const MobileDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  z-index: 2;
 `;

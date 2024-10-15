@@ -40,8 +40,8 @@ export const useGetWorkList = ({ category, currentPage }: WorkListRequestType) =
       pageParams: data?.pageParams || [],
     }),
     staleTime: 1000 * 60 * 5,
-    // refetchOnWindowFocus: false,
-    // refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 
   return { data, hasNextPage, fetchNextPage, isFetchingNextPage };

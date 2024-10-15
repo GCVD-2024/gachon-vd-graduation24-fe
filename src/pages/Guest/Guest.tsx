@@ -9,9 +9,9 @@ import { GUEST_KEYS } from '../../constants/QueryKey';
 
 const Guest = () => {
   const { data: guestBookData } = useGetGuestBookList();
-  console.log('실행', guestBookData);
   const { GuestBookMutation } = usePostGuestBook();
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const [isTyping, setIsTyping] = useState<boolean>(false);
 
   const [formValues, setFormValues] = useState({
     name: '',
@@ -46,14 +46,20 @@ const Guest = () => {
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    setIsTyping(true);
     setFormValues((prevValues) => ({
       ...prevValues,
       [name]: value,
     }));
   }, []);
 
+  const handleInputBlur = useCallback(() => {
+    setIsTyping(false);
+  }, []);
   const scrollToBottom = () => {
-    entriesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (!isTyping) {
+      entriesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const handleSubmit = async () => {
@@ -118,6 +124,7 @@ const Guest = () => {
               type="text"
               value={formValues.name}
               onChange={handleInputChange}
+              onBlur={handleInputBlur}
               placeholder="이름을 입력하세요"
               autoComplete="off"
             />
@@ -126,6 +133,7 @@ const Guest = () => {
               type="text"
               value={formValues.comment}
               onChange={handleInputChange}
+              onBlur={handleInputBlur}
               placeholder="댓글을 입력하세요"
               autoComplete="off"
             />

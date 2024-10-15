@@ -1,7 +1,8 @@
 // TO DO : 임시로 작성되었기에, 수정 필요
 export const theme = {
   colors: {
-    primary: '#00B4DB',
+    primary: '#E44227',
+    primaryBlue: '#00B4DB',
     background: '#000000',
     text: {
       primary: '#FFFFFF',

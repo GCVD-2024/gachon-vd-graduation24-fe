@@ -9,4 +9,13 @@ const WORK_KEYS = {
   detail: (name: string, title: string) => [...WORK_KEYS.details(), name, title] as const,
 };
 
-export { WORK_KEYS };
+const GUEST_KEYS = {
+  all: ['guest'] as const,
+  lists: () => [...GUEST_KEYS.all, 'list'] as const,
+  list: (category: string, currentPage: number) =>
+    [...GUEST_KEYS.lists(), category, currentPage] as const,
+  details: () => [...GUEST_KEYS.all, 'detail'] as const,
+  detail: (name: string, title: string) => [...GUEST_KEYS.details(), name, title] as const,
+};
+
+export { WORK_KEYS, GUEST_KEYS };

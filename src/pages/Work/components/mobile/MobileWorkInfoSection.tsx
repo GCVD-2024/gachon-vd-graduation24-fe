@@ -53,7 +53,7 @@ const WorkCategory = styled.span`
 
   font-size: 1.8rem;
   line-height: 120%;
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.primaryBlue};
 `;
 
 const WorkAuthorInfo = styled.div`
@@ -85,7 +85,6 @@ const InfoBodyWrapper = styled.div`
 const WorkTitle = styled.span`
   margin-bottom: 1.2rem;
 
-  font: ${({ theme }) => theme.fonts.Primary};
   font-size: 2.4rem;
   font-style: normal;
   font-weight: 900;

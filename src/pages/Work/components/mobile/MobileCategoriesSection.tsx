@@ -54,7 +54,7 @@ const CategoriesItem = styled.span<{ selected: boolean }>`
   line-height: 120%;
   font-style: normal;
   font-weight: 900;
-  color: ${({ theme, selected }) => (selected ? theme.colors.primary : 'white')};
+  color: ${({ theme, selected }) => (selected ? theme.colors.primaryBlue : 'white')};
 
   cursor: pointer;
 

@@ -8,11 +8,10 @@ interface useIntersectionObserverProps {
 }
 
 export const useIntersectionObserver = ({
-  threshold = 0.5,
+  threshold = 0.2,
   hasNextPage,
   fetchNextPage,
 }: useIntersectionObserverProps) => {
-  
   //관찰할 요소
   const [target, setTarget] = useState<HTMLDivElement | null | undefined>(null);
 

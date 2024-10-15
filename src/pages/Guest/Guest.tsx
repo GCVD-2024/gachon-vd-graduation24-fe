@@ -53,7 +53,7 @@ const Guest = () => {
   }, []);
 
   const scrollToBottom = () => {
-    entriesEndRef.current?.scrollIntoView({ behavior: 'smooth' }); 
+    entriesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleSubmit = async () => {
@@ -93,7 +93,7 @@ const Guest = () => {
         );
 
         setIsAnimating(false);
-        scrollToBottom(); 
+        scrollToBottom();
       }, 1000);
     } catch (error) {
       console.error('방명록 전송 실패 -- ✈️ :', error);
@@ -101,7 +101,7 @@ const Guest = () => {
   };
 
   useEffect(() => {
-    scrollToBottom(); 
+    scrollToBottom();
   }, [allEntries]);
 
   return (
@@ -147,7 +147,7 @@ const Guest = () => {
             />
           </EntryWrapper>
         ))}
-        <div ref={entriesEndRef} /> {/* 스크롤이 도착할 마지막 요소 */}
+        <div ref={entriesEndRef} />
       </EntriesContainer>
     </GuestPage>
   );
@@ -198,6 +198,11 @@ const Title = styled.h1`
   font-weight: 900;
   color: ${({ theme }) => theme.colors.primaryBlue};
   line-height: normal;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+    padding: 1rem;
+  }
 `;
 
 const GuestPage = styled.main`
@@ -218,6 +223,10 @@ const GuestPage = styled.main`
     object-fit: cover;
     z-index: 0;
   }
+
+  @media (max-width: 768px) {
+    padding-bottom: 100px;
+  }
 `;
 
 const EntriesContainer = styled.div`
@@ -225,9 +234,20 @@ const EntriesContainer = styled.div`
   position: relative;
   flex-wrap: wrap;
   overflow-x: scroll;
-
+  justify-content: center;
   padding: 20px;
   margin-bottom: 7rem;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+    justify-content: center;
+    margin-bottom: 11rem;
+    gap: 1rem;
+    display: flex;
+    position: relative;
+    left: 50%;
+    transform: translateX(-52%);
+  }
 `;
 
 const EntryWrapper = styled.div<{ twinkle: boolean }>`
@@ -245,32 +265,43 @@ const ComentContainer = styled.article`
   width: 55%;
   gap: 0.5rem;
   padding-bottom: 2%;
-
   left: 50%;
   transform: translateX(-50%);
   bottom: 0;
   z-index: 10;
+
+  @media (max-width: 768px) {
+    width: 90%;
+    gap: 0.2rem;
+    margin-bottom: 3rem;
+  }
 `;
 
 const TextInputContainer = styled.article`
   display: flex;
   width: 100%;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const TextContainer = styled.section`
   display: flex;
   gap: 2rem;
-`;
 
+  @media (max-width: 768px) {
+    gap: 1rem;
+    flex-direction: column;
+  }
+`;
 const SubmitButton = styled.button<{ isAnimating: boolean }>`
-  height: 160px;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.primaryBlue};
   color: white;
   font-size: 16px;
   font-weight: bold;
-  border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -281,12 +312,23 @@ const SubmitButton = styled.button<{ isAnimating: boolean }>`
   font-style: normal;
   font-weight: 900;
   line-height: 120%;
+  border: none;
   transition: background-color 0.3s ease;
 
+  // 기본적으로 애니메이션 적용
   animation: ${({ isAnimating }) => (isAnimating ? expandCircle : 'none')} 1s ease;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.primaryBlue};
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 60px;
+    border-radius: 10px;
+    font-size: 20px;
+    animation: none;
+    border: none;
   }
 `;
 
@@ -299,7 +341,6 @@ const NameInput = styled.input`
   background: transparent;
   border-radius: 14px 14px 0px 0px;
   border: 2px solid #fff;
-  /* border-bottom: none; */
   outline: none;
 
   &::placeholder {
@@ -308,6 +349,11 @@ const NameInput = styled.input`
 
   &:focus {
     border-color: ${({ theme }) => theme.colors.primaryBlue};
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    height: 40px;
   }
 `;
 
@@ -318,4 +364,9 @@ const TextInput = styled(NameInput)`
   height: 160px;
   border-radius: 0px 0px 14px 14px;
   border-top: none;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    height: 80px;
+  }
 `;

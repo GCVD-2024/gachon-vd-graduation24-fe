@@ -30,12 +30,23 @@ const GuestBoxContainer = styled.div`
   margin: 10px;
   border-radius: 8px;
   color: white;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+    padding: 12px;
+  }
 `;
 
 const GuestBoxHeader = styled.div`
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 8px;
+
+  @media (max-width: 768px) {
+    font-size: 8px;
+    margin-bottom: 11px;
+  }
 `;
 
 const GuestBoxContent = styled.div`
@@ -45,6 +56,11 @@ const GuestBoxContent = styled.div`
   position: relative;
   transform: translateY(-50%);
   margin-bottom: 16px;
+
+  @media (max-width: 768px) {
+    font-size: 10px;
+    margin-bottom: 12px;
+  }
 `;
 
 const GuestBoxFooter = styled.div`
@@ -52,4 +68,8 @@ const GuestBoxFooter = styled.div`
   top: 60%;
   position: relative;
   text-align: right;
+
+  @media (max-width: 768px) {
+    font-size: 8px;
+  }
 `;

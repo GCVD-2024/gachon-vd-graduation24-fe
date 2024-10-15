@@ -11,6 +11,8 @@ function Layout({ children }: { children: React.ReactNode }) {
 
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
 
+  const isWorkDetailRoute = /^\/work\/[^/]+\/[^/]+$/.test(location.pathname);
+
   useEffect(() => {
     if (isDrawerOpen === true) {
       document.body.style.overflow = 'hidden';
@@ -31,38 +33,42 @@ function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <LayoutWrapper>
-      <Nav isMobile={isMobile}>
-        {isMobile ? (
-          <>
-            <HamburgerButton onClick={toggleDrawer} src="/svg/hamburger.svg" />
-            <Drawer isOpen={isDrawerOpen}>
-              <DrawerContent>
-                <DrawerButton onClick={toggleDrawer} src="/svg/left-arrow.svg" />
-                <NavLinkContainer isMobile={isMobile}>
-                  {NAVIGATION_ITEMS.map((item) => (
-                    <NavLink
-                      key={item.name}
-                      to={item.path}
-                      isActive={location.pathname === item.path}
-                      onClick={toggleDrawer}
-                    >
-                      {item.name}
-                    </NavLink>
-                  ))}
-                </NavLinkContainer>
-              </DrawerContent>
-            </Drawer>
-          </>
-        ) : (
-          <NavLinkContainer isMobile={isMobile}>
-            {NAVIGATION_ITEMS.map((item) => (
-              <NavLink key={item.name} to={item.path} isActive={location.pathname === item.path}>
-                {item.name}
-              </NavLink>
-            ))}
-          </NavLinkContainer>
-        )}
-      </Nav>
+      {isMobile && isWorkDetailRoute ? (
+        <></>
+      ) : (
+        <Nav isMobile={isMobile}>
+          {isMobile ? (
+            <>
+              <HamburgerButton onClick={toggleDrawer} src="/svg/hamburger.svg" />
+              <Drawer isOpen={isDrawerOpen}>
+                <DrawerContent>
+                  <DrawerButton onClick={toggleDrawer} src="/svg/left-arrow.svg" />
+                  <NavLinkContainer isMobile={isMobile}>
+                    {NAVIGATION_ITEMS.map((item) => (
+                      <NavLink
+                        key={item.name}
+                        to={item.path}
+                        isActive={location.pathname === item.path}
+                        onClick={toggleDrawer}
+                      >
+                        {item.name}
+                      </NavLink>
+                    ))}
+                  </NavLinkContainer>
+                </DrawerContent>
+              </Drawer>
+            </>
+          ) : (
+            <NavLinkContainer isMobile={isMobile}>
+              {NAVIGATION_ITEMS.map((item) => (
+                <NavLink key={item.name} to={item.path} isActive={location.pathname === item.path}>
+                  {item.name}
+                </NavLink>
+              ))}
+            </NavLinkContainer>
+          )}
+        </Nav>
+      )}
       {children}
     </LayoutWrapper>
   );

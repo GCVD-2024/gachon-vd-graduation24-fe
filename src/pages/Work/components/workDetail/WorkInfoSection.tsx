@@ -34,7 +34,7 @@ const WorkCategory = styled.span`
 
   font-size: 5rem;
   line-height: 120%;
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.primaryBlue};
 `;
 
 const WorkAuthorInfo = styled.div`

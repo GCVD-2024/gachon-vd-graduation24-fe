@@ -56,7 +56,6 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    /* 폰트 */
     color: #FFFFFF;
     font-family: 'Pretendard';
 

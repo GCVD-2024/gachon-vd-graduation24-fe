@@ -33,7 +33,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <LayoutWrapper>
-      {isWorkDetailRoute ? (
+      {isMobile && isWorkDetailRoute ? (
         <></>
       ) : (
         <Nav isMobile={isMobile}>

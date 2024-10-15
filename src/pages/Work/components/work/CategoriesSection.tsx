@@ -43,12 +43,12 @@ const CategoriesWrapper = styled.section`
 `;
 
 const CategoriesItem = styled.span<{ selected: boolean }>`
-  ${({ theme }) => theme.fonts.primary};
+  ${({ theme }) => theme.fonts.primaryBlue};
   font-size: 3rem;
   font-style: normal;
   font-weight: 500;
   line-height: 120%;
-  color: ${({ theme, selected }) => (selected ? theme.colors.primary : 'white')};
+  color: ${({ theme, selected }) => (selected ? theme.colors.primaryBlue : 'white')};
 
   cursor: pointer;
 `;

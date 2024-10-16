@@ -20,7 +20,6 @@ const getWorkList = async (category: string, currentPage: number) => {
   const res = await get<WorkListResponseType>(
     `work?category=${mappedCategory}&currentPage=${currentPage}`
   );
-  console.log('API Response:', res);
   return res.result.works as WorkListType[];
 };
 

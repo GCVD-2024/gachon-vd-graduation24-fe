@@ -36,8 +36,9 @@ const ButtonWrapper = styled.button`
   right: 20px;
   width: 70px;
   height: 70px;
-  background-color: #00B4DB;
-  color: #fff;
+  background-color: transparent;
+  border: 3px solid #00b4db;
+  color: #00b4db;
   font-size: 16px;
   font-weight: 900;
   border-radius: 50%;
@@ -46,13 +47,11 @@ const ButtonWrapper = styled.button`
   align-items: center;
   cursor: pointer;
   z-index: 1000;
-  border: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: background-color 0.2s, opacity 0.5s, transform 0.5s;
 
   &:hover {
-    background-color: transparent;
-    border: 3px solid #00B4DB;
-    color: #00B4DB;
+    background-color: #00b4db;
+    color: #fff;
   }
 `;

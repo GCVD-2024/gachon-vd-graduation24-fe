@@ -32,7 +32,7 @@ function About() {
         />
         {isMobile ? <></> : <ScrollIndicator scrollPercentage={scrollPercentage} />}
         <MainTitle />
-        <ExhibitionInfo />
+        {/* <ExhibitionInfo /> */}
         <ExhibitionIntroduction />
         <ExhibitionMeaning />
         <GraduationCommittee />

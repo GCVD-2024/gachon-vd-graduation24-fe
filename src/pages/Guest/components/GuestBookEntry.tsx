@@ -44,7 +44,7 @@ const GuestBoxHeader = styled.div`
   margin-bottom: 8px;
 
   @media (max-width: 768px) {
-    font-size: 8px;
+    font-size: 10px;
     margin-bottom: 11px;
   }
 `;
@@ -58,8 +58,9 @@ const GuestBoxContent = styled.div`
   margin-bottom: 16px;
 
   @media (max-width: 768px) {
-    font-size: 10px;
+    font-size: 12px;
     margin-bottom: 12px;
+    padding-top: 1rem;
   }
 `;
 
@@ -70,6 +71,6 @@ const GuestBoxFooter = styled.div`
   text-align: right;
 
   @media (max-width: 768px) {
-    font-size: 8px;
+    font-size: 10px;
   }
 `;

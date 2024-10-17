@@ -92,10 +92,6 @@ const Guest = () => {
         queryKey: GUEST_KEYS.all,
       });
 
-      // 새로 방명록 데이터 가져오기
-      const updatedGuestBookData = await useGetGuestBookList();
-      console.log(updatedGuestBookData);
-
       setTimeout(() => {
         setGuestEntries((prevEntries) =>
           prevEntries.map((entry) =>

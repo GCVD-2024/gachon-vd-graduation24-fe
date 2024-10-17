@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
 import MainTitle from './components/MainTitle/MainTitle';
-import ExhibitionInfo from './components/ExhibitionInfo/ExhibitionInfo';
 import ExhibitionIntroduction from './components/ExhibitionIntroduction/ExhibitionIntroduction';
 import ExhibitionMeaning from './components/ExhibitionMeaning/ExhibitionMeaning';
 import GraduationCommittee from './components/GraduationCommittee/GraduationCommittee';
@@ -32,7 +31,7 @@ function About() {
         />
         {isMobile ? <></> : <ScrollIndicator scrollPercentage={scrollPercentage} />}
         <MainTitle />
-        <ExhibitionInfo />
+        {/* <ExhibitionInfo /> */}
         <ExhibitionIntroduction />
         <ExhibitionMeaning />
         <GraduationCommittee />

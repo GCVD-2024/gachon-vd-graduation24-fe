@@ -1,7 +1,7 @@
 export const NAVIGATION_ITEMS = [
   { name: 'ABOUT', path: '/' },
-  { name: 'WORKS', path: 'work' },
-  { name: 'GUEST', path: 'guest' },
+  { name: 'WORKS', path: '/work' },
+  { name: 'GUEST', path: '/guest' },
 ];
 
 export const MOBILE_BREAKPOINT = 768;
@@ -49,3 +49,5 @@ export const WORDS = [
 
 // CategoriesSection.tsx
 export const CATEGORIES = ['ALL', 'UX', 'BRAND', 'GRAPHIC', 'ILLUST', 'MEDIA'] as const;
+export const DETAIL_RESPONSE_CATEGORIES = ['ALL', 'UXUI', 'BX', 'GRAPHIC', 'ILLUSTRATION', 'MEDIA'] as const;
+export const WORK_CATEGORIES = ['ALL', 'UX/UI', 'BRAND', 'GRAPHIC', 'ILLUST', 'MEDIA'] as const;

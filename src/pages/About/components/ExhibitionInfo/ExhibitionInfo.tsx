@@ -60,18 +60,21 @@ const TitleContainer = styled.div<{ isMobile: boolean }>`
 const Title = styled.h1<{ isMobile: boolean }>`
   font-size: ${props => props.isMobile ? '24px' : '40px'};
   font-weight: 900;
+  line-height: 140%;
 `;
 
 const Subtitle = styled.h2<{ isMobile: boolean }>`
   margin-bottom: ${props => props.isMobile ? '50px' : '139px'};
   font-size: ${props => props.isMobile ? '10px' : '20px'};
   font-weight: 500;
+  line-height: 140%;
 `;
 
 const InfoSection = styled.div<{ isMobile: boolean }>`
   margin-bottom: 20px;
   font-size: ${props => props.isMobile ? '10px' : '16px'};
   font-weight: 700;
+  line-height: 140%;
 `;
 
 const Label = styled.span<{ isMobile: boolean }>`
@@ -79,4 +82,5 @@ const Label = styled.span<{ isMobile: boolean }>`
   font-size: ${props => props.isMobile ? '10px' : '16px'};
   font-weight: 700;
   color: #00b4db;
+  line-height: 140%;
 `;

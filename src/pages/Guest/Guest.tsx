@@ -9,9 +9,9 @@ import { GUEST_KEYS } from '../../constants/QueryKey';
 
 const Guest = () => {
   const { data: guestBookData } = useGetGuestBookList();
-  console.log('실행', guestBookData);
   const { GuestBookMutation } = usePostGuestBook();
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const [isTyping, setIsTyping] = useState<boolean>(false);
 
   const [formValues, setFormValues] = useState({
     name: '',
@@ -46,14 +46,20 @@ const Guest = () => {
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    setIsTyping(true);
     setFormValues((prevValues) => ({
       ...prevValues,
       [name]: value,
     }));
   }, []);
 
+  const handleInputBlur = useCallback(() => {
+    setIsTyping(false);
+  }, []);
   const scrollToBottom = () => {
-    entriesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (!isTyping) {
+      entriesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const handleSubmit = async () => {
@@ -118,6 +124,7 @@ const Guest = () => {
               type="text"
               value={formValues.name}
               onChange={handleInputChange}
+              onBlur={handleInputBlur}
               placeholder="이름을 입력하세요"
               autoComplete="off"
             />
@@ -126,6 +133,7 @@ const Guest = () => {
               type="text"
               value={formValues.comment}
               onChange={handleInputChange}
+              onBlur={handleInputBlur}
               placeholder="댓글을 입력하세요"
               autoComplete="off"
             />
@@ -198,6 +206,7 @@ const Title = styled.h1`
   font-weight: 900;
   color: ${({ theme }) => theme.colors.primaryBlue};
   line-height: normal;
+  padding: 1rem;
 
   @media (max-width: 768px) {
     font-size: 28px;
@@ -236,7 +245,11 @@ const EntriesContainer = styled.div`
   overflow-x: scroll;
   justify-content: center;
   padding: 20px;
-  margin-bottom: 7rem;
+  margin-bottom: 4rem;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 
   @media (max-width: 768px) {
     padding: 10px;
@@ -264,7 +277,7 @@ const ComentContainer = styled.article`
   position: fixed;
   width: 55%;
   gap: 0.5rem;
-  padding-bottom: 2%;
+  margin-bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
   bottom: 0;
@@ -273,7 +286,7 @@ const ComentContainer = styled.article`
   @media (max-width: 768px) {
     width: 90%;
     gap: 0.2rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
   }
 `;
 
@@ -315,7 +328,6 @@ const SubmitButton = styled.button<{ isAnimating: boolean }>`
   border: none;
   transition: background-color 0.3s ease;
 
-  // 기본적으로 애니메이션 적용
   animation: ${({ isAnimating }) => (isAnimating ? expandCircle : 'none')} 1s ease;
 
   &:hover {
@@ -324,9 +336,9 @@ const SubmitButton = styled.button<{ isAnimating: boolean }>`
 
   @media (max-width: 768px) {
     width: 100%;
-    height: 60px;
-    border-radius: 10px;
-    font-size: 20px;
+    height: 45px;
+    border-radius: 5px;
+    font-size: 17px;
     animation: none;
     border: none;
   }
@@ -361,7 +373,7 @@ const TextInput = styled(NameInput)`
   display: flex;
   padding-left: 1rem;
   font-size: 16px;
-  height: 160px;
+  height: 133px;
   border-radius: 0px 0px 14px 14px;
   border-top: none;
 

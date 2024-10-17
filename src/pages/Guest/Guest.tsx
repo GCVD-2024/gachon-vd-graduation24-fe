@@ -247,6 +247,10 @@ const EntriesContainer = styled.div`
   padding: 20px;
   margin-bottom: 4rem;
 
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
   @media (max-width: 768px) {
     padding: 10px;
     justify-content: center;

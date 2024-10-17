@@ -1,19 +1,19 @@
 import { styled } from 'styled-components';
-import { Category } from '../../../../types/types';
-import { CATEGORIES } from '../../../../constants/constants';
+import { WorkCategory } from '../../../../types/types';
+import { WORK_CATEGORIES } from '../../../../constants/constants';
 import { useQueryClient } from '@tanstack/react-query';
 import { usePrefetchWorkList } from '../../../../hooks/queries/usePrefetchWorkList';
 import { WORK_KEYS } from '../../../../constants/QueryKey';
 
 interface CategoriesSectionProps {
-  category: Category;
-  setCategory: React.Dispatch<React.SetStateAction<Category>>;
+  category: WorkCategory;
+  setCategory: React.Dispatch<React.SetStateAction<WorkCategory>>;
 }
 const CategoriesSection = ({ category, setCategory }: CategoriesSectionProps) => {
   const queryClient = useQueryClient();
   const { prefetchWorkList } = usePrefetchWorkList();
 
-  const handleClick = (name: Category) => {
+  const handleClick = (name: WorkCategory) => {
     queryClient.removeQueries({ queryKey: WORK_KEYS.all });
     prefetchWorkList(category, 1);
     setCategory(name);
@@ -21,7 +21,7 @@ const CategoriesSection = ({ category, setCategory }: CategoriesSectionProps) =>
 
   return (
     <CategoriesWrapper>
-      {CATEGORIES.map((item) => (
+      {WORK_CATEGORIES.map((item) => (
         <CategoriesItem key={item} onClick={() => handleClick(item)} selected={category === item}>
           {item}
         </CategoriesItem>

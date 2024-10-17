@@ -5,10 +5,22 @@ interface WorkInfoSectionProps {
 }
 
 const MobileWorkInfoSection = ({ data }: WorkInfoSectionProps) => {
+  const mappedCategory = (() => {
+    switch (data.category) {
+      case 'UXUI':
+        return 'UX/UI';
+      case 'ILLUSTRATION':
+        return 'ILLUST';
+      case 'BX':
+        return 'BRAND';
+      default:
+        return data.category;
+    }
+  })();
   return (
     <WorkInfoWrapper>
       <MobileCategoryWrapper>
-        <WorkCategory>{data.category}</WorkCategory>
+        <WorkCategory>{mappedCategory}</WorkCategory>
         <WorkAuthorInfo>
           <AuthorSpan>{data.studentName}</AuthorSpan>
           <AuthorSpan className="studentId">{data.studentId}</AuthorSpan>
@@ -52,6 +64,8 @@ const WorkCategory = styled.span`
   margin-left: 1.6rem;
 
   font-size: 1.8rem;
+  font-style: normal;
+  font-weight: 900;
   line-height: 120%;
   color: ${({ theme }) => theme.colors.primaryBlue};
 `;
@@ -65,9 +79,12 @@ const WorkAuthorInfo = styled.div`
 
 const AuthorSpan = styled.span`
   font-size: 1.2rem;
+  font-style: normal;
+  font-weight: 700;
   line-height: 100%;
 
   &.studentId {
+    font-weight: 500;
     color: #7ca2b0;
   }
 `;

@@ -5,9 +5,21 @@ interface WorkInfoSectionProps {
 }
 
 const WorkInfoSection = ({ data }: WorkInfoSectionProps) => {
+  const mappedCategory = (() => {
+    switch (data.category) {
+      case 'UXUI':
+        return 'UX/UI';
+      case 'ILLUSTRATION':
+        return 'ILLUST';
+      case 'BX':
+        return 'BRAND';
+      default:
+        return data.category;
+    }
+  })();
   return (
     <WorkInfoWrapper>
-      <WorkCategory>{data.category}</WorkCategory>
+      <WorkCategory>{mappedCategory}</WorkCategory>
       <WorkTitle>제목 : {data.title}</WorkTitle>
       <WorkSubtitle>{data.subtitle}</WorkSubtitle>
       <WorkAuthorInfo>
@@ -32,7 +44,9 @@ const WorkInfoWrapper = styled.section`
 const WorkCategory = styled.span`
   margin-bottom: 6rem;
 
-  font-size: 5rem;
+  font-size: 3rem;
+  font-style: normal;
+  font-weight: 900;
   line-height: 120%;
   color: ${({ theme }) => theme.colors.primaryBlue};
 `;
@@ -46,9 +60,12 @@ const WorkAuthorInfo = styled.div`
 
 const AuthorSpan = styled.span`
   font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 700;
   line-height: 100%;
 
   &.studentId {
+    font-weight: 500;
     color: #7ca2b0;
   }
 `;
@@ -56,7 +73,9 @@ const AuthorSpan = styled.span`
 const WorkTitle = styled.span`
   margin-bottom: 2rem;
 
-  font-size: 3.2rem;
+  font-size: 3rem;
+  font-style: normal;
+  font-weight: 900;
   line-height: 120%;
 `;
 
@@ -64,7 +83,9 @@ const WorkSubtitle = styled.span`
   margin-bottom: 4rem;
 
   font-size: 1.6rem;
-  line-height: 120%;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
 `;
 
 const WorkBody = styled.span`

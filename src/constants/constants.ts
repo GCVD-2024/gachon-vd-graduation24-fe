@@ -49,3 +49,5 @@ export const WORDS = [
 
 // CategoriesSection.tsx
 export const CATEGORIES = ['ALL', 'UX', 'BRAND', 'GRAPHIC', 'ILLUST', 'MEDIA'] as const;
+export const DETAIL_RESPONSE_CATEGORIES = ['ALL', 'UXUI', 'BX', 'GRAPHIC', 'ILLUSTRATION', 'MEDIA'] as const;
+export const WORK_CATEGORIES = ['ALL', 'UX/UI', 'BRAND', 'GRAPHIC', 'ILLUST', 'MEDIA'] as const;

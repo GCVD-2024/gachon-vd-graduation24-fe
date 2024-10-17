@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
-import { Category } from '../../../../types/types';
+import { WorkCategory } from '../../../../types/types';
 import MobileCategoriesSection from './MobileCategoriesSection';
 
 interface MobileHeaderProps {
-  category: Category;
-  setCategory: React.Dispatch<React.SetStateAction<Category>>;
+  category: WorkCategory;
+  setCategory: React.Dispatch<React.SetStateAction<WorkCategory>>;
 }
 
 const MobileHeader = ({ category, setCategory }: MobileHeaderProps) => {

@@ -1,6 +1,8 @@
-import { CATEGORIES } from '../constants/constants';
+import { CATEGORIES, DETAIL_RESPONSE_CATEGORIES, WORK_CATEGORIES } from '../constants/constants';
 
 export type Category = (typeof CATEGORIES)[number];
+export type WorkCategory = (typeof WORK_CATEGORIES)[number];
+export type DetailWorkCategory = (typeof DETAIL_RESPONSE_CATEGORIES)[number];
 
 export interface ResponseType<T = Record<string, object>> {
   isSuccess: boolean;
@@ -20,7 +22,7 @@ export type GuestBookListResponseType = ResponseType<{
 }>;
 
 export type WorkListRequestType = {
-  category: Category;
+  category: WorkCategory;
   currentPage: number;
 };
 
@@ -49,7 +51,7 @@ export type WorkDetailType = {
   studentName: string;
   studentId: string;
   contact: string;
-  category: Category;
+  category: DetailWorkCategory;
   title: string;
   subtitle: string;
   description: string;

@@ -4,13 +4,13 @@ import ExhibitionSection from './components/work/ExhibitionSection';
 import styled from 'styled-components';
 import { useGetWorkList } from '../../hooks/queries/useGetWorkList';
 import { useState } from 'react';
-import { Category } from '../../types/types';
+import { WorkCategory } from '../../types/types';
 import { useIsMobile } from '../../hooks/useIsMobile';
 import MobileHeader from './components/mobile/MobileHeader';
 import background from '../../assets/img/workBackground.png';
 
 const Work = () => {
-  const [category, setCategory] = useState<Category>('ALL');
+  const [category, setCategory] = useState<WorkCategory>('ALL');
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } = useGetWorkList({
     category,
     currentPage: 1,

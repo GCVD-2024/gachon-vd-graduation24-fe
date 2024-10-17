@@ -77,19 +77,20 @@ const MatterJsContainer = styled.div<{ isMobile: boolean }>`
 const ContentWrapper = styled.div<{ isMobile: boolean }>`
   display: flex;
   flex-direction: ${(props) => (props.isMobile ? 'column' : 'row')};
-  gap: ${(props) => (props.isMobile ? '30px' : '300px')};
-  align-items: ${(props) => (props.isMobile ? 'center' : 'flex-start')};
+  gap: ${(props) => (props.isMobile ? '30px' : '250px')};
+  align-items: flex-start;
 `;
 
 const Title = styled.h1<{ isMobile: boolean }>`
   font-size: ${(props) => (props.isMobile ? '32px' : '40px')};
   font-weight: 800;
-  text-align: ${(props) => (props.isMobile ? 'center' : 'left')};
+  text-align: left;
+  line-height: 140%;
 `;
 
 const Description = styled.p<{ isMobile: boolean }>`
-  font-size: ${(props) => (props.isMobile ? '14px' : '16px')};
+  font-size: ${(props) => (props.isMobile ? '12px' : '16px')};
   font-weight: 500;
-  line-height: 150%;
-  text-align: ${(props) => (props.isMobile ? 'center' : 'left')};
+  line-height: 140%;
+  text-align: left;
 `;

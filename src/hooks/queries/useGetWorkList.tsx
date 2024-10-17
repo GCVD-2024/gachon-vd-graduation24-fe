@@ -20,14 +20,21 @@ const getWorkList = async (category: string, currentPage: number) => {
   const res = await get<WorkListResponseType>(
     `work?category=${mappedCategory}&currentPage=${currentPage}`
   );
-  console.log('API Response:', res);
   return res.result.works as WorkListType[];
 };
 
 export const useGetWorkList = ({ category, currentPage }: WorkListRequestType) => {
+      let mappedCategory = (() => {
+        switch (category) {
+          case 'UX/UI':
+            return 'UX';
+          default:
+            return category;
+        }
+      })();
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: WORK_KEYS.list(category, currentPage),
-    queryFn: ({ pageParam = currentPage }) => getWorkList(category, pageParam),
+    queryKey: WORK_KEYS.list(mappedCategory, currentPage),
+    queryFn: ({ pageParam = currentPage }) => getWorkList(mappedCategory, pageParam),
     getNextPageParam: (lastPage, allPages) => {
       if (lastPage && Array.isArray(lastPage) && lastPage?.length === 10) {
         return allPages?.length ? allPages.length + 1 : 1;

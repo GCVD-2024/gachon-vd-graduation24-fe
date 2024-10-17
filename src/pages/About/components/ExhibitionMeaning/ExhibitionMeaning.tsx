@@ -34,7 +34,7 @@ export default function ExhibitionMeaning() {
 
 const IntroductionWrapper = styled.div<{ isMobile: boolean }>`
   height: ${(props) => (props.isMobile ? 'auto' : '1080px')};
-  padding: ${(props) => (props.isMobile ? '40px 20px' : '0px 140px')};
+  padding: ${(props) => (props.isMobile ? '40px 20px' : '80px 310px')};
 `;
 
 const TitleContainer = styled.div<{ isMobile: boolean }>`
@@ -53,11 +53,12 @@ const Paragraph = styled.p<{ isMobile: boolean }>`
   margin-bottom: ${(props) => (props.isMobile ? '40px' : '60px')};
   font-size: ${(props) => (props.isMobile ? '12px' : '16px')};
   font-weight: 500;
-  line-height: 1.5;
+  line-height: 140%;
 `;
 
 const Highlight = styled.span<{ isMobile: boolean }>`
   color: #00b4db;
   font-weight: 700;
   font-size: ${(props) => (props.isMobile ? '12px' : '16px')};
+  line-height: 140%;
 `;

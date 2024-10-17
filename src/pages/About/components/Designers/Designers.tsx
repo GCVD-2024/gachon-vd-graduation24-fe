@@ -94,6 +94,7 @@ const Title = styled.h1<{ isMobile: boolean }>`
   margin-bottom: ${(props) => (props.isMobile ? '40px' : '80px')};
   margin-left: ${(props) => (props.isMobile ? '10px' : '30px')};
   text-align: start;
+  line-height: 140%;
 `;
 
 const DesignersGrid = styled.div<{ isMobile: boolean }>`
@@ -107,4 +108,5 @@ const DesignerName = styled.span<{ isMobile: boolean }>`
   font-size: ${(props) => (props.isMobile ? '12px' : '16px')};
   font-weight: 500;
   text-align: center;
+  line-height: 140%;
 `;

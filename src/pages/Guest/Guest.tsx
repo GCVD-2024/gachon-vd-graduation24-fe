@@ -86,10 +86,15 @@ const Guest = () => {
         comment: '',
       });
       setIsAnimating(true);
-      useGetGuestBookList();
-      queryClient.invalidateQueries({
+
+      // 방명록 데이터를 다시 호출
+      await queryClient.invalidateQueries({
         queryKey: GUEST_KEYS.all,
       });
+
+      // 새로 방명록 데이터 가져오기
+      const updatedGuestBookData = await useGetGuestBookList();
+      console.log(updatedGuestBookData);
 
       setTimeout(() => {
         setGuestEntries((prevEntries) =>
@@ -97,7 +102,6 @@ const Guest = () => {
             entry.id === newEntry.id ? { ...entry, twinkle: false } : entry
           )
         );
-
         setIsAnimating(false);
         scrollToBottom();
       }, 1000);
@@ -242,7 +246,6 @@ const EntriesContainer = styled.div`
   display: flex;
   position: relative;
   flex-wrap: wrap;
-  overflow-x: scroll;
   justify-content: center;
   padding: 20px;
   margin-bottom: 4rem;

@@ -64,7 +64,7 @@ export default function GraduationCommittee(): React.ReactElement {
 
 const CommitteeWrapper = styled.div<{ isMobile: boolean }>`
   height: ${(props) => (props.isMobile ? 'auto' : '1080px')};
-  padding: ${(props) => (props.isMobile ? '40px 20px' : '0px 140px')};
+  padding: ${(props) => (props.isMobile ? '40px 20px' : '80px 310px')};
 `;
 
 const Title = styled.h1<{ isMobile: boolean }>`

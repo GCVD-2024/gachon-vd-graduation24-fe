@@ -16,11 +16,16 @@ export default function ConceptSavoring() {
       </Subtitle>
       <DescriptionContainer isMobile={isMobile}>
         <Description className="savoring_content" isMobile={isMobile}>
-          Savoring은 어떤 경험이나 감정을 깊이 있게 즐기고 음미하는 것을 의미한다.
-          <br />
+          Savoring은 어떤 경험이나 감정을
+          {isMobile ? <br /> : ' '}
+          깊이 있게 즐기고 음미하는 것을 의미한다.
+        </Description>
+        <Description isMobile={isMobile}>
           Digging이 무언가를 탐구하고 발견하는 과정이라면,
           <br />
-          Savoring은 그 과정에서 얻은 결과를 천천히 그리고 깊이 있게 즐기는 것이다.
+          Savoring은 그 과정에서 얻은 결과를
+          {isMobile ? <br /> : ' '}
+          천천히 그리고 깊이 있게 즐기는 것이다.
         </Description>
         <Description className="savoring_content" isMobile={isMobile}>
           우리는 Digging을 통해 발견한 것들을 Savoring함으로써
@@ -50,17 +55,19 @@ const PageWrapper = styled.div<{ isMobile: boolean }>`
 const TitleText = styled.h1<{ isMobile: boolean }>`
   font-size: ${(props) => (props.isMobile ? '24px' : '40px')};
   font-weight: 800;
-  line-height: 120%;
+  line-height: 140%;
   letter-spacing: ${(props) => (props.isMobile ? '-1.28px' : '-1.52px')};
   text-align: center;
 `;
 
 const Title = styled(TitleText)`
   margin-bottom: ${(props) => (props.isMobile ? '10px' : '20px')};
+  line-height: 140%;
 `;
 
 const Subtitle = styled(TitleText)`
   margin-bottom: ${(props) => (props.isMobile ? '40px' : '85px')};
+  line-height: 140%;
 `;
 
 const DescriptionContainer = styled.div<{ isMobile: boolean }>`
@@ -68,7 +75,8 @@ const DescriptionContainer = styled.div<{ isMobile: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: ${(props) => (props.isMobile ? '30px' : '60px')};
+  line-height: 140%;
+  gap: ${(props) => (props.isMobile ? '16px' : '60px')};
 `;
 
 const Description = styled.p<{ isMobile: boolean }>`

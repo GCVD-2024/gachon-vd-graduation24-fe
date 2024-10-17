@@ -245,6 +245,7 @@ const EntriesContainer = styled.div`
   justify-content: center;
   padding: 20px;
   margin-bottom: 4rem;
+  overflow-x: scroll;
 
   ::-webkit-scrollbar {
     display: none;

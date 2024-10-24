@@ -14,9 +14,9 @@ interface InfoItem {
 }
 
 const infoItems: InfoItem[] = [
-  { label: '', content: '가천대학교 시각디자인학과 졸업전시 2025' },
-  { label: '기간', content: '2024. 10. - 2024. 10.' },
-  { label: '시간', content: '10:00 - 18:00' },
+  { label: '', content: '2024 가천대학교 시각디자인학과 졸업전시' },
+  { label: '기간', content: '2024. 10.17. - 2024. 10.29.' },
+  { label: '시간', content: '10:00 - 22:00' },
   { label: '장소', content: '가천대학교 비전타워 B1' },
 ];
 

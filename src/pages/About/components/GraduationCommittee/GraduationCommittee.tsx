@@ -20,7 +20,7 @@ export default function GraduationCommittee(): React.ReactElement {
     <CommitteeWrapper ref={containerRef} isMobile={isMobile}>
       <section>
         <Title className="commitee_title" isMobile={isMobile}>
-          2025
+          2024
           <br />
           졸업 준비 위원회
         </Title>

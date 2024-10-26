@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { WorkCategory } from '../../types/types';
 import { useIsMobile } from '../../hooks/useIsMobile';
 import MobileHeader from './components/mobile/MobileHeader';
-import background from '../../assets/img/workBackground.png';
+import background from '../../assets/img/works_background.png';
 
 const Work = () => {
   const [category, setCategory] = useState<WorkCategory>('ALL');
@@ -61,7 +61,6 @@ const WorkPage = styled.div`
 
   img {
     width: 100vw;
-    height: 100vh;
     position: fixed;
 
     z-index: 1;

@@ -211,7 +211,7 @@ const Title = styled.h1`
   font-weight: 900;
   color: ${({ theme }) => theme.colors.primaryBlue};
   line-height: normal;
-  padding: 1rem;
+  padding: 12rem 0 3rem 0;
 
   @media (max-width: 768px) {
     font-size: 28px;
@@ -248,7 +248,7 @@ const EntriesContainer = styled.div`
   position: relative;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 20px;
+  padding: 0 2rem;
   margin-bottom: 4rem;
   overflow-x: scroll;
 

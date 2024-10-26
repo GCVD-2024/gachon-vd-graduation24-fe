@@ -70,7 +70,7 @@ const WorkPage = styled.div`
 
 const PcDiv = styled.div`
   display: flex;
-  padding: 6rem 0;
+  padding: 13rem 0;
 
   z-index: 2;
 `;

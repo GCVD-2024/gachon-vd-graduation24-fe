@@ -19,7 +19,7 @@ export default function ExhibitionMeaning() {
           {isMobile ? <br /> : ' '}
           디자인 아이덴티티를 드러내고 있다.
           <br />
-          우리가 지나온 길을 상징하여여 구성하고
+          우리가 지나온 길을 상징화하여 구성하고
           {isMobile ? <br /> : ' '}
           앞으로 나아갈 길을 상상해 볼 수 있다.
           <br />

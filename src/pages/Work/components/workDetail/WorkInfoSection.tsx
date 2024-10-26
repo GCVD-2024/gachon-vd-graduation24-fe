@@ -20,7 +20,7 @@ const WorkInfoSection = ({ data }: WorkInfoSectionProps) => {
   return (
     <WorkInfoWrapper>
       <WorkCategory>{mappedCategory}</WorkCategory>
-      <WorkTitle>제목 : {data.title}</WorkTitle>
+      <WorkTitle>{data.title}</WorkTitle>
       <WorkSubtitle>{data.subtitle}</WorkSubtitle>
       <WorkAuthorInfo>
         <AuthorSpan>{data.studentName}</AuthorSpan>

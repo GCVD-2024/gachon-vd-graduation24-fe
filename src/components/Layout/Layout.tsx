@@ -126,7 +126,7 @@ const Drawer = styled.div<{ isOpen: boolean }>`
   left: ${({ isOpen }) => (isOpen ? '0' : '-250px')};
   width: 150px;
   height: 100%;
-  background-color: #000000;
+  background-color: #121212;
   transition: left 0.3s ease-in-out;
   z-index: 10000000;
 `;

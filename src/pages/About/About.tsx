@@ -22,7 +22,7 @@ function About() {
   return (
     <>
       <Helmet>
-        <title>Digging Club - About</title>
+        <title>Digging Club : 2024 가천대 시각디자인학과 졸업전시</title>
       </Helmet>
       <AboutPage>
         <ScrollToTopButton

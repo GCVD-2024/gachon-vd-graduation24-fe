@@ -21,7 +21,7 @@ const Work = () => {
     <WorkPage>
       <img src={background} />
       <Helmet>
-        <title>Digging Club - Work</title>
+        <title>Digging Club : work</title>
       </Helmet>
       {isMobile ? (
         <MobileDiv>

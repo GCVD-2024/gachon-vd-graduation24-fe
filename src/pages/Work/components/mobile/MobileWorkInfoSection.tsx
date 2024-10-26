@@ -27,7 +27,7 @@ const MobileWorkInfoSection = ({ data }: WorkInfoSectionProps) => {
         </WorkAuthorInfo>
       </MobileCategoryWrapper>
       <InfoBodyWrapper>
-        <WorkTitle>제목 : {data.title}</WorkTitle>
+        <WorkTitle>{data.title}</WorkTitle>
         <WorkSubtitle>{data.subtitle}</WorkSubtitle>
         <WorkBody>{data.description}</WorkBody>
       </InfoBodyWrapper>

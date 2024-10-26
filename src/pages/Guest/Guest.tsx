@@ -63,6 +63,8 @@ const Guest = () => {
   };
 
   const handleSubmit = async () => {
+    if (!formValues.name || !formValues.comment) return;
+
     const newGuestBookData: IGuestBookData = {
       nickname: formValues.name,
       content: formValues.comment,
@@ -87,7 +89,6 @@ const Guest = () => {
       });
       setIsAnimating(true);
 
-      // 방명록 데이터를 다시 호출
       await queryClient.invalidateQueries({
         queryKey: GUEST_KEYS.all,
       });
@@ -139,7 +140,11 @@ const Guest = () => {
             />
           </TextInputContainer>
 
-          <SubmitButton onClick={handleSubmit} isAnimating={isAnimating}>
+          <SubmitButton
+            onClick={handleSubmit}
+            disabled={!formValues.name || !formValues.comment}
+            isAnimating={isAnimating}
+          >
             DIGGING!
           </SubmitButton>
         </TextContainer>
@@ -332,6 +337,11 @@ const SubmitButton = styled.button<{ isAnimating: boolean }>`
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.primaryBlue};
+  }
+
+  &:disabled {
+    background-color: gray;
+    cursor: not-allowed;
   }
 
   @media (max-width: 768px) {

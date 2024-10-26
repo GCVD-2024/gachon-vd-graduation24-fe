@@ -4,7 +4,6 @@ import { useIsMobile } from '../../../../hooks/useIsMobile';
 
 const designers = [
   '이다현',
-  '권현아',
   '안준범',
   '송영민',
   '정시온',
@@ -62,7 +61,7 @@ const designers = [
   '조예찬',
   '이지민',
   '오치영',
-  '채승우'
+  '채승우',
 ];
 export default function Designers() {
   const containerRef = useRef<HTMLDivElement>(null);

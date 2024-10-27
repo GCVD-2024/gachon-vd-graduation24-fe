@@ -83,6 +83,6 @@ const Description = styled.p<{ isMobile: boolean }>`
   text-align: center;
   font-size: ${(props) => (props.isMobile ? '12px' : '16px')};
   font-weight: 500;
-  line-height: 140%;
+  line-height: 200%;
   letter-spacing: ${(props) => (props.isMobile ? '-0.56px' : '-0.64px')};
 `;

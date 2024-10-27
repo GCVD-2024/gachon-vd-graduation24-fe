@@ -48,7 +48,7 @@ const Paragraph = styled.p<{ isMobile: boolean }>`
   margin-bottom: ${(props) => (props.isMobile ? '16px' : '60px')};
   font-size: ${(props) => (props.isMobile ? '12px' : '16px')};
   font-weight: 500;
-  line-height: 140%;
+  line-height: 200%;
 `;
 
 const Highlight = styled.span<{ isMobile: boolean }>`

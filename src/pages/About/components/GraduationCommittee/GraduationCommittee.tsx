@@ -5,8 +5,8 @@ import { useIsMobile } from '../../../../hooks/useIsMobile';
 const roles = [
   { title: '위원장', members: ['홍정우'] },
   { title: '웹', members: ['이가영', '이한별', '김도연'] },
-  { title: '편집', members: ['조예진', '정다연'] },
-  { title: '홍보', members: ['나선주'] },
+  { title: '홍보', members: ['조예진', '정다연'] },
+  { title: '편집', members: ['나선주'] },
   { title: '회계', members: ['이경택'] },
 ];
 
@@ -101,5 +101,6 @@ const RoleTitle = styled.h3<{ isMobile: boolean }>`
 const Member = styled.div<{ isMobile: boolean }>`
   font-size: ${(props) => (props.isMobile ? '14px' : '16px')};
   font-weight: 500;
+  line-height: 200%;
   margin-bottom: ${(props) => (props.isMobile ? '10px' : '0')};
 `;

@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { WorkCategory } from '../../types/types';
 import { useIsMobile } from '../../hooks/useIsMobile';
 import MobileHeader from './components/mobile/MobileHeader';
-import background from '../../assets/img/workBackground.png';
+import background from '../../assets/img/works_background.png';
 
 const Work = () => {
   const [category, setCategory] = useState<WorkCategory>('ALL');
@@ -57,10 +57,10 @@ const WorkPage = styled.div`
 
   display: flex;
   justify-content: center;
+  background-color: #121212;
 
   img {
     width: 100vw;
-    height: 100vh;
     position: fixed;
 
     z-index: 1;
@@ -69,7 +69,7 @@ const WorkPage = styled.div`
 
 const PcDiv = styled.div`
   display: flex;
-  padding: 6rem 0;
+  padding: 13rem 0;
 
   z-index: 2;
 `;

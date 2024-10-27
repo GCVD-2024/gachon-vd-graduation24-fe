@@ -15,7 +15,7 @@ interface InfoItem {
 
 const infoItems: InfoItem[] = [
   { label: '', content: '2024 가천대학교 시각디자인학과 졸업전시' },
-  { label: '기간', content: '2024. 10.17. - 2024. 10.29.' },
+  { label: '기간', content: '2024. 10. 17. - 2024. 10. 29.' },
   { label: '시간', content: '10:00 - 20:00' },
   { label: '장소', content: '가천대학교 비전타워 B1' },
 ];
@@ -43,7 +43,7 @@ export default function MainTitle() {
   return (
     <MainTitleWrapper isMobile={isMobile}>
       <BackgroundImage
-        src="/about/MainTitle/main-title-bg.svg"
+        src="/about/MainTitle/main_bg.png"
         alt="Main background"
         isMobile={isMobile}
       />
@@ -129,7 +129,7 @@ const OverlayContent = styled.div`
 
 const BackgroundImage = styled.img<{ isMobile: boolean }>`
   position: absolute;
-  top: 0;
+  top: 25rem;
   left: 0;
   width: 100%;
   height: 100%;

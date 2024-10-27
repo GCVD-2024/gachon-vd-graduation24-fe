@@ -211,7 +211,7 @@ const Title = styled.h1`
   font-weight: 900;
   color: ${({ theme }) => theme.colors.primaryBlue};
   line-height: normal;
-  padding: 1rem;
+  padding: 12rem 0 3rem 0;
 
   @media (max-width: 768px) {
     font-size: 28px;
@@ -222,7 +222,7 @@ const Title = styled.h1`
 const GuestPage = styled.main`
   width: 100vw;
   height: calc(100vh - 73px);
-  background: radial-gradient(41.45% 43.19% at 50% 50%, #00b4db 0%, #000 100%);
+  background: radial-gradient(41.45% 43.19% at 50% 50%, #00b4db 0%, #121212 100%);
   overflow-x: auto;
   display: flex;
   flex-direction: column;
@@ -248,7 +248,7 @@ const EntriesContainer = styled.div`
   position: relative;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 20px;
+  padding: 0 2rem;
   margin-bottom: 4rem;
   overflow-x: scroll;
 

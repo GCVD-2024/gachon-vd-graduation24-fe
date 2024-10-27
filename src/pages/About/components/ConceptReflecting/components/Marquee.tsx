@@ -55,7 +55,7 @@ const MarqueeBlur = styled.div`
   inset: 0;
   display: grid;
   place-items: center;
-  background-color: #121212;
+  background-color: #000000;
   background-image: linear-gradient(to right, rgba(0, 180, 219, 1), 1rem, transparent 50%),
     linear-gradient(to left, rgba(0, 180, 219, 1), 1rem, transparent 50%);
   filter: contrast(15);

@@ -222,7 +222,7 @@ const Title = styled.h1`
 const GuestPage = styled.main`
   width: 100vw;
   height: calc(100vh - 73px);
-  background: radial-gradient(41.45% 43.19% at 50% 50%, #00b4db 0%, #121212 100%);
+  background: radial-gradient(41.45% 43.19% at 50% 50%, #00b4db 0%, #000000 100%);
   overflow-x: auto;
   display: flex;
   flex-direction: column;
@@ -233,7 +233,7 @@ const GuestPage = styled.main`
   img {
     position: absolute;
     width: 100vw;
-    height: calc(100vh - 73px);
+    height: 100dvh;
     object-fit: cover;
     z-index: 0;
   }

@@ -43,7 +43,7 @@ export default function MainTitle() {
   return (
     <MainTitleWrapper isMobile={isMobile}>
       <BackgroundImage
-        src="/about/MainTitle/about_background.png"
+        src="/about/MainTitle/main_bg.png"
         alt="Main background"
         isMobile={isMobile}
       />
@@ -129,7 +129,7 @@ const OverlayContent = styled.div`
 
 const BackgroundImage = styled.img<{ isMobile: boolean }>`
   position: absolute;
-  top: 30rem;
+  top: 25rem;
   left: 0;
   width: 100%;
   height: 100%;

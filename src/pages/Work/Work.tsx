@@ -57,7 +57,7 @@ const WorkPage = styled.div`
 
   display: flex;
   justify-content: center;
-  background-color: #121212;
+  background-color: #000000;
 
   img {
     width: 100vw;

@@ -32,7 +32,7 @@ const ImmersingWrapper = styled.div<{ isMobile: boolean }>`
   height: ${(props) => (props.isMobile ? 'auto' : '3000px')};
   min-height: ${(props) => (props.isMobile ? '100vh' : 'auto')};
   display: flex;
-  background-color: #121212;
+  background-color: #000000;
   flex-direction: column;
   justify-content: center;
   align-items: center;

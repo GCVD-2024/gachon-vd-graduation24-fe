@@ -50,5 +50,5 @@ export default About;
 
 const AboutPage = styled.div`
   position: relative;
-  background-color: #121212;
+  background-color: #000000;
 `;

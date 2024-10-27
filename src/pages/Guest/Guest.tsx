@@ -233,7 +233,7 @@ const GuestPage = styled.main`
   img {
     position: absolute;
     width: 100vw;
-    height: calc(100vh - 73px);
+    height: 100dvh;
     object-fit: cover;
     z-index: 0;
   }

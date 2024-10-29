@@ -56,7 +56,7 @@ const GlobalStyle = createGlobalStyle`
     color: #FFFFFF;
     font-family: 'Pretendard';
     -webkit-text-size-adjust: 100%;
-    background-color: #000000;
+    background-color: #121212;
   }
 
   a {

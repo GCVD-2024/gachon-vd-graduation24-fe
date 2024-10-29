@@ -24,14 +24,14 @@ const getWorkList = async (category: string, currentPage: number) => {
 };
 
 export const useGetWorkList = ({ category, currentPage }: WorkListRequestType) => {
-      let mappedCategory = (() => {
-        switch (category) {
-          case 'UX/UI':
-            return 'UX';
-          default:
-            return category;
-        }
-      })();
+  let mappedCategory = (() => {
+    switch (category) {
+      case 'UXUI':
+        return 'UX';
+      default:
+        return category;
+    }
+  })();
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: WORK_KEYS.list(mappedCategory, currentPage),
     queryFn: ({ pageParam = currentPage }) => getWorkList(mappedCategory, pageParam),

@@ -19,7 +19,7 @@ export default function ExhibitionMeaning() {
           {isMobile ? <br /> : ' '}
           디자인 아이덴티티를 드러내고 있다.
           <br />
-          우리가 지나온 길을 상징하여여 구성하고
+          우리가 지나온 길을 상징화하여 구성하고
           {isMobile ? <br /> : ' '}
           앞으로 나아갈 길을 상상해 볼 수 있다.
           <br />
@@ -45,7 +45,7 @@ const Title = styled.h1<{ isMobile: boolean }>`
   margin-bottom: ${(props) => (props.isMobile ? '50px' : '100px')};
   font-size: ${(props) => (props.isMobile ? '28px' : '40px')};
   font-weight: 900;
-  line-height: 140%;
+  line-height: 200%;
   letter-spacing: ${(props) => (props.isMobile ? '-0.56px' : '-0.8px')};
 `;
 
@@ -53,12 +53,12 @@ const Paragraph = styled.p<{ isMobile: boolean }>`
   margin-bottom: ${(props) => (props.isMobile ? '40px' : '60px')};
   font-size: ${(props) => (props.isMobile ? '12px' : '16px')};
   font-weight: 500;
-  line-height: 140%;
+  line-height: 200%;
 `;
 
 const Highlight = styled.span<{ isMobile: boolean }>`
   color: #00b4db;
   font-weight: 700;
   font-size: ${(props) => (props.isMobile ? '12px' : '16px')};
-  line-height: 140%;
+  line-height: 200%;
 `;

@@ -63,6 +63,8 @@ const Guest = () => {
   };
 
   const handleSubmit = async () => {
+    if (!formValues.name || !formValues.comment) return;
+
     const newGuestBookData: IGuestBookData = {
       nickname: formValues.name,
       content: formValues.comment,
@@ -86,8 +88,8 @@ const Guest = () => {
         comment: '',
       });
       setIsAnimating(true);
-      useGetGuestBookList();
-      queryClient.invalidateQueries({
+
+      await queryClient.invalidateQueries({
         queryKey: GUEST_KEYS.all,
       });
 
@@ -97,7 +99,6 @@ const Guest = () => {
             entry.id === newEntry.id ? { ...entry, twinkle: false } : entry
           )
         );
-
         setIsAnimating(false);
         scrollToBottom();
       }, 1000);
@@ -139,7 +140,11 @@ const Guest = () => {
             />
           </TextInputContainer>
 
-          <SubmitButton onClick={handleSubmit} isAnimating={isAnimating}>
+          <SubmitButton
+            onClick={handleSubmit}
+            disabled={!formValues.name || !formValues.comment}
+            isAnimating={isAnimating}
+          >
             DIGGING!
           </SubmitButton>
         </TextContainer>
@@ -206,7 +211,7 @@ const Title = styled.h1`
   font-weight: 900;
   color: ${({ theme }) => theme.colors.primaryBlue};
   line-height: normal;
-  padding: 1rem;
+  padding: 12rem 0 3rem 0;
 
   @media (max-width: 768px) {
     font-size: 28px;
@@ -217,7 +222,7 @@ const Title = styled.h1`
 const GuestPage = styled.main`
   width: 100vw;
   height: calc(100vh - 73px);
-  background: radial-gradient(41.45% 43.19% at 50% 50%, #00b4db 0%, #000 100%);
+  background: radial-gradient(41.45% 43.19% at 50% 50%, #00b4db 0%, #121212 100%);
   overflow-x: auto;
   display: flex;
   flex-direction: column;
@@ -228,7 +233,7 @@ const GuestPage = styled.main`
   img {
     position: absolute;
     width: 100vw;
-    height: calc(100vh - 73px);
+    height: 100dvh;
     object-fit: cover;
     z-index: 0;
   }
@@ -242,10 +247,10 @@ const EntriesContainer = styled.div`
   display: flex;
   position: relative;
   flex-wrap: wrap;
-  overflow-x: scroll;
   justify-content: center;
-  padding: 20px;
+  padding: 0 2rem;
   margin-bottom: 4rem;
+  overflow-x: scroll;
 
   ::-webkit-scrollbar {
     display: none;
@@ -332,6 +337,11 @@ const SubmitButton = styled.button<{ isAnimating: boolean }>`
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.primaryBlue};
+  }
+
+  &:disabled {
+    background-color: gray;
+    cursor: not-allowed;
   }
 
   @media (max-width: 768px) {

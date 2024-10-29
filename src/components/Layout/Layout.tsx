@@ -8,6 +8,7 @@ function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const isMobile = useIsMobile();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
 
@@ -31,12 +32,23 @@ function Layout({ children }: { children: React.ReactNode }) {
     };
   }, [isDrawerOpen]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <LayoutWrapper>
       {isMobile && isWorkDetailRoute ? (
         <></>
       ) : (
-        <Nav isMobile={isMobile}>
+        <Nav isFixed={location.pathname !== '/'} isMobile={isMobile} isScrolled={isScrolled}>
           {isMobile ? (
             <>
               <HamburgerButton onClick={toggleDrawer} src="/svg/hamburger.svg" />
@@ -82,7 +94,9 @@ const LayoutWrapper = styled.div`
 `;
 
 interface NavProps {
+  isFixed: boolean;
   isMobile: boolean;
+  isScrolled: boolean;
 }
 
 const Nav = styled.nav<NavProps>`
@@ -91,6 +105,12 @@ const Nav = styled.nav<NavProps>`
   justify-content: ${({ isMobile }) => (isMobile ? 'flex-start' : 'center')};
   align-items: center;
   padding-left: 16px;
+  position: ${({ isFixed }) => (isFixed ? 'fixed' : 'static')};
+  top: 0;
+  width: 100%;
+  background-color: ${({ isScrolled }) => (isScrolled ? 'transparent' : '#121212')};
+  transition: background-color 0.3s ease;
+  z-index: 1000;
 `;
 
 interface NavLinkContainerProps {
@@ -106,6 +126,7 @@ const NavLinkContainer = styled.div<NavLinkContainerProps>`
 interface NavLinkProps {
   isActive: boolean;
 }
+
 const NavLink = styled(Link)<NavLinkProps>`
   font-size: 20px;
   font-weight: 900;
@@ -126,7 +147,7 @@ const Drawer = styled.div<{ isOpen: boolean }>`
   left: ${({ isOpen }) => (isOpen ? '0' : '-250px')};
   width: 150px;
   height: 100%;
-  background-color: #000000;
+  background-color: #121212;
   transition: left 0.3s ease-in-out;
   z-index: 10000000;
 `;

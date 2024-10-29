@@ -91,6 +91,6 @@ const Title = styled.h1<{ isMobile: boolean }>`
 const Description = styled.p<{ isMobile: boolean }>`
   font-size: ${(props) => (props.isMobile ? '12px' : '16px')};
   font-weight: 500;
-  line-height: 140%;
+  line-height: 200%;
   text-align: left;
 `;

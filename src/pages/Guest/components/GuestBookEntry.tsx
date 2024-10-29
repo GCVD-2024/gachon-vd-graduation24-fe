@@ -55,7 +55,8 @@ const GuestBoxContent = styled.div`
   top: 41%;
   position: relative;
   transform: translateY(-50%);
-  margin-bottom: 16px;
+  height: 60px;
+  overflow-y: scroll;
 
   @media (max-width: 768px) {
     font-size: 12px;
@@ -66,7 +67,8 @@ const GuestBoxContent = styled.div`
 
 const GuestBoxFooter = styled.div`
   font-size: 12px;
-  top: 60%;
+  top: 42%;
+  padding: 2rem;
   position: relative;
   text-align: right;
 

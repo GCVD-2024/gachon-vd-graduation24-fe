@@ -50,7 +50,7 @@ export default function BlackholeCircle() {
     let animationFrameId: number;
 
     const animate = () => {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillStyle = 'rgba(18, 18, 18, 1)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
 

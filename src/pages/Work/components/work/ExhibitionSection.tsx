@@ -59,7 +59,7 @@ const ExhibitionWrapper = styled.div<{ isMobile: boolean }>`
   justify-content: ${({ isMobile }) => (isMobile ? 'center' : null)};
   width: ${({ isMobile }) => (isMobile ? '34.3rem' : '95rem')};
   margin-left: ${({ isMobile }) => (isMobile ? null : '33rem')};
-  margin-top: ${({ isMobile }) => (isMobile ? '14.8rem' : null)};
+  margin-top: ${({ isMobile }) => (isMobile ? '19.2rem' : null)};
 
   display: grid;
   grid-template-rows: ${({ isMobile }) => (isMobile ? 'repeat(10, 1fr)' : 'repeat(5, 1fr)')};

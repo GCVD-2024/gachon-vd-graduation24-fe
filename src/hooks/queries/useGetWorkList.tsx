@@ -41,6 +41,7 @@ export const useGetWorkList = ({ category, currentPage }: WorkListRequestType) =
       }
       return null;
     },
+    placeholderData: (previousData) => previousData ?? { pages: [], pageParams: [] },
     initialPageParam: 1,
     select: (data) => ({
       pages: data?.pages.flatMap((page) => page) || [],
